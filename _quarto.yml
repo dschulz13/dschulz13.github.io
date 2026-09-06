@@ -15,7 +15,7 @@ website:
       - text: "Blog"
         href: blog.qmd
     right:
-      - text: "Impressum"
+      - text: "Impressum & Datenschutzerklärung"
         href: impressum.qmd
   sidebar:
     - id: publications
