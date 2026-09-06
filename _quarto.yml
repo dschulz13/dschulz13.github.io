@@ -11,8 +11,16 @@ website:
       - sidebar:publications
       - text: "Teaching"
         href: teachings.qmd
+      - text: "CV"
+        href: cv.qmd
       - text: "Blog"
         href: blog.qmd
+      - icon: github
+        href: https://github.com/dschulz13
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/dominik-schulz-83b6131b2/
+        aria-label: LinkedIn
     right:
       - text: "Impressum & Datenschutzerklärung"
         href: impressum.qmd

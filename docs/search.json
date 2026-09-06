@@ -24,11 +24,14 @@
     "text": "Soon to be filled!"
   },
   {
-    "objectID": "blog_posts/0001 - welcome/index.html",
-    "href": "blog_posts/0001 - welcome/index.html",
-    "title": "Welcome to Stats Rsenal",
+    "objectID": "conferences.html",
+    "href": "conferences.html",
+    "title": "Conferences",
     "section": "",
-    "text": "Welcome to Stats Rsenal!\nStarting a blog on data analysis with a focus on programming has been a long-time idea of mine. However, due to other obligations the realization was postponed time and time again. Nonetheless, now it is finally time to start this project and bring the joy of data analysis to the world.\nOn an irregular basis, I will share with you posts teaching about programming, applied statistics, machine learning, and time series analysis.\nPlease feel free to learn more about me on my homepage, and reach out, if you have feedback on my posts.\nStay tuned for exciting updates! With that being said, what better way is there to start such a blog than with the most popular words in the world of programming?\n\nprint(\"Hello, World!\")\n\n[1] \"Hello, World!\"\n\n\nBest,Dominik"
+    "text": "Find here a selection of my contributions to scientific conferences.\n\n\n\n\nAutomated Local Polynomial Smoothing of Time Series Using smoots\n\n\nYear: 2021\n\n\nConference: PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Poster\n\n\n\n\n\nThe smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series\n\n\nYear: 2022\n\n\nConference: CFE-CMStatistics 2022\n\n\nLocation: London, UK\n\n\nType: Talk\n\n\n\n\n\nEine Sammlung von R-Paketen zur parametrischen und semiparametrischen Modellierung von Zeitreihen der Makroökonomie und des Finanzsektors\n\n\nYear: 2025\n\n\nConference: Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Talk\n\n\n\n\n\nDas R-Paket deseats zur simultanen Schätzung von Trend und Saisonalität in Zeitreihen anhand datengesteuerter lokal gewichteter Regression\n\n\nYear: 2025\n\n\nConference: Statistische Woche 2025\n\n\nLocation: Wiesbaden, Germany\n\n\nType: Poster",
+    "crumbs": [
+      "Conferences"
+    ]
   },
   {
     "objectID": "blog.html",
@@ -38,14 +41,18 @@
     "text": "Welcome to the blog Stats Rsenal. Every now and then I will upload a post here on a topic from data science, time series analysis and programming."
   },
   {
-    "objectID": "conferences.html",
-    "href": "conferences.html",
-    "title": "Conferences",
+    "objectID": "blog_posts/0001 - welcome/index.html",
+    "href": "blog_posts/0001 - welcome/index.html",
+    "title": "Welcome to Stats Rsenal",
     "section": "",
-    "text": "Find here a selection of my contributions to scientific conferences.\n\n\n\n\nAutomated Local Polynomial Smoothing of Time Series Using smoots\n\n\nYear: 2021\n\n\nConference: PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Poster\n\n\n\n\n\nThe smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series\n\n\nYear: 2022\n\n\nConference: CFE-CMStatistics 2022\n\n\nLocation: London, UK\n\n\nType: Talk\n\n\n\n\n\nEine Sammlung von R-Paketen zur parametrischen und semiparametrischen Modellierung von Zeitreihen der Makroökonomie und des Finanzsektors\n\n\nYear: 2025\n\n\nConference: Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Talk\n\n\n\n\n\nDas R-Paket deseats zur simultanen Schätzung von Trend und Saisonalität in Zeitreihen anhand datengesteuerter lokal gewichteter Regression\n\n\nYear: 2025\n\n\nConference: Statistische Woche 2025\n\n\nLocation: Wiesbaden, Germany\n\n\nType: Poster",
-    "crumbs": [
-      "Conferences"
-    ]
+    "text": "Welcome to Stats Rsenal!\nStarting a blog on data analysis with a focus on programming has been a long-time idea of mine. However, due to other obligations the realization was postponed time and time again. Nonetheless, now it is finally time to start this project and bring the joy of data analysis to the world.\nOn an irregular basis, I will share with you posts teaching about programming, applied statistics, machine learning, and time series analysis.\nPlease feel free to learn more about me on my homepage, and reach out, if you have feedback on my posts.\nStay tuned for exciting updates! With that being said, what better way is there to start such a blog than with the most popular words in the world of programming?\n\nprint(\"Hello, World!\")\n\n[1] \"Hello, World!\"\n\n\nBest,Dominik"
+  },
+  {
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "Soon to be filled!"
   },
   {
     "objectID": "index.html",
