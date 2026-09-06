@@ -1,0 +1,31 @@
+/* css styles */
+.button-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: #2c3e50;
+  text-decoration: none; /* Removes the text underline */
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #2c3e50;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.button-link:hover {
+  background-color: white; /* Darkens the button on hover */
+  color: #FF5F1F;
+  border-color: #FF5F1F;
+}
+
+.stacked-list dt {
+  font-weight: bold;
+  margin-top: 15px; /* Adds space before the next name */
+}
+
+.stacked-list dd {
+  margin: 0 0 2px 0 !important;   /* Forces bottom margin to 2px, resets everything else */
+  padding: 0 !important;
+  color: #555;      /* Optional: makes the description slightly lighter */
+}

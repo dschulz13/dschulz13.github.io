@@ -1,0 +1,60 @@
+[
+  {
+    "objectID": "teachings.html",
+    "href": "teachings.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Here you can find a list of the courses I taught at Paderborn University until March 2026.\n\n\n\n\nAngewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie\n\n\nCourse ID: M.184.2453\n\n\nLevel: Bachelor\n\n\nRole: Tutor\n\n\nContents: White noise, random walks, ARMA models, GARCH models, forecasting, application with R\n\n\nCourse language: German\n\n\n\n\n\nEconometrics\n\nCourse ID: M.184.4479\n\n\nLevel: Master\n\n\nRole: Tutor\n\n\nContents: Simple and multiple linear regression, hypothesis testing, point and interval predictions, heteroskedasticity, multicollinearity\n\n\nCourse language: English\n\n\n\n\n\nFinancial Econometrics and Quantitative Risk Management\n\nCourse ID: M.184.4451\n\n\nLevel: Master\n\n\nRole: Tutor\n\n\nContents: ARMA models, short-memory GARCH-type models, forecasting, backtesting of GARCH-type models\n\n\nCourse language: English\n\n\n\n\n\nAdvanced Time Series Analysis and Forecasting\n\nCourse ID: M.184.5453\n\n\nLevel: Master\n\n\nRole: Lecturer, tutor\n\n\nContents: Seasonal time series, (semiparametric) FARIMA models, VARMA models, cointegration, (semiparametric) ACD models, high-frequency time series, FIGARCH models, multivariate GARCH models, forecasting\n\n\nCourse language: English"
+  },
+  {
+    "objectID": "published_software.html",
+    "href": "published_software.html",
+    "title": "Software",
+    "section": "",
+    "text": "Here you can find a selection of my published software. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026.\n\n\nR packages\n\n\n\nsmoots: Nonparametric Estimation of the Trend and Its Derivatives in TS\n\n\nYear: 2023\n\n\nAuthors: Feng, Y., Letmathe, S., Schulz, D. (Maintainer)\n\n\nVersion: 1.1.4\n\n\nAvailable on: CRAN\n\n\nLink: https://doi.org/10.32614/CRAN.package.smoots\n\n\nDownloads: 42,988\n\n\n\n\n\nesemifar: Smoothing Long-Memory Time Series\n\n\nYear: 2024\n\n\nAuthors: Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)\n\n\nVersion: 2.0.1\n\n\nAvailable on: CRAN\n\n\nLink: https://doi.org/10.32614/CRAN.package.esemifar\n\n\nDownloads: 22,230\n\n\n\n\n\nufRisk: Risk Measure Calculation in Financial TS\n\n\nYear: 2023\n\n\nAuthors: Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)\n\n\nVersion: 1.0.7\n\n\nAvailable on: CRAN\n\n\nLink: https://doi.org/10.32614/CRAN.package.ufRisk\n\n\nDownloads: 15,482\n\n\n\n\n\ndeseats: Data-Driven Locally Weighted Regression for Trend and Seasonality in TS\n\n\nYear: 2026\n\n\nAuthors: Feng, Y., Schulz, D. (Maintainer)\n\n\nVersion: 1.1.2\n\n\nAvailable on: CRAN\n\n\nLink: https://doi.org/10.32614/CRAN.package.deseats\n\n\nDownloads: 12,072\n\n\n\n\n\nfEGarch: SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions\n\n\nYear: 2026\n\n\nAuthors: Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.\n\n\nVersion: 1.0.7\n\n\nAvailable on: CRAN\n\n\nLink: https://doi.org/10.32614/CRAN.package.fEGarch\n\n\nDownloads: 5,461\n\n\n\nR Shiny apps\n\n\n\nGrime Dice Simulation\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nAvailable on: Posit Connect Cloud\n\n\nLink: https://schulzd-grime-dice-simulation.share.connect.posit.cloud/\n\n\n\n\n\nStock Price Analyzer\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nAvailable on: Posit Connect Cloud\n\n\nLink: https://schulzd-stock-price-analyzer.share.connect.posit.cloud/\n\n\n\n\n\nWeather Forecaster\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nAvailable on: Posit Connect Cloud\n\n\nLink: https://schulzd-weather-forecaster.share.connect.posit.cloud/\n\n\n\n\n\nOne-Minute Closing Price Downloader\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nAvailable on: Posit Connect Cloud\n\n\nLink: https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/\n\n\n\nPython scripts\n\n\n\nImmo_Webscraper: Ein automatisierter Webscraper für ImmobilienScout24 unter Nutzung von Pythons Playwright\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nAvailable on: Github\n\n\nLink: https://github.com/dschulz13/Immo_Webscraper",
+    "crumbs": [
+      "Software"
+    ]
+  },
+  {
+    "objectID": "blog_posts/0001 - welcome/index.html",
+    "href": "blog_posts/0001 - welcome/index.html",
+    "title": "Welcome to Stats Rsenal",
+    "section": "",
+    "text": "Welcome to Stats Rsenal!\nStarting a blog on data analysis with a focus on programming has been a long-time idea of mine. However, due to other obligations the realization was postponed time and time again. Nonetheless, now it is finally time to start this project and bring the joy of data analysis to the world.\nOn an irregular basis, I will share with you posts teaching about programming, applied statistics, machine learning, and time series analysis.\nPlease feel free to learn more about me on my homepage, and reach out, if you have feedback on my posts.\nStay tuned for exciting updates! With that being said, what better way is there to start such a blog than with the most popular words in the world of programming?\n\nprint(\"Hello, World!\")\n\n[1] \"Hello, World!\"\n\n\nBest,Dominik"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog “Stats Rsenal”",
+    "section": "",
+    "text": "Welcome to the blog Stats Rsenal. Every now and then I will upload a post here on a topic from data science, time series analysis and programming."
+  },
+  {
+    "objectID": "conferences.html",
+    "href": "conferences.html",
+    "title": "Conferences",
+    "section": "",
+    "text": "Find here a selection of my contributions to scientific conferences.\n\n\n\n\nAutomated Local Polynomial Smoothing of Time Series Using smoots\n\n\nYear: 2021\n\n\nConference: PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Poster\n\n\n\n\n\nThe smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series\n\n\nYear: 2022\n\n\nConference: CFE-CMStatistics 2022\n\n\nLocation: London, UK\n\n\nType: Talk\n\n\n\n\n\nEine Sammlung von R-Paketen zur parametrischen und semiparametrischen Modellierung von Zeitreihen der Makroökonomie und des Finanzsektors\n\n\nYear: 2025\n\n\nConference: Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University\n\n\nLocation: Paderborn, Germany\n\n\nType: Talk\n\n\n\n\n\nDas R-Paket deseats zur simultanen Schätzung von Trend und Saisonalität in Zeitreihen anhand datengesteuerter lokal gewichteter Regression\n\n\nYear: 2025\n\n\nConference: Statistische Woche 2025\n\n\nLocation: Wiesbaden, Germany\n\n\nType: Poster",
+    "crumbs": [
+      "Conferences"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi everyone, I’m Dominik Schulz!",
+    "section": "",
+    "text": "Statistician & Data Scientist\n\n\nI am a former PhD student and a former scientific employee at the Chair of Econometrics and Quantitative Methods, Faculty of Business Administration and Economics, Paderborn University. My training includes statistics and data science and the focus of my research so far is on time series analysis as well as the development of statistical software in this context, in particular for the free software R.\nThis site functions both as a personal website and a blog (called Stats Rsenal) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly.\nIf you have any feedback or suggestions, please feel free to reach out via dominik.schulz.r@gmail.com.\n\nResearch articles Software Conferences Teaching Blog “Stats Rsenal”"
+  },
+  {
+    "objectID": "research_articles.html",
+    "href": "research_articles.html",
+    "title": "Research articles",
+    "section": "",
+    "text": "Here you can find a selection of my research articles together with links to them.\n\n\n\n\nThe smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series\n\n\nYear: 2022\n\n\nAuthors: Feng, Y., Gries, T., Letmathe, S., Schulz, D.\n\n\nPublished in: The R Journal, 14(1), 182-195\n\n\nLink: https://doi.org/10.32614/rj-2022-017\n\n\n\n\n\ndeseats: An R Package for Data-Driven Trend and Seasonality Estimation in Time Series\n\n\nYear: 2026\n\n\nAuthors: Schulz, D.\n\n\nPublished in: The R Journal, 18(2), 245-293\n\n\nLink: https://doi.org/10.32614/RJ-2026-025\n\n\n\n\n\nA Semiparametric Spatial FARIMA Applied in the Presence of Spatial Seasonality\n\n\nYear: 2026\n\n\nAuthors: Schulz, D., Do, T. T. H., Feng, Y.\n\n\nPublished in: CIE Working Paper Series (Paderborn University), 170\n\n\nLink: https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf\n\n\n\n\n\nDiagnosing the Trend and Bootstrapping the Forecasting Intervals Using a Semiparametric ARMA\n\n\nYear: 2026\n\n\nAuthors: Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.\n\n\nPublished in: CIE Working Paper Series (Paderborn University), 168\n\n\nLink: https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf\n\n\n\n\n\nEstimating, Forecasting and Backtesting a Family of Exponential and Other GARCH Models Using the fEGarch Package\n\n\nYear: 2026\n\n\nAuthors: Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.\n\n\nPublished in: CIE Working Paper Series (Paderborn University), 171\n\n\nLink: https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf",
+    "crumbs": [
+      "Research articles"
+    ]
+  }
+]
