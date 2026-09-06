@@ -116,6 +116,24 @@ Here you can find a selection of my published **software**. Download numbers ref
 
 </dl>
 
+<hr>
+
+<dl class="stacked-list">
+
+<dt>smardapi: Access to the SMARD API of the German Federal Network Agency</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D. (Maintainer)</dd>
+
+<dd>Version: 0.1.0</dd>
+
+<dd>Available on: Github</dd>
+
+<dd>Link: <https://github.com/dschulz13/smardapi></dd>
+
+</dl>
+
 <br><br>
 
 [R Shiny apps]{style="font-size:30px;font-weight:bold;"}
@@ -181,6 +199,22 @@ Here you can find a selection of my published **software**. Download numbers ref
 <dd>Available on: Posit Connect Cloud</dd>
 
 <dd>Link: <https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/></dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>FARIMA Simulator</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Posit Connect Cloud</dd>
+
+<dd>Link: <https://schulzd-farima-simulator.share.connect.posit.cloud/></dd>
 
 </dl>
 
