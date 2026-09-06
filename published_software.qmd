@@ -126,7 +126,7 @@ Here you can find a selection of my published **software**. Download numbers ref
 
 <dd>Authors: Schulz, D. (Maintainer)</dd>
 
-<dd>Version: 0.1.0</dd>
+<dd>Version: 0.1.1</dd>
 
 <dd>Available on: Github</dd>
 
