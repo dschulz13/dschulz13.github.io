@@ -5,7 +5,6 @@ website:
   title: "Dominik Schulz"
   search: false
   navbar:
-    logo: avatarCircleSmall.png
     left:
       - text: "Home"
         href: index.qmd
