@@ -1,6 +1,6 @@
 ---
 title: 'Blog "Stats Rsenal"'
-image: avatar.png
+image: avatarCircleSmall.png
 sidebar: false
 page-layout: full
 about:
