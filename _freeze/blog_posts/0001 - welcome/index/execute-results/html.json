@@ -1,0 +1,15 @@
+{
+  "hash": "9f570d632960c14beaa40567a1401f36",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Welcome to Stats Rsenal\"\nauthor: \"Dominik Schulz\"\ndate: \"2026-09-06\"\ncategories: [news, code]\n---\n\n\n\n![](thumbnail.jpg)\n\nWelcome to **Stats Rsenal**!\n\nStarting a blog on data analysis with a focus on programming has been a long-time idea of mine. However, due to other obligations the realization was postponed time and time again. Nonetheless, now it is finally time to start this project and bring the joy of data analysis to the world.\n\nOn an irregular basis, I will share with you posts teaching about programming, applied statistics, machine learning, and time series analysis.\n\nPlease feel free to learn more about me on my homepage, and reach out, if you have feedback on my posts.\n\nStay tuned for exciting updates! With that being said, what better way is there to start such a blog than with the most popular words in the world of programming?\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nprint(\"Hello, World!\")\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"Hello, World!\"\n```\n\n\n:::\n:::\n\n\n\nBest,<br>Dominik\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

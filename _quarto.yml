@@ -1,0 +1,34 @@
+project:
+  type: website
+
+website:
+  title: "Dominik Schulz"
+  navbar:
+    logo: avatarCircleSmall.png
+    left:
+      - text: "Home"
+        href: index.qmd
+      - sidebar:publications
+      - text: "Teaching"
+        href: teachings.qmd
+      - text: "Blog"
+        href: blog.qmd
+  sidebar:
+    - id: publications
+      title: "Publications"
+      style: "docked"
+      background: light
+      collapse-level: 2
+      contents:
+        - research_articles.qmd
+        - published_software.qmd
+        - conferences.qmd
+
+format:
+  html:
+    theme:
+      light: flatly
+    css: styles.css
+
+editor: visual
+

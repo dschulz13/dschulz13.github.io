@@ -1,0 +1,80 @@
+---
+title: "Conferences"
+image: conferences_logo.jpg
+sidebar: false
+page-layout: full
+about:
+  template: trestles
+  image-shape: round
+---
+
+::: {#hero-heading}
+Find here a selection of my contributions to scientific conferences.
+:::
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Automated Local Polynomial Smoothing of Time Series
+Using smoots</dt>
+
+<dd>Year: 2021</dd>
+
+<dd>Conference: PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University</dd>
+
+<dd>Location: Paderborn, Germany</dd>
+
+<dd>Type: Poster</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>The smoots Package in R for Semiparametric Modeling of Trend
+Stationary Time Series</dt>
+
+<dd>Year: 2022</dd>
+
+<dd>Conference: CFE-CMStatistics 2022</dd>
+
+<dd>Location: London, UK</dd>
+
+<dd>Type: Talk</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Eine Sammlung von R-Paketen zur parametrischen und semiparametrischen
+Modellierung von Zeitreihen der Makroökonomie und des Finanzsektors</dt>
+
+<dd>Year: 2025</dd>
+
+<dd>Conference: Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University</dd>
+
+<dd>Location: Paderborn, Germany</dd>
+
+<dd>Type: Talk</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Das R-Paket deseats zur simultanen Schätzung von Trend und Saisonalität in Zeitreihen anhand datengesteuerter lokal gewichteter Regression</dt>
+
+<dd>Year: 2025</dd>
+
+<dd>Conference: Statistische Woche 2025</dd>
+
+<dd>Location: Wiesbaden, Germany</dd>
+
+<dd>Type: Poster</dd>
+
+</dl>

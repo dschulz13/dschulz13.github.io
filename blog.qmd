@@ -1,0 +1,23 @@
+---
+title: 'Blog "Stats Rsenal"'
+image: avatar.png
+sidebar: false
+page-layout: full
+about:
+  template: trestles
+  image-shape: round
+listing:
+  contents:
+    - "blog_posts"
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: true
+  filter-ui: true 
+---
+
+::: {#hero-heading}
+Welcome to the blog **Stats Rsenal**. Every now and then I will upload a post here on a topic from data science, time series analysis and programming.
+
+## Blog entries
+:::

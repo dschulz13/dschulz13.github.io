@@ -1,0 +1,63 @@
+---
+title: "Research articles"
+image: research_article_logo.jpg
+sidebar: false
+page-layout: full
+about:
+  template: trestles
+  image-shape: round
+---
+
+::: {#hero-heading}
+Here you can find a selection of my **research articles** together with links to them.
+:::
+
+<hr>
+
+<dl class="stacked-list">
+  <dt>The smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series</dt>
+  <dd>Year: 2022</dd>
+  <dd>Authors: Feng, Y., Gries, T., Letmathe, S., Schulz, D.</dd> 
+  <dd>Published in: The R Journal, 14(1), 182-195</dd> 
+  <dd>Link: [https://doi.org/10.32614/rj-2022-017](https://doi.org/10.32614/rj-2022-017)</dd>
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+  <dt>deseats: An R Package for Data-Driven Trend and Seasonality Estimation in Time Series</dt>
+  <dd>Year: 2026</dd>
+  <dd>Authors: Schulz, D.</dd> 
+  <dd>Published in: The R Journal, 18(2), 245-293</dd> 
+  <dd>Link: [https://doi.org/10.32614/RJ-2026-025](https://doi.org/10.32614/RJ-2026-025)</dd>
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+  <dt>A Semiparametric Spatial FARIMA Applied in the Presence of Spatial Seasonality</dt>
+  <dd>Year: 2026</dd>
+  <dd>Authors: Schulz, D., Do, T. T. H., Feng, Y.</dd> 
+  <dd>Published in: CIE Working Paper Series (Paderborn University), 170</dd> 
+  <dd>Link: [https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf](https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf)</dd>
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+  <dt>Diagnosing the Trend and Bootstrapping the Forecasting Intervals Using a Semiparametric ARMA</dt>
+  <dd>Year: 2026</dd>
+  <dd>Authors: Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.</dd> 
+  <dd>Published in: CIE Working Paper Series (Paderborn University), 168</dd> 
+  <dd>Link: [https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf](https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf)</dd>
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+  <dt>Estimating, Forecasting and Backtesting a Family of Exponential and Other GARCH Models Using the fEGarch Package</dt>
+  <dd>Year: 2026</dd>
+  <dd>Authors: Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.</dd> 
+  <dd>Published in: CIE Working Paper Series (Paderborn University), 171</dd> 
+  <dd>Link: [https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf](https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf)</dd>
+</dl>

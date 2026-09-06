@@ -1,0 +1,205 @@
+---
+title: "Software"
+image: software_logo.jpg
+sidebar: false
+page-layout: full
+about:
+  template: trestles
+  image-shape: round
+---
+
+::: {#hero-heading}
+Here you can find a selection of my published **software**. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026.
+:::
+
+<br>
+
+[R packages]{style="font-size:30px;font-weight:bold;"}
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>smoots: Nonparametric Estimation of the Trend and Its Derivatives in TS</dt>
+
+<dd>Year: 2023</dd>
+
+<dd>Authors: Feng, Y., Letmathe, S., Schulz, D. (Maintainer)</dd>
+
+<dd>Version: 1.1.4</dd>
+
+<dd>Available on: CRAN</dd>
+
+<dd>Link: <https://doi.org/10.32614/CRAN.package.smoots></dd>
+
+<dd>Downloads: 42,988</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>esemifar: Smoothing Long-Memory Time Series</dt>
+
+<dd>Year: 2024</dd>
+
+<dd>Authors: Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)</dd>
+
+<dd>Version: 2.0.1</dd>
+
+<dd>Available on: CRAN</dd>
+
+<dd>Link: <https://doi.org/10.32614/CRAN.package.esemifar></dd>
+
+<dd>Downloads: 22,230</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>ufRisk: Risk Measure Calculation in Financial TS</dt>
+
+<dd>Year: 2023</dd>
+
+<dd>Authors: Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)</dd>
+
+<dd>Version: 1.0.7</dd>
+
+<dd>Available on: CRAN</dd>
+
+<dd>Link: <https://doi.org/10.32614/CRAN.package.ufRisk></dd>
+
+<dd>Downloads: 15,482</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>deseats: Data-Driven Locally Weighted Regression for Trend and Seasonality in TS</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Feng, Y., Schulz, D. (Maintainer)</dd>
+
+<dd>Version: 1.1.2</dd>
+
+<dd>Available on: CRAN</dd>
+
+<dd>Link: <https://doi.org/10.32614/CRAN.package.deseats></dd>
+
+<dd>Downloads: 12,072</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>fEGarch: SM/LM EGARCH & GARCH, VaR/ES Backtesting & Dual LM Extensions</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+
+<dd>Version: 1.0.7</dd>
+
+<dd>Available on: CRAN</dd>
+
+<dd>Link: <https://doi.org/10.32614/CRAN.package.fEGarch></dd>
+
+<dd>Downloads: 5,461</dd>
+
+</dl>
+
+<br><br>
+
+[R Shiny apps]{style="font-size:30px;font-weight:bold;"}
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Grime Dice Simulation</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Posit Connect Cloud</dd>
+
+<dd>Link: <https://schulzd-grime-dice-simulation.share.connect.posit.cloud/></dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Stock Price Analyzer</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Posit Connect Cloud</dd>
+
+<dd>Link: <https://schulzd-stock-price-analyzer.share.connect.posit.cloud/></dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Weather Forecaster</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Posit Connect Cloud</dd>
+
+<dd>Link: <https://schulzd-weather-forecaster.share.connect.posit.cloud/></dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>One-Minute Closing Price Downloader</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Posit Connect Cloud</dd>
+
+<dd>Link: <https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/></dd>
+
+</dl>
+
+<br><br>
+
+[Python scripts]{style="font-size:30px;font-weight:bold;"}
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Immo_Webscraper: Ein automatisierter Webscraper für ImmobilienScout24 unter Nutzung von Pythons Playwright</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Github</dd>
+
+<dd>Link: <https://github.com/dschulz13/Immo_Webscraper></dd>
+
+</dl>

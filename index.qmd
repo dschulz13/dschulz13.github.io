@@ -1,0 +1,20 @@
+---
+title: "Hi everyone, I'm Dominik Schulz!"
+logo: profileCircular.png
+page-layout: full
+title-block-banner: false
+---
+
+::: {#hero-heading}
+<center>![](profileCircularSmall.png)<br>[Statistician & Data Scientist]{style="font-size: 26px; color: #2c3e50;"}</center>
+
+<br>
+
+I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/).
+
+This site functions both as a **personal website** and a **blog** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly.
+
+If you have any **feedback** or **suggestions**, please feel free to **reach out** via [dominik.schulz.r\@gmail.com](mailto:dominik.schulz.r@gmail.com).
+:::
+
+<a href="research_articles.qmd" class="button-link">Research articles</a> <a href="published_software.qmd" class="button-link">Software</a> <a href="conferences.qmd" class="button-link">Conferences</a> <a href="teachings.qmd" class="button-link">Teaching</a> <a href="blog.qmd" class="button-link">Blog "Stats Rsenal"</a>

@@ -1,0 +1,24 @@
+---
+title: "Welcome to Stats Rsenal"
+author: "Dominik Schulz"
+date: "2026-09-06"
+categories: [news, code]
+---
+
+![](thumbnail.jpg)
+
+Welcome to **Stats Rsenal**!
+
+Starting a blog on data analysis with a focus on programming has been a long-time idea of mine. However, due to other obligations the realization was postponed time and time again. Nonetheless, now it is finally time to start this project and bring the joy of data analysis to the world.
+
+On an irregular basis, I will share with you posts teaching about programming, applied statistics, machine learning, and time series analysis.
+
+Please feel free to learn more about me on my homepage, and reach out, if you have feedback on my posts.
+
+Stay tuned for exciting updates! With that being said, what better way is there to start such a blog than with the most popular words in the world of programming?
+
+```{r}
+print("Hello, World!")
+```
+
+Best,<br>Dominik
