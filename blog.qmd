@@ -7,8 +7,7 @@ about:
   template: trestles
   image-shape: round
 listing:
-  contents:
-    - "blog_posts"
+  contents: blog_posts/**/*.qmd
   sort: "date desc"
   type: default
   categories: true
@@ -18,6 +17,10 @@ listing:
 
 ::: {#hero-heading}
 Welcome to the blog **Stats Rsenal**. Every now and then I will upload a post here on a topic from data science, time series analysis and programming.
+
+## Series
+
+There are no series yet.
 
 ## Blog entries
 :::

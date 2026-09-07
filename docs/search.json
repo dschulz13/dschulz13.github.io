@@ -38,7 +38,7 @@
     "href": "blog.html",
     "title": "Blog “Stats Rsenal”",
     "section": "",
-    "text": "Welcome to the blog Stats Rsenal. Every now and then I will upload a post here on a topic from data science, time series analysis and programming."
+    "text": "Welcome to the blog Stats Rsenal. Every now and then I will upload a post here on a topic from data science, time series analysis and programming.\n\n\nThere are no series yet."
   },
   {
     "objectID": "blog_posts/0001 - welcome/index.html",
@@ -70,5 +70,12 @@
     "crumbs": [
       "Research articles"
     ]
+  },
+  {
+    "objectID": "blog.html#series",
+    "href": "blog.html#series",
+    "title": "Blog “Stats Rsenal”",
+    "section": "",
+    "text": "There are no series yet."
   }
 ]
