@@ -1,7 +1,23 @@
 ---
-title: "Impressum & Datenschutzerklärung"
+title: "Legal Notice (Impressum & Datenschutz)"
 page-layout: full
 title-block-banner: false
 ---
 
-Soon to be filled!
+
+## Impressum
+
+Angaben gemäß § 5 DDG
+
+Dominik Schulz
+c/o Impressumservice Dein-Impressum
+Stettiner Str. 41
+35410 Hungen
+
+Mail: dominik.schulz.r@gmail.com
+Tel.: 0157 9234 1658
+(Die Telefonnummer wird von Dein Impressum betreut.)
+
+## Datenschutzerklärung
+
+Soon to be filled in!

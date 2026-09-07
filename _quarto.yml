@@ -22,7 +22,7 @@ website:
         href: https://www.linkedin.com/in/dominik-schulz-83b6131b2/
         aria-label: LinkedIn
     right:
-      - text: "Impressum & Datenschutzerklärung"
+      - text: "Legal Notice (Impressum & Datenschutz)"
         href: impressum.qmd
   sidebar:
     - id: publications
