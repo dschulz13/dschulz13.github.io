@@ -6,11 +6,18 @@ title-block-banner: false
 ---
 
 ::: {#hero-heading}
-<center>![](profileCircularSmall.png)<br>[Statistician & Data Scientist]{style="font-size: 26px; color: #2c3e50;"}</center>
+
+::: {.columns}
+::: {.column width="40%"}
+I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I appreciate more and more in my own workflows.
+:::
+
+::: {.column width="60%"}
+<center>![](profileCircularSmall.png)<br>[Statistician & Data Scientist]{style="font-size: 20px; color: #2c3e50;"}</center>
+:::
+:::
 
 <br>
-
-I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I appreciate more and more in my own workflows.
 
 This site functions both as a **personal website** and a **blog** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly. Regarding programming topics, I will mainly focus on R but also incorporate posts on SQL or Python from time to time.
 
