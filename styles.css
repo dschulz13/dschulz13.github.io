@@ -28,7 +28,7 @@
   color: white;
   border-color: #2c3e50;
   opacity: 0.8;
-  transition: border-radius 0.2s, opacity 0.2s;
+  transition: opacity 0.2s;
 }
 
 .stacked-list dt {
