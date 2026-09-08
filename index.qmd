@@ -7,6 +7,8 @@ title-block-banner: false
 
 ::: {#hero-heading}
 
+<div class="info-box">
+
 ::: {.columns}
 ::: {.column width="40%"}
 I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I appreciate more and more in my own workflows.
@@ -16,6 +18,8 @@ I am a **former PhD student** and a **former scientific employee** at the **Chai
 <center>![](profileCircularSmall.png)<br>[Statistician & Data Scientist]{style="font-size: 20px; color: #2c3e50;"}</center>
 :::
 :::
+
+</div>
 
 <br>
 
