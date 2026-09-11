@@ -4,4 +4,95 @@ page-layout: full
 title-block-banner: false
 ---
 
-Soon to be filled!
+## Job history
+
+
+<dl class="stacked-list">
+
+<dt>Scientific Employee</dt>
+
+<dd>Department: Chair of Econometrics and Quantitative Methods, Faculty of Business Administration and Economics</dd>
+
+<dd>Employer: Paderborn University, Germany</dd>
+
+<dd>Period: Oct 2021 - Mar 2026</dd>
+
+<dd>Details: Data modelling, researching new time series models, simulation studies, programming and publishing of R software, planning and conducting tutorials and lectures</dd>
+
+<hr>
+
+</dl>
+
+<dl class="stacked-list">
+
+<dt>Student Assistant</dt>
+
+<dd>Department: Chair of Econometrics and Quantitative Methods, Faculty of Business Administration and Economics</dd>
+
+<dd>Employer: Paderborn University, Germany</dd>
+
+<dd>Period: Mar 2019 - Sep 2021</dd>
+
+<dd>Details: Data modelling, researching new time series models, simulation studies, programming and publishing of R software, planning and conducting tutorials and lectures</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Intern</dt>
+
+<dd>Department: Agriculture, environment, foreign trade</dd>
+
+<dd>Employer: Federal Statistical Office, Germany</dd>
+
+<dd>Period: Aug 2018 - Sep 2018</dd>
+
+<dd>Details: SAS programming, environmental accounts, controlling received data packages, updating publications about structural data on water management</dd>
+
+</dl>
+
+<br><br>
+
+## Education
+
+<dl class="stacked-list">
+
+<dt>PhD studies (finished)</dt>
+
+<dd>Institution: Faculty of Business Administration and Economics, Paderborn University, Germany</dd>
+
+<dd>Thesis topic: New Implementations in R for Parametric and Semiparametric Modelling of Univariate and Spatial Short- and Long-Memory Time Series</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>M.Sc. International Economics and Management (finished)</dt>
+
+<dd>Institution: Faculty of Business Administration and Economics, Paderborn University, Germany</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>Study semester abroad</dt>
+
+<dd>Institution: La Facultad de Ciencias Económicas y Empresariales, Universidad de Granada, Spain</dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>B.Sc. International Business Studies (finished)</dt>
+
+<dd>Institution: Faculty of Business Administration and Economics, Paderborn University, Germany</dd>
+
+</dl>
