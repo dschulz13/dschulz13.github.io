@@ -120,7 +120,7 @@ Here you can find a selection of my published **software**. Download numbers ref
 
 <dl class="stacked-list">
 
-<dt>smardapi: Access to the SMARD API of the German Federal Network Agency</dt>
+<dt>smardapi (R Version): Access to the SMARD API of the German Federal Network Agency</dt>
 
 <dd>Year: 2026</dd>
 
@@ -220,7 +220,7 @@ Here you can find a selection of my published **software**. Download numbers ref
 
 <br><br>
 
-[Python scripts]{style="font-size:30px;font-weight:bold;"}
+[Python projects]{style="font-size:30px;font-weight:bold;"}
 
 <hr>
 
@@ -235,5 +235,21 @@ Here you can find a selection of my published **software**. Download numbers ref
 <dd>Available on: Github</dd>
 
 <dd>Link: <https://github.com/dschulz13/Immo_Webscraper></dd>
+
+</dl>
+
+<hr>
+
+<dl class="stacked-list">
+
+<dt>smardapi (Python Version): Access to the SMARD API of the German Federal Network Agency</dt>
+
+<dd>Year: 2026</dd>
+
+<dd>Authors: Schulz, D.</dd>
+
+<dd>Available on: Github</dd>
+
+<dd>Link: <https://github.com/dschulz13/smardapi_python></dd>
 
 </dl>
