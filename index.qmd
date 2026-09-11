@@ -37,4 +37,4 @@ If you have any **feedback** or **suggestions**, please feel free to **reach out
 </p>
 :::
 
-<a href="research_articles.qmd" class="button-link">Research articles</a> <a href="published_software.qmd" class="button-link">Software</a> <a href="conferences.qmd" class="button-link">Conferences</a> <a href="teachings.qmd" class="button-link">Teaching</a> <a href="blog.qmd" class="button-link">Blog "Stats Rsenal"</a>
+<a href="research_articles.qmd" class="button-link">Research articles</a> <a href="published_software.qmd" class="button-link">Software</a> <a href="conferences.qmd" class="button-link">Conferences</a> <a href="teachings.qmd" class="button-link">Teaching</a> <a href="cv.qmd" class="button-link">CV</a> <a href="blog.qmd" class="button-link">Blog "Stats Rsenal"</a>
