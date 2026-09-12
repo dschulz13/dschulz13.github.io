@@ -61,6 +61,7 @@
 .pyramid-container {
   display: flex;
   align-items: center;
+  min-height: 400px;
 }
 .pyramid {
   display: inline-block;
