@@ -1,16 +1,165 @@
 ---
 title: "Software"
-image: software_logo.jpg
 sidebar: false
 page-layout: full
-about:
-  template: trestles
-  image-shape: round
 ---
 
 ::: {#hero-heading}
-Here you can find a selection of my published **software**. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026.
+Here you can find a selection of my published **software**. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026. **Note:** This page is currently under construction. While the overall information will stay the same, new HTML implementations will redesign this page strongly in the near future.
 :::
+
+## R packages
+
+<div class = "pyramid-container">
+<div class = "pyramid">
+<div class = "first-row">
+<a href = "https://cran.r-project.org/web/packages/fEGarch/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="fEGarch_logo.png" data-info="fegarch">
+</a>
+</div>  
+<div class = "second-row">
+<a href = "https://cran.r-project.org/web/packages/fEGarch/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="fEGarch_logo.png" data-info="fegarch">
+</a>
+<a href = "https://cran.r-project.org/web/packages/smoots/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="logo_smoots.png" data-info="smoots">
+</a>
+</div>   
+<div class = "third-row">
+<a href = "https://cran.r-project.org/web/packages/smoots/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="logo_smoots.png" data-info="smoots">
+</a>
+<a href = "https://cran.r-project.org/web/packages/esemifar/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="logo_esemifar.png" data-info="esemifar">
+</a>
+<a href = "https://cran.r-project.org/web/packages/deseats/index.html" target="_blank" rel="noopener noreferrer">
+<img class = "hexa" src="logo_deseats.png" data-info="deseats">
+</a>
+</div>
+</div>
+<div id="hexagon-text">
+<div id="default-info" class="info active">
+<h3>Welcome</h3> 
+<p style = "text-align:justify;">
+Move your mouse over a package icon to learn more. Click an icon to go to the package's CRAN or GitHub page.
+</p>
+</div>
+
+<div id="smoots" class="info">
+<h3>smoots</h3>
+<p>Nonparametric Estimation of the Trend and Its Derivatives in Time Series</p>
+
+<dl>
+
+<dd><span class = "lightbold">Year:</span> 2023</dd>
+
+<dd><span class = "lightbold">Authors:</span> Feng, Y., Letmathe, S., Schulz, D. (Maintainer)</dd>
+
+<dd><span class = "lightbold">Version:</span> 1.1.4</dd>
+
+<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+
+<dd><span class = "lightbold">Downloads:</span> 42,988</dd>
+
+</dl>
+
+</div>
+
+<div id="esemifar" class="info">
+<h3>esemifar</h3>
+<p>Smoothing Long-Memory Time Series</p>
+
+<dl>
+
+<dd><span class = "lightbold">Year:</span> 2024</dd>
+
+<dd><span class = "lightbold">Authors:</span> Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)</dd>
+
+<dd><span class = "lightbold">Version:</span> 2.0.1</dd>
+
+<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+
+<dd><span class = "lightbold">Downloads:</span> 22,230</dd>
+
+</dl>
+</div>
+
+<div id="deseats" class="info">
+<h3>deseats</h3>
+<p>Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series</p>
+
+<dl>
+
+<dd><span class = "lightbold">Year:</span> 2026</dd>
+
+<dd><span class = "lightbold">Authors:</span> Feng, Y., Schulz, D. (Maintainer)</dd>
+
+<dd><span class = "lightbold">Version:</span> 1.1.2</dd>
+
+<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+
+<dd><span class = "lightbold">Downloads:</span> 12,072</dd>
+
+</dl>
+</div>
+
+<div id="fegarch" class="info">
+<h3>fEGarch</h3>
+<p>Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory Extensions</p>
+
+<dl>
+
+<dd><span class = "lightbold">Year:</span> 2026</dd>
+
+<dd><span class = "lightbold">Authors:</span> Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+
+<dd><span class = "lightbold">Version:</span> 1.0.7</dd>
+
+<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+
+<dd><span class = "lightbold">Downloads:</span> 5,461</dd>
+
+</dl>
+</div>
+
+</div>
+</div>
+
+<script>
+const hexagons = document.querySelectorAll('.hexa');
+const infoBoxes = document.querySelectorAll('.info');
+const defaultInfo = document.getElementById('default-info');
+
+hexagons.forEach(hexagon => {
+
+hexagon.addEventListener('mouseenter', () => {
+
+// Hide all information
+infoBoxes.forEach(info => {
+info.classList.remove('active');
+});
+
+// Show information belonging to this hexagon
+const info = document.getElementById(hexagon.dataset.info);
+
+if (info) {
+info.classList.add('active');
+}
+});
+
+hexagon.addEventListener('mouseleave', () => {
+
+// Hide all information
+infoBoxes.forEach(info => {
+info.classList.remove('active');
+});
+
+// Show default information again
+defaultInfo.classList.add('active');
+});
+
+});
+</script>
 
 <br>
 

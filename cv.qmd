@@ -59,7 +59,7 @@ title-block-banner: false
 
 <dl class="stacked-list">
 
-<dt>PhD studies (finished)</dt>
+<dt>Doctoral studies (finished)</dt>
 
 <dd>Institution: Faculty of Business Administration and Economics, Paderborn University, Germany</dd>
 
