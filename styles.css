@@ -62,6 +62,7 @@
   display: flex;
   align-items: center;
   min-height: 400px;
+  flex-wrap: wrap;
 }
 .pyramid {
   display: inline-block;
@@ -130,4 +131,40 @@
 
 .lightbold {
   font-weight: 700;
+}
+
+/* Shiny apps grid styles */
+
+.thumbnail-grid-container {
+  margin: 0 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.info-card-box {
+  margin: 0 0;
+  flex: 0 0 calc(50% - 10px);
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+.thumbnail-anchor {
+  display: block;
+  height: 50px;
+  max-height: 50px;
+  object-fit: cover; /* Fills the frame and crops excess */
+  object-position: center;
+}
+.thumbnail-picture {
+  object-fit: cover; /* Fills the frame and crops excess */
+  object-position: center;
+}
+.thumbnail-picture:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+.thumb-descr {
+  font-family: sans-serif;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
