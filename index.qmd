@@ -1,5 +1,5 @@
 ---
-title: "Hi everyone, I'm Dominik Schulz!"
+title: "Hi everyone, I'm Dr. Dominik Schulz!"
 pagetitle: "Home"
 logo: profileCircular.png
 page-layout: full
