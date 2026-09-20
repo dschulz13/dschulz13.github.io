@@ -175,6 +175,10 @@
 
 /* Left/right buttons */
 .carousel-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
