@@ -5,164 +5,160 @@ page-layout: full
 ---
 
 ::: {#hero-heading}
-Here you can find a selection of my published **software**. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026. **Note:** This page is currently under construction. While the overall information will stay the same, new HTML implementations will redesign this page strongly in the near future.
+Here you can find a selection of my published **software**. Download numbers refer to realized lifetime downloads by the end of Aug 30, 2026.
 :::
 
 ## R packages
 
-<div class = "pyramid-container">
-<div class = "pyramid">
-<div class = "first-row">
-<a href = "https://cran.r-project.org/web/packages/fEGarch/index.html" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="fEGarch_logo.png" data-info="fegarch">
-</a>
-</div>  
-<div class = "second-row">
-<a href = "https://cran.r-project.org/web/packages/ufRisk/index.html" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="ufRisk_logo.png" data-info="ufrisk">
-</a>
-<a href = "https://github.com/dschulz13/smardapi" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="smardapi_logo.png" data-info="smardapi">
-</a>
-</div>   
-<div class = "third-row">
-<a href = "https://cran.r-project.org/web/packages/smoots/index.html" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="logo_smoots.png" data-info="smoots">
-</a>
-<a href = "https://cran.r-project.org/web/packages/esemifar/index.html" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="logo_esemifar.png" data-info="esemifar">
-</a>
-<a href = "https://cran.r-project.org/web/packages/deseats/index.html" target="_blank" rel="noopener noreferrer">
-<img class = "hexa" src="logo_deseats.png" data-info="deseats">
-</a>
-</div>
-</div>
-<div id="hexagon-text">
-<div id="default-info" class="info active">
-<h3>Welcome</h3> 
-<p style = "text-align:justify;">
-Move your mouse over a package icon to learn more. Click an icon to go to the package's CRAN or GitHub page.
-</p>
-</div>
+::::::::::::::: pyramid-container
+:::::: pyramid
+::: first-row
+<a href = "https://cran.r-project.org/web/packages/fEGarch/index.html" target="_blank" rel="noopener noreferrer"> <img src="fEGarch_logo.png" class="hexa" data-info="fegarch"/> </a>
+:::
 
-<div id="smoots" class="info">
+::: second-row
+<a href = "https://cran.r-project.org/web/packages/ufRisk/index.html" target="_blank" rel="noopener noreferrer"> <img src="ufRisk_logo.png" class="hexa" data-info="ufrisk"/> </a> <a href = "https://github.com/dschulz13/smardapi" target="_blank" rel="noopener noreferrer"> <img src="smardapi_logo.png" class="hexa" data-info="smardapi"/> </a>
+:::
+
+::: third-row
+<a href = "https://cran.r-project.org/web/packages/smoots/index.html" target="_blank" rel="noopener noreferrer"> <img src="logo_smoots.png" class="hexa" data-info="smoots"/> </a> <a href = "https://cran.r-project.org/web/packages/esemifar/index.html" target="_blank" rel="noopener noreferrer"> <img src="logo_esemifar.png" class="hexa" data-info="esemifar"/> </a> <a href = "https://cran.r-project.org/web/packages/deseats/index.html" target="_blank" rel="noopener noreferrer"> <img src="logo_deseats.png" class="hexa" data-info="deseats"/> </a>
+:::
+::::::
+
+:::::::::: {#hexagon-text}
+::: {#default-info .info .active}
+<h3>Welcome</h3>
+
+<p style="text-align:justify;">
+
+Move your mouse over a package icon to learn more. Click an icon to go to the package's CRAN or GitHub page.
+
+</p>
+:::
+
+::: {#smoots .info}
 <h3>smoots</h3>
+
 <p>Nonparametric Estimation of the Trend and Its Derivatives in Time Series</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2023</dd>
+<dd>[Year:]{.lightbold} 2023</dd>
 
-<dd><span class = "lightbold">Authors:</span> Feng, Y., Letmathe, S., Schulz, D. (Maintainer)</dd>
+<dd>[Authors:]{.lightbold} Feng, Y., Letmathe, S., Schulz, D. (Maintainer)</dd>
 
-<dd><span class = "lightbold">Version:</span> 1.1.4</dd>
+<dd>[Version:]{.lightbold} 1.1.4</dd>
 
-<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+<dd>[Available on:]{.lightbold} CRAN</dd>
 
-<dd><span class = "lightbold">Downloads:</span> 42,988</dd>
+<dd>[Downloads:]{.lightbold} 42,988</dd>
 
 </dl>
+:::
 
-</div>
-
-<div id="esemifar" class="info">
+::: {#esemifar .info}
 <h3>esemifar</h3>
+
 <p>Smoothing Long-Memory Time Series</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2024</dd>
+<dd>[Year:]{.lightbold} 2024</dd>
 
-<dd><span class = "lightbold">Authors:</span> Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)</dd>
+<dd>[Authors:]{.lightbold} Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)</dd>
 
-<dd><span class = "lightbold">Version:</span> 2.0.1</dd>
+<dd>[Version:]{.lightbold} 2.0.1</dd>
 
-<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+<dd>[Available on:]{.lightbold} CRAN</dd>
 
-<dd><span class = "lightbold">Downloads:</span> 22,230</dd>
+<dd>[Downloads:]{.lightbold} 22,230</dd>
 
 </dl>
-</div>
+:::
 
-<div id="deseats" class="info">
+::: {#deseats .info}
 <h3>deseats</h3>
+
 <p>Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2026</dd>
+<dd>[Year:]{.lightbold} 2026</dd>
 
-<dd><span class = "lightbold">Authors:</span> Feng, Y., Schulz, D. (Maintainer)</dd>
+<dd>[Authors:]{.lightbold} Feng, Y., Schulz, D. (Maintainer)</dd>
 
-<dd><span class = "lightbold">Version:</span> 1.1.2</dd>
+<dd>[Version:]{.lightbold} 1.1.2</dd>
 
-<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+<dd>[Available on:]{.lightbold} CRAN</dd>
 
-<dd><span class = "lightbold">Downloads:</span> 12,072</dd>
+<dd>[Downloads:]{.lightbold} 12,072</dd>
 
 </dl>
-</div>
+:::
 
-<div id="fegarch" class="info">
+::: {#fegarch .info}
 <h3>fEGarch</h3>
+
 <p>Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory Extensions</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2026</dd>
+<dd>[Year:]{.lightbold} 2026</dd>
 
-<dd><span class = "lightbold">Authors:</span> Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+<dd>[Authors:]{.lightbold} Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.</dd>
 
-<dd><span class = "lightbold">Version:</span> 1.0.7</dd>
+<dd>[Version:]{.lightbold} 1.0.7</dd>
 
-<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+<dd>[Available on:]{.lightbold} CRAN</dd>
 
-<dd><span class = "lightbold">Downloads:</span> 5,461</dd>
+<dd>[Downloads:]{.lightbold} 5,461</dd>
 
 </dl>
-</div>
+:::
 
-<div id="smardapi" class="info">
+::: {#smardapi .info}
 <h3>smardapi</h3>
+
 <p>Access to the SMARD API of the German Federal Network Agency</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2026</dd>
+<dd>[Year:]{.lightbold} 2026</dd>
 
-<dd><span class = "lightbold">Authors:</span> Schulz, D. (Maintainer)</dd>
+<dd>[Authors:]{.lightbold} Schulz, D. (Maintainer)</dd>
 
-<dd><span class = "lightbold">Version:</span> 0.1.2</dd>
+<dd>[Version:]{.lightbold} 0.1.2</dd>
 
-<dd><span class = "lightbold">Available on:</span> GitHub</dd>
+<dd>[Available on:]{.lightbold} GitHub</dd>
 
-<dd><span class = "lightbold">Downloads:</span> ---</dd>
+<dd>[Downloads:]{.lightbold} ---</dd>
 
 </dl>
-</div>
+:::
 
-<div id="ufrisk" class="info">
+::: {#ufrisk .info}
 <h3>ufRisk</h3>
+
 <p>Risk Measure Calculation in Financial Time Series</p>
 
 <dl>
 
-<dd><span class = "lightbold">Year:</span> 2023</dd>
+<dd>[Year:]{.lightbold} 2023</dd>
 
-<dd><span class = "lightbold">Authors:</span> Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)</dd>
+<dd>[Authors:]{.lightbold} Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)</dd>
 
-<dd><span class = "lightbold">Version:</span> 1.0.7</dd>
+<dd>[Version:]{.lightbold} 1.0.7</dd>
 
-<dd><span class = "lightbold">Available on:</span> CRAN</dd>
+<dd>[Available on:]{.lightbold} CRAN</dd>
 
-<dd><span class = "lightbold">Downloads:</span> 15,482</dd>
+<dd>[Downloads:]{.lightbold} 15,482</dd>
 
 </dl>
-</div>
+:::
+::::::::::
+:::::::::::::::
 
-</div>
-</div>
-
+```{=html}
 <script>
 const hexagons = document.querySelectorAll('.hexa');
 const infoBoxes = document.querySelectorAll('.info');
@@ -198,72 +194,114 @@ defaultInfo.classList.add('active');
 
 });
 </script>
-
+```
 
 <br><br>
 
 ## R dashboards & R Shiny apps
 
-<div class="carousel">
-
+::::::::::: carousel
 <button class="carousel-button left" id="prev">
-&#10094;
+
+❮
+
 </button>
 
-<div class="carousel-viewport">
-<div class="carousel-track" id="track">
+::::::::: carousel-viewport
+:::::::: {#track .carousel-track}
+::: card
+<a href="https://schulzd-grime-dice-simulation.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="GrimeDiceThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<div class="card">
-<a href="https://schulzd-grime-dice-simulation.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">
-<img src="GrimeDiceThumbFinal.png" class = "thumbnail-picture">
-</a>
-<p class="thumb-descr"><span style = "font-weight: bold;">Year:</span> 2026</p>
-<p class="thumb-descr"><span style = "font-weight: bold;">Authors:</span> Schulz, D.</p>
-</div>
+<p class="thumb-descr">
 
-<div class="card">
-<a href="https://schulzd-stock-price-analyzer.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">
-<img src="StockAnalyzerThumbFinal.png" class = "thumbnail-picture">
-</a>
-<p class="thumb-descr"><span style = "font-weight: bold;">Year:</span> 2026</p>
-<p class="thumb-descr"><span style = "font-weight: bold;">Authors:</span> Schulz, D.</p>
-</div>  
+[Year:]{style="font-weight: bold;"} 2026
 
-<div class="card">
-<a href="https://schulzd-weather-forecaster.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">
-<img src="WeatherThumbFinal.png" class = "thumbnail-picture">
-</a>
-<p class="thumb-descr"><span style = "font-weight: bold;">Year:</span> 2026</p>
-<p class="thumb-descr"><span style = "font-weight: bold;">Authors:</span> Schulz, D.</p>
-</div>
+</p>
 
-<div class="card">
-<a href="https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">
-<img src="OneMinuteThumbFinal.png" class = "thumbnail-picture">
-</a>
-<p class="thumb-descr"><span style = "font-weight: bold;">Year:</span> 2026</p>
-<p class="thumb-descr"><span style = "font-weight: bold;">Authors:</span> Schulz, D.</p>
-</div>
+<p class="thumb-descr">
 
-<div class="card">
-<a href="https://schulzd-farima-simulator.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">
-<img src="FARIMAThumbFinal.png" class = "thumbnail-picture">
-</a>
-<p class="thumb-descr"><span style = "font-weight: bold;">Year:</span> 2026</p>
-<p class="thumb-descr"><span style = "font-weight: bold;">Authors:</span> Schulz, D.</p>
-</div>
+[Authors:]{style="font-weight: bold;"} Schulz, D.
 
-</div>
-</div>
+</p>
+:::
+
+::: card
+<a href="https://schulzd-stock-price-analyzer.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="StockAnalyzerThumbFinal.png" class="thumbnail-picture"/> </a>
+
+<p class="thumb-descr">
+
+[Year:]{style="font-weight: bold;"} 2026
+
+</p>
+
+<p class="thumb-descr">
+
+[Authors:]{style="font-weight: bold;"} Schulz, D.
+
+</p>
+:::
+
+::: card
+<a href="https://schulzd-weather-forecaster.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="WeatherThumbFinal.png" class="thumbnail-picture"/> </a>
+
+<p class="thumb-descr">
+
+[Year:]{style="font-weight: bold;"} 2026
+
+</p>
+
+<p class="thumb-descr">
+
+[Authors:]{style="font-weight: bold;"} Schulz, D.
+
+</p>
+:::
+
+::: card
+<a href="https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="OneMinuteThumbFinal.png" class="thumbnail-picture"/> </a>
+
+<p class="thumb-descr">
+
+[Year:]{style="font-weight: bold;"} 2026
+
+</p>
+
+<p class="thumb-descr">
+
+[Authors:]{style="font-weight: bold;"} Schulz, D.
+
+</p>
+:::
+
+::: card
+<a href="https://schulzd-farima-simulator.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="FARIMAThumbFinal.png" class="thumbnail-picture"/> </a>
+
+<p class="thumb-descr">
+
+[Year:]{style="font-weight: bold;"} 2026
+
+</p>
+
+<p class="thumb-descr">
+
+[Authors:]{style="font-weight: bold;"} Schulz, D.
+
+</p>
+:::
+::::::::
+:::::::::
 
 <button class="carousel-button right" id="next">
-&#10095;
+
+❯
+
 </button>
 
-<div class="carousel-indicators" id="indicators"></div>
+::: {#indicators .carousel-indicators}
+:::
+:::::::::::
 
-</div>
-
+```{=html}
 <script>
 const track = document.getElementById("track");
 const cards = track.querySelectorAll(".card");
@@ -333,40 +371,42 @@ goToSlide(currentIndex - 1);
 // Initial state
 goToSlide(0);
 </script>
-
+```
 
 <br><br>
 
-[Python projects]{style="font-size:30px;font-weight:bold;"}
+## Python projects
 
-<hr>
-
-<dl class="stacked-list">
-
-<dt>Immo_Webscraper: Ein automatisierter Webscraper für ImmobilienScout24 unter Nutzung von Pythons Playwright</dt>
-
-<dd>Year: 2026</dd>
-
-<dd>Authors: Schulz, D.</dd>
-
-<dd>Available on: Github</dd>
-
-<dd>Link: <https://github.com/dschulz13/Immo_Webscraper></dd>
-
-</dl>
-
-<hr>
+::: panel-tabset
+## smard_api
 
 <dl class="stacked-list">
 
 <dt>smardapi (Python Version): Access to the SMARD API of the German Federal Network Agency</dt>
 
-<dd>Year: 2026</dd>
+<dd><strong>Year:</strong> 2026</dd>
 
-<dd>Authors: Schulz, D.</dd>
+<dd><strong>Authors:</strong> Schulz, D.</dd>
 
-<dd>Available on: Github</dd>
+<dd><strong>Available on:</strong> GitHub</dd>
 
-<dd>Link: <https://github.com/dschulz13/smardapi_python></dd>
+<dd><strong>Link:</strong> <https://github.com/dschulz13/smardapi_python></dd>
 
 </dl>
+
+## Immo_Webscraper
+
+<dl class="stacked-list">
+
+<dt>Immo_Webscraper: Ein automatisierter Webscraper für ImmobilienScout24 unter Nutzung von Pythons Playwright</dt>
+
+<dd><strong>Year:</strong> 2026</dd>
+
+<dd><strong>Authors:</strong> Schulz, D.</dd>
+
+<dd><strong>Available on:</strong> GitHub</dd>
+
+<dd><strong>Link:</strong> <https://github.com/dschulz13/Immo_Webscraper></dd>
+
+</dl>
+:::

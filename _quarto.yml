@@ -2,6 +2,8 @@ project:
   type: website
   output-dir: docs
 website:
+  page-footer:
+    right: "Copyright 2026, Dominik Schulz"
   title: "Dominik Schulz"
   search: false
   navbar:

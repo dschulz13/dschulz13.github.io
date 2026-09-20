@@ -4,8 +4,8 @@ image: avatarCircleSmall.png
 sidebar: false
 page-layout: full
 about:
-  template: trestles
-  image-shape: round
+  template: solana
+  image-shape: rounded
 listing:
   contents: blog_posts/**/*.qmd
   sort: "date desc"

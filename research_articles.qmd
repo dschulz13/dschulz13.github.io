@@ -4,8 +4,8 @@ image: research_article_logo.jpg
 sidebar: false
 page-layout: full
 about:
-  template: trestles
-  image-shape: round
+  template: solana
+  image-shape: rounded
 ---
 
 ::: {#hero-heading}
@@ -14,98 +14,126 @@ Here you can find a selection of my **research articles** together with links to
 
 <hr>
 
-<dl class="stacked-list">
+::: {.panel-tabset}
 
-<dt>The smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series</dt>
-
-<dd>Year: 2022</dd>
-
-<dd>Authors: Feng, Y., Gries, T., Letmathe, S., Schulz, D.</dd>
-
-<dd>Published in: The R Journal, 14(1), 182-195</dd>
-
-<dd>Link: <https://doi.org/10.32614/rj-2022-017></dd>
-
-</dl>
-
-<hr>
+## 1.
 
 <dl class="stacked-list">
 
-<dt>deseats: An R Package for Data-Driven Trend and Seasonality Estimation in Time Series</dt>
+<dt>
 
-<dd>Year: 2026</dd>
+The smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series
 
-<dd>Authors: Schulz, D.</dd>
+</dt>
 
-<dd>Published in: The R Journal, 18(2), 245-293</dd>
+<dd><strong>Year:</strong> 2022</dd>
 
-<dd>Link: <https://doi.org/10.32614/RJ-2026-025></dd>
+<dd><strong>Authors:</strong> Feng, Y., Gries, T., Letmathe, S., Schulz, D.</dd>
+
+<dd><strong>Published in:</strong> The R Journal, 14(1), 182-195</dd>
+
+<dd><strong>Link:</strong> <https://doi.org/10.32614/rj-2022-017></dd>
 
 </dl>
 
-<hr>
+## 2.
 
 <dl class="stacked-list">
 
-<dt>A Semiparametric Spatial FARIMA Applied in the Presence of Spatial Seasonality</dt>
+<dt>
 
-<dd>Year: 2026</dd>
+deseats: An R Package for Data-Driven Trend and Seasonality Estimation in Time Series
 
-<dd>Authors: Schulz, D., Do, T. T. H., Feng, Y.</dd>
+</dt>
 
-<dd>Published in: CIE Working Paper Series (Paderborn University), 170</dd>
+<dd><strong>Year:</strong> 2026</dd>
 
-<dd>Link: <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf></dd>
+<dd><strong>Authors:</strong> Schulz, D.</dd>
+
+<dd><strong>Published in:</strong> The R Journal, 18(2), 245-293</dd>
+
+<dd><strong>Link:</strong> <https://doi.org/10.32614/RJ-2026-025></dd>
 
 </dl>
 
-<hr>
+## 3.
 
 <dl class="stacked-list">
 
-<dt>Diagnosing the Trend and Bootstrapping the Forecasting Intervals Using a Semiparametric ARMA</dt>
+<dt>
 
-<dd>Year: 2026</dd>
+A Semiparametric Spatial FARIMA Applied in the Presence of Spatial Seasonality
 
-<dd>Authors: Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.</dd>
+</dt>
 
-<dd>Published in: CIE Working Paper Series (Paderborn University), 168</dd>
+<dd><strong>Year:</strong> 2026</dd>
 
-<dd>Link: <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf></dd>
+<dd><strong>Authors:</strong> Schulz, D., Do, T. T. H., Feng, Y.</dd>
+
+<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 170</dd>
+
+<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf></dd>
 
 </dl>
 
-<hr>
+## 4.
 
 <dl class="stacked-list">
 
-<dt>Estimating, Forecasting and Backtesting a Family of Exponential and Other GARCH Models Using the fEGarch Package</dt>
+<dt>
 
-<dd>Year: 2026</dd>
+Diagnosing the Trend and Bootstrapping the Forecasting Intervals Using a Semiparametric ARMA
 
-<dd>Authors: Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+</dt>
 
-<dd>Published in: CIE Working Paper Series (Paderborn University), 171</dd>
+<dd><strong>Year:</strong> 2026</dd>
 
-<dd>Link: <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf></dd>
+<dd><strong>Authors:</strong> Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.</dd>
+
+<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 168</dd>
+
+<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf></dd>
 
 </dl>
 
-<hr>
+## 5.
 
 <dl class="stacked-list">
 
-<dt>Well-Known and Recent Long-Memory GARCH Models and Their Semiparametric Extensions</dt>
+<dt>
 
-<dd>Year: 2026</dd>
+Estimating, Forecasting and Backtesting a Family of Exponential and Other GARCH Models Using the fEGarch Package
 
-<dd>Authors: Ayensu, O. K., Feng, Y., Schulz, D.</dd>
+</dt>
 
-<dd>Published in: CIE Working Paper Series (Paderborn University), 175</dd>
+<dd><strong>Year:</strong> 2026</dd>
 
-<dd>Link: <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP175.pdf></dd>
+<dd><strong>Authors:</strong> Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+
+<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 171</dd>
+
+<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf></dd>
 
 </dl>
 
+## 6.
 
+<dl class="stacked-list">
+
+<dt>
+
+Well-Known and Recent Long-Memory GARCH Models and Their Semiparametric Extensions
+
+</dt>
+
+<dd><strong>Year:</strong> 2026</dd>
+
+<dd><strong>Authors:</strong> Ayensu, O. K., Feng, Y., Schulz, D.</dd>
+
+<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 175</dd>
+
+<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP175.pdf></dd>
+
+</dl>
+
+:::

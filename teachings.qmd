@@ -4,8 +4,9 @@ image: teaching_logo.jpg
 sidebar: false
 page-layout: full
 about:
-  template: trestles
-  image-shape: round
+  template: solana
+  image-shape: rounded
+  image-width: 280px
 ---
 
 ::: {#hero-heading}
@@ -14,44 +15,94 @@ Here you can find a list of the courses I taught at Paderborn University until M
 
 <hr>
 
-<dl class="stacked-list">
-  <dt>Angewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie</dt>
-  <dd>Course ID: M.184.2453</dd>
-  <dd>Level: Bachelor</dd>
-  <dd>Role: Tutor</dd> 
-  <dd>Contents: White noise, random walks, ARMA models, GARCH models, forecasting, application with R</dd>
-  <dd>Course language: German</dd>   
-</dl>
+::: {.panel-tabset}
 
-<hr>
+## M.184.2453
 
 <dl class="stacked-list">
-  <dt>Econometrics</dd>
-  <dd>Course ID: M.184.4479</dd>
-  <dd>Level: Master</dd>  
-  <dd>Role: Tutor</dd> 
-  <dd>Contents: Simple and multiple linear regression, hypothesis testing, point and interval predictions, heteroskedasticity, multicollinearity</dd>
-  <dd>Course language: English</dd>    
+
+<dt>
+
+Angewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie<br>
+
+</dt>
+
+<dd><strong>Course ID:</strong> M.184.2453</dd>
+
+<dd><strong>Level:</strong> Bachelor</dd>
+
+<dd><strong>Role:</strong> Tutor</dd>
+
+<dd><strong>Contents:</strong> White noise, random walks, ARMA models, GARCH models, forecasting, application with R</dd>
+
+<dd><strong>Course language:</strong> German</dd>
+
 </dl>
 
-<hr>
+## M.184.4479
 
 <dl class="stacked-list">
-  <dt>Financial Econometrics and Quantitative Risk Management</dd>
-  <dd>Course ID: M.184.4451</dd>  
-  <dd>Level: Master</dd>  
-  <dd>Role: Tutor</dd> 
-  <dd>Contents: ARMA models, short-memory GARCH-type models, forecasting, backtesting of GARCH-type models</dd>
-  <dd>Course language: English</dd>    
+
+<dt>
+
+Econometrics<br>
+
+</dt>
+
+<dd><strong>Course ID:</strong> M.184.4479</dd>
+
+<dd><strong>Level:</strong> Master</dd>
+
+<dd><strong>Role:</strong> Tutor</dd>
+
+<dd><strong>Contents:</strong> Simple and multiple linear regression, hypothesis testing, point and interval predictions, heteroskedasticity, multicollinearity</dd>
+
+<dd><strong>Course language:</strong> English</dd>
+
 </dl>
 
-<hr>
+## M.184.4451
 
 <dl class="stacked-list">
-  <dt>Advanced Time Series Analysis and Forecasting</dd>
-  <dd>Course ID: M.184.5453</dd>  
-  <dd>Level: Master</dd>
-  <dd>Role: Lecturer, tutor</dd> 
-  <dd>Contents: Seasonal time series, (semiparametric) FARIMA models, VARMA models, cointegration, (semiparametric) ACD models, high-frequency time series, FIGARCH models, multivariate GARCH models, forecasting</dd>
-  <dd>Course language: English</dd>    
+
+<dt>
+
+Financial Econometrics and Quantitative Risk Management<br>
+
+</dt>
+
+<dd><strong>Course ID:</strong> M.184.4451</dd>
+
+<dd><strong>Level:</strong> Master</dd>
+
+<dd><strong>Role:</strong> Tutor</dd>
+
+<dd><strong>Contents:</strong> ARMA models, short-memory GARCH-type models, forecasting, backtesting of GARCH-type models</dd>
+
+<dd><strong>Course language:</strong> English</dd>
+
 </dl>
+
+## M.184.5453
+
+<dl class="stacked-list">
+
+<dt>
+
+Advanced Time Series Analysis and Forecasting<br>
+
+</dt>
+
+<dd><strong>Course ID:</strong> M.184.5453</dd>
+
+<dd><strong>Level:</strong> Master</dd>
+
+<dd><strong>Role:</strong> Lecturer, tutor</dd>
+
+<dd><strong>Contents:</strong> Seasonal time series, (semiparametric) FARIMA models, VARMA models, cointegration, (semiparametric) ACD models, high-frequency time series, FIGARCH models, multivariate GARCH models, forecasting</dd>
+
+<dd><strong>Course language:</strong> English</dd>
+
+</dl>
+
+:::
