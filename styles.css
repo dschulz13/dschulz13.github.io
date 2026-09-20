@@ -316,3 +316,10 @@
   margin-left: 16px;
   padding-right: 32px;
 }
+
+
+.justification {
+  text-align: justify !important;
+  width: 96%;
+}
+
