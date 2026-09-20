@@ -373,8 +373,13 @@ defaultInfo.classList.add('active');
 </section>
 <section id="r-dashboards-r-shiny-apps" class="level2">
 <h2 class="anchored" data-anchor-id="r-dashboards-r-shiny-apps">R dashboards &amp; R Shiny apps</h2>
-<div class="thumbnail-grid-container">
-<div class="info-card-box">
+<div class="carousel">
+<button class="carousel-button left" id="prev">
+❮
+</button>
+<div class="carousel-viewport">
+<div id="track" class="carousel-track">
+<div class="card">
 <a href="https://schulzd-grime-dice-simulation.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="GrimeDiceThumbFinal.png" class="thumbnail-picture"> </a>
 <p class="thumb-descr">
 <span style="font-weight: bold;">Year:</span> 2026
@@ -383,7 +388,7 @@ defaultInfo.classList.add('active');
 <span style="font-weight: bold;">Authors:</span> Schulz, D.
 </p>
 </div>
-<div class="info-card-box">
+<div class="card">
 <a href="https://schulzd-stock-price-analyzer.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="StockAnalyzerThumbFinal.png" class="thumbnail-picture"> </a>
 <p class="thumb-descr">
 <span style="font-weight: bold;">Year:</span> 2026
@@ -392,7 +397,7 @@ defaultInfo.classList.add('active');
 <span style="font-weight: bold;">Authors:</span> Schulz, D.
 </p>
 </div>
-<div class="info-card-box">
+<div class="card">
 <a href="https://schulzd-weather-forecaster.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="WeatherThumbFinal.png" class="thumbnail-picture"> </a>
 <p class="thumb-descr">
 <span style="font-weight: bold;">Year:</span> 2026
@@ -401,7 +406,7 @@ defaultInfo.classList.add('active');
 <span style="font-weight: bold;">Authors:</span> Schulz, D.
 </p>
 </div>
-<div class="info-card-box">
+<div class="card">
 <a href="https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="OneMinuteThumbFinal.png" class="thumbnail-picture"> </a>
 <p class="thumb-descr">
 <span style="font-weight: bold;">Year:</span> 2026
@@ -410,7 +415,7 @@ defaultInfo.classList.add('active');
 <span style="font-weight: bold;">Authors:</span> Schulz, D.
 </p>
 </div>
-<div class="info-card-box">
+<div class="card">
 <a href="https://schulzd-farima-simulator.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="FARIMAThumbFinal.png" class="thumbnail-picture"> </a>
 <p class="thumb-descr">
 <span style="font-weight: bold;">Year:</span> 2026
@@ -420,6 +425,83 @@ defaultInfo.classList.add('active');
 </p>
 </div>
 </div>
+</div>
+<button class="carousel-button right" id="next">
+❯
+</button>
+<div id="indicators" class="carousel-indicators">
+
+</div>
+</div>
+<script>
+const track = document.getElementById("track");
+const cards = track.querySelectorAll(".card");
+
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+const indicators = document.getElementById("indicators");
+
+let currentIndex = 0;
+
+
+// Create one indicator for each card
+cards.forEach((card, index) => {
+const indicator = document.createElement("button");
+
+indicator.classList.add("indicator");
+
+indicator.addEventListener("click", () => {
+goToSlide(index);
+});
+
+indicators.appendChild(indicator);
+});
+
+
+const indicatorElements =
+indicators.querySelectorAll(".indicator");
+
+
+function goToSlide(index) {
+
+// Wrap around when reaching either end
+if (index < 0) {
+index = cards.length - 1;
+}
+
+if (index >= cards.length) {
+index = 0;
+}
+
+currentIndex = index;
+
+// Move the track
+track.style.transform =
+`translateX(-${currentIndex * 100}%)`;
+
+// Update indicator
+indicatorElements.forEach((indicator, i) => {
+indicator.classList.toggle(
+"active",
+i === currentIndex
+);
+});
+}
+
+
+nextButton.addEventListener("click", () => {
+goToSlide(currentIndex + 1);
+});
+
+
+prevButton.addEventListener("click", () => {
+goToSlide(currentIndex - 1);
+});
+
+
+// Initial state
+goToSlide(0);
+</script>
 <p><br><br></p>
 <p><span style="font-size:30px;font-weight:bold;">Python projects</span></p>
 <hr>
