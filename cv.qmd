@@ -287,7 +287,7 @@ La Facultad de Ciencias Económicas y Empresariales, Universidad de Granada, Spa
 <div class="job-card-container">
 <div class="job-card">
 <p class="job-header">
-Study semester abroad
+B. Sc. International Business Studies (finished)
 </p>
 
 <div class="col-container">
