@@ -212,15 +212,15 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-grime-dice-simulation.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="GrimeDiceThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:8px;">
 
-[Year:]{style="font-weight: bold;"} 2026
+<strong>Year:</strong> 2026
 
 </p>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:-50px;">
 
-[Authors:]{style="font-weight: bold;"} Schulz, D.
+<strong>Authors:</strong> Schulz, D.
 
 </p>
 :::
@@ -228,15 +228,15 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-stock-price-analyzer.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="StockAnalyzerThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:8px;">
 
-[Year:]{style="font-weight: bold;"} 2026
+<strong>Year:</strong> 2026
 
 </p>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:-50px;">
 
-[Authors:]{style="font-weight: bold;"} Schulz, D.
+<strong>Authors:</strong> Schulz, D.
 
 </p>
 :::
@@ -244,15 +244,15 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-weather-forecaster.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="WeatherThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:8px;">
 
-[Year:]{style="font-weight: bold;"} 2026
+<strong>Year:</strong> 2026
 
 </p>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:-50px;">
 
-[Authors:]{style="font-weight: bold;"} Schulz, D.
+<strong>Authors:</strong> Schulz, D.
 
 </p>
 :::
@@ -260,15 +260,15 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="OneMinuteThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:8px;">
 
-[Year:]{style="font-weight: bold;"} 2026
+<strong>Year:</strong> 2026
 
 </p>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:-50px;">
 
-[Authors:]{style="font-weight: bold;"} Schulz, D.
+<strong>Authors:</strong> Schulz, D.
 
 </p>
 :::
@@ -276,15 +276,15 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-farima-simulator.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="FARIMAThumbFinal.png" class="thumbnail-picture"/> </a>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:8px;">
 
-[Year:]{style="font-weight: bold;"} 2026
+<strong>Year:</strong> 2026
 
 </p>
 
-<p class="thumb-descr">
+<p class="thumb-descr", style="margin-top:-50px;">
 
-[Authors:]{style="font-weight: bold;"} Schulz, D.
+<strong>Authors:</strong> Schulz, D.
 
 </p>
 :::

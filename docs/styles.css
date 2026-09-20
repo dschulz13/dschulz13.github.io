@@ -137,7 +137,7 @@
 
 .carousel {
   width: 650px;
-  height: 350px;
+  height: 344px;
   margin: 50px auto;
   position: relative;
   padding: 0;
@@ -167,7 +167,7 @@
   border-radius: 12px;
   text-align: center;
   width: 650px;
-  height: 350px;
+  height: 344px;
   border-style: solid;
   border-width: 2px;
   border-color: #2c3e50;
@@ -247,9 +247,68 @@
 .thumb-descr {
   font-family: sans-serif;
   margin-bottom: 0px;
-  margin-top: 2px;
-  margin-left: 2px;
+  margin-top: 0px;
+  margin-left: 0px;
+  padding-bottom: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
+
+
+
+
+.job-card-container {
+  border-style: none;
+  min-width: 400px;
+  margin-bottom: 10px;
+}
+
+.job-card {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #2c3e50;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.job-header {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-left: 8px;
+  margin-top: 4px;
+  font-size: 16pt;
+}
+
+.job-ind {
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.job-text {
+  color: #2c3e50;
+}
+
+.col-container {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  margin-left: 30px;
+  gap: 16px;
+}
+
+.col1 {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.col2 {
+  flex: 1;
+  flex-shrink: 0;
+  margin-left: 16px;
+  padding-right: 32px;
+}
