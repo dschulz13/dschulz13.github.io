@@ -4,19 +4,24 @@ pagetitle: "Home"
 logo: profileCircular.png
 page-layout: full
 title-block-banner: false
+listing:
+  contents: blog_posts/**/*.qmd
+  sort: "date desc"
+  type: grid
+  max-items: 3
+  grid-columns: 3
+  fields: [image, date, title, author, reading-time]
 ---
 
 ::::::: {#hero-heading}
 :::::: {.info-box style="background-color:#2c3e50;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);padding: 0;padding-left: 80px; padding-top: 20px; padding-bottom: 20px;margin-right: 40px;"}
 ::::: {.columns style="display: flex; align-items: center;"}
 ::: {.column style="width=70%;margin:0;padding:0;padding-right: 40px;text-align: justify; color: white;"}
-
 <p style="text-align: justify; color: white;">
 
 I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I appreciate more and more in my own workflows.
 
 </p>
-
 :::
 
 ::: {.column style="width=30%;margin:0;padding:0;"}
@@ -28,13 +33,23 @@ I am a **former PhD student** and a **former scientific employee** at the **Chai
 <br>
 
 <p class="justification">
+
 This site functions both as a **personal website** and a **blog** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly. Regarding programming topics, I will mainly focus on R but also incorporate posts on SQL or Python from time to time.
+
 </p>
 
 <p class="justification">
 If you have any **feedback** or **suggestions**, please feel free to **reach out** via [dominik.schulz.r\@gmail.com](mailto:dominik.schulz.r@gmail.com).
 </p>
 
+<a href="research_articles.qmd" class="button-link">Research articles</a> <a href="published_software.qmd" class="button-link">Software</a> <a href="conferences.qmd" class="button-link">Conferences</a> <a href="teachings.qmd" class="button-link">Teaching</a> <a href="cv.qmd" class="button-link">CV</a> <a href="blog.qmd" class="button-link">Blog "Stats Rsenal"</a>
+
 :::::::
 
-<a href="research_articles.qmd" class="button-link">Research articles</a> <a href="published_software.qmd" class="button-link">Software</a> <a href="conferences.qmd" class="button-link">Conferences</a> <a href="teachings.qmd" class="button-link">Teaching</a> <a href="cv.qmd" class="button-link">CV</a> <a href="blog.qmd" class="button-link">Blog "Stats Rsenal"</a>
+::: {#hero-heading}
+<br>
+
+## Latest blog entries
+:::
+
+
