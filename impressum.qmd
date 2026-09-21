@@ -4,20 +4,14 @@ page-layout: full
 title-block-banner: false
 ---
 
-
 ## Impressum
 
 Angaben gemäß § 5 DDG
 
-Dominik Schulz<br>
-c/o Impressumservice Dein-Impressum<br>
-Stettiner Str. 41<br>
-35410 Hungen<br>
+Dominik Schulz<br> c/o Impressumservice Dein-Impressum<br> Stettiner Str. 41<br> 35410 Hungen<br>
 
-Mail: dominik.schulz.r@gmail.com<br>
-Tel.: 0157 9234 1658<br>
-(Die Telefonnummer wird von Dein Impressum betreut.)
+Mail: dominik.schulz.r\@gmail.com<br> Tel.: 0157 9234 1658<br> (Die Telefonnummer wird von Dein Impressum betreut.)
 
 ## Datenschutzerklärung
 
-Soon to be filled in!
+Es werden keine personenbezogenen Daten erhoben, gespeichert oder ausgewertet.
