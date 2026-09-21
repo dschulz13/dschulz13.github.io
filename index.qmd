@@ -33,9 +33,7 @@ I am a **former PhD student** and a **former scientific employee** at the **Chai
 <br>
 
 <p class="justification">
-
 This site functions both as a **personal website** and a **blog** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly. Regarding programming topics, I will mainly focus on R but also incorporate posts on SQL or Python from time to time.
-
 </p>
 
 <p class="justification">
