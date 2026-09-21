@@ -1,15 +1,13 @@
 ---
 title: 'Blog "Stats Rsenal"'
-image: avatarCircleSmall.png
 sidebar: false
 page-layout: full
-about:
-  template: solana
-  image-shape: rounded
 listing:
   contents: blog_posts/**/*.qmd
   sort: "date desc"
-  type: default
+  type: table
+  table-hover: true
+  fields: [image, date, title, author, reading-time]
   categories: true
   sort-ui: true
   filter-ui: true 

@@ -31,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -61,9 +62,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -196,44 +197,56 @@ window.Quarto = {
         
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-solana column-page-left">
-  <div class="about-entity">
-    <div class="entity-contents">
-      <header id="title-block-header" class="quarto-title-block default">
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Blog “Stats Rsenal”</h1>
 </div>
+
+
+
 <div class="quarto-title-meta column-page-left">
+
+    
+  
+    
   </div>
-</header> 
-      <div class="about-contents"><main class="content column-page-left" id="quarto-document-content">
+  
+
+
+</header>
+
+
 <div id="hero-heading">
 <p>Welcome to the blog <strong>Stats Rsenal</strong>. Every now and then I will upload a post here on a topic from data science, time series analysis and programming.</p>
 <section id="series" class="level2">
-<h2 data-anchor-id="series">Series</h2>
+<h2 class="anchored" data-anchor-id="series">Series</h2>
 <p>There are no series yet.</p>
 </section>
 <section id="blog-entries" class="level2">
-<h2 data-anchor-id="blog-entries">Blog entries</h2>
+<h2 class="anchored" data-anchor-id="blog-entries">Blog entries</h2>
 </section>
 </div>
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+
+
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
      <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
          <option value="listing-date-sort" data-direction="asc">
           Date - Oldest
         </option>
          <option value="listing-date-sort" data-direction="desc">
           Date - Newest
+        </option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
         </option>
          <option value="listing-author" data-direction="asc">
           Author
@@ -245,54 +258,50 @@ window.Quarto = {
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="news,code" data-listing-date-sort="1788645600000" data-listing-file-modified-sort="1788685738475" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="124">
-<div class="thumbnail">
-<p><a href="./blog_posts/0001 - welcome/index.html" class="no-external"></a></p><a href="./blog_posts/0001 - welcome/index.html" class="no-external">
-<p class="card-img-top"><img src="blog_posts\0001 - welcome\thumbnail.jpg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./blog_posts/0001 - welcome/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./blog_posts/0001 - welcome/index.html" class="no-external">Welcome to Stats Rsenal</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./blog_posts/0001 - welcome/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<div class="listing-description">
-<a href="./blog_posts/0001 - welcome/index.html" class="no-external">Welcome to <strong>Stats Rsenal</strong>!</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./blog_posts/0001 - welcome/index.html" class="no-external">
-<div class="listing-date">
-Sep 6, 2026
-</div>
-<div class="listing-author">
-Dominik Schulz
-</div>
-</a>
-</div>
-</div>
-</div>
+<table class="quarto-listing-table table table-hover">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
+</th>
+<th>
+Reading Time
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="news,code" data-listing-date-sort="1788645600000" data-listing-file-modified-sort="1788685738475" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="124" data-listing-title-sort="Welcome to Stats Rsenal" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="blog_posts\0001 - welcome\thumbnail.jpg" style="height: 40px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<span class="listing-date">Sep 6, 2026</span>
+</td>
+<td>
+<a href="./blog_posts/0001 - welcome/index.html" class="title listing-title">Welcome to Stats Rsenal</a>
+</td>
+<td>
+<span class="listing-author">Dominik Schulz</span>
+</td>
+<td>
+<span class="listing-reading-time">1 min</span>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main></div>
-    </div>
-    <img src="avatarCircleSmall.png" class="about-image
-  rounded " style="width: 15em;">
-  </div>
-</div>
- <!-- /main -->
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -313,6 +322,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
