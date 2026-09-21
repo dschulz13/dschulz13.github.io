@@ -302,10 +302,35 @@
   gap: 16px;
 }
 
+.col-container2 {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  margin-left: 30px;
+  margin-bottom: -10px;
+  gap: 16px;
+}
+
 .col1 {
   width: 100px;
   min-width: 100px;
   max-width: 100px;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.col12 {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.col13 {
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
   margin-left: 8px;
   margin-right: 16px;
 }
@@ -323,3 +348,6 @@
   width: 96%;
 }
 
+.inform-card {
+  border-style: none;
+}

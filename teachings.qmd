@@ -15,94 +15,333 @@ Here you can find a list of the courses I taught at Paderborn University until M
 
 <hr>
 
-::: {.panel-tabset}
+::: panel-tabset
 
 ## M.184.2453
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Angewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie
+</p>
 
-<dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Couse ID:
+</p>
+:::
 
-Angewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie<br>
+::: col2
+<p class="job-text">
+M.184.2453
+</p>
+:::
+:::::
 
-</dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Level:
+</p>
+:::
 
-<dd><strong>Course ID:</strong> M.184.2453</dd>
+::: col2
+<p class="job-text">
+Bachelor
+</p>
+:::
+:::::
 
-<dd><strong>Level:</strong> Bachelor</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Role:
+</p>
+:::
 
-<dd><strong>Role:</strong> Tutor</dd>
+::: col2
+<p class="job-text">
+Tutor
+</p>
+:::
+:::::
 
-<dd><strong>Contents:</strong> White noise, random walks, ARMA models, GARCH models, forecasting, application with R</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Contents:
+</p>
+:::
 
-<dd><strong>Course language:</strong> German</dd>
+::: col2
+<p class="job-text">
+White noise, random walks, ARMA models, GARCH models, forecasting, application with R
+</p>
+:::
+:::::
 
-</dl>
+::::: col-container
+::: col13
+<p class="job-ind">
+Course language:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+German
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## M.184.4479
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Econometrics
+</p>
 
-<dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Couse ID:
+</p>
+:::
 
-Econometrics<br>
+::: col2
+<p class="job-text">
+M.184.4479
+</p>
+:::
+:::::
 
-</dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Level:
+</p>
+:::
 
-<dd><strong>Course ID:</strong> M.184.4479</dd>
+::: col2
+<p class="job-text">
+Master
+</p>
+:::
+:::::
 
-<dd><strong>Level:</strong> Master</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Role:
+</p>
+:::
 
-<dd><strong>Role:</strong> Tutor</dd>
+::: col2
+<p class="job-text">
+Tutor
+</p>
+:::
+:::::
 
-<dd><strong>Contents:</strong> Simple and multiple linear regression, hypothesis testing, point and interval predictions, heteroskedasticity, multicollinearity</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Contents:
+</p>
+:::
 
-<dd><strong>Course language:</strong> English</dd>
+::: col2
+<p class="job-text">
+Simple and multiple linear regression, hypothesis testing, point and interval predictions, heteroskedasticity, multicollinearity
+</p>
+:::
+:::::
 
-</dl>
+::::: col-container
+::: col13
+<p class="job-ind">
+Course language:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+English
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## M.184.4451
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Financial Econometrics and Quantitative Risk Management
+</p>
 
-<dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Couse ID:
+</p>
+:::
 
-Financial Econometrics and Quantitative Risk Management<br>
+::: col2
+<p class="job-text">
+M.184.4451
+</p>
+:::
+:::::
 
-</dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Level:
+</p>
+:::
 
-<dd><strong>Course ID:</strong> M.184.4451</dd>
+::: col2
+<p class="job-text">
+Master
+</p>
+:::
+:::::
 
-<dd><strong>Level:</strong> Master</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Role:
+</p>
+:::
 
-<dd><strong>Role:</strong> Tutor</dd>
+::: col2
+<p class="job-text">
+Tutor
+</p>
+:::
+:::::
 
-<dd><strong>Contents:</strong> ARMA models, short-memory GARCH-type models, forecasting, backtesting of GARCH-type models</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Contents:
+</p>
+:::
 
-<dd><strong>Course language:</strong> English</dd>
+::: col2
+<p class="job-text">
+ARMA models, short-memory GARCH-type models, forecasting, backtesting of GARCH-type models
+</p>
+:::
+:::::
 
-</dl>
+::::: col-container
+::: col13
+<p class="job-ind">
+Course language:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+English
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## M.184.5453
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Advanced Time Series Analysis and Forecasting
+</p>
 
-<dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Couse ID:
+</p>
+:::
 
-Advanced Time Series Analysis and Forecasting<br>
+::: col2
+<p class="job-text">
+M.184.5453
+</p>
+:::
+:::::
 
-</dt>
+::::: col-container
+::: col13
+<p class="job-ind">
+Level:
+</p>
+:::
 
-<dd><strong>Course ID:</strong> M.184.5453</dd>
+::: col2
+<p class="job-text">
+Master
+</p>
+:::
+:::::
 
-<dd><strong>Level:</strong> Master</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Role:
+</p>
+:::
 
-<dd><strong>Role:</strong> Lecturer, tutor</dd>
+::: col2
+<p class="job-text">
+Lecturer, tutor
+</p>
+:::
+:::::
 
-<dd><strong>Contents:</strong> Seasonal time series, (semiparametric) FARIMA models, VARMA models, cointegration, (semiparametric) ACD models, high-frequency time series, FIGARCH models, multivariate GARCH models, forecasting</dd>
+::::: col-container
+::: col13
+<p class="job-ind">
+Contents:
+</p>
+:::
 
-<dd><strong>Course language:</strong> English</dd>
+::: col2
+<p class="job-text">
+Seasonal time series, (semiparametric) FARIMA models, VARMA models, cointegration, (semiparametric) ACD models, high-frequency time series, FIGARCH models, multivariate GARCH models, forecasting
+</p>
+:::
+:::::
 
-</dl>
+::::: col-container
+::: col13
+<p class="job-ind">
+Course language:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+English
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
 
 :::

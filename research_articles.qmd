@@ -14,126 +14,407 @@ Here you can find a selection of my **research articles** together with links to
 
 <hr>
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## 1.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 The smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2022</dd>
+::: col2
+<p class="job-text">
+2022
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Feng, Y., Gries, T., Letmathe, S., Schulz, D.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> The R Journal, 14(1), 182-195</dd>
+::: col2
+<p class="job-text">
+Feng, Y., Gries, T., Letmathe, S., Schulz, D.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://doi.org/10.32614/rj-2022-017></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+The R Journal, 14(1), 182-195
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://doi.org/10.32614/rj-2022-017>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+
+
 
 ## 2.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 deseats: An R Package for Data-Driven Trend and Seasonality Estimation in Time Series
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Schulz, D.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> The R Journal, 18(2), 245-293</dd>
+::: col2
+<p class="job-text">
+Schulz, D.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://doi.org/10.32614/RJ-2026-025></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+The R Journal, 18(2), 245-293
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://doi.org/10.32614/RJ-2026-025>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## 3.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 A Semiparametric Spatial FARIMA Applied in the Presence of Spatial Seasonality
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Schulz, D., Do, T. T. H., Feng, Y.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 170</dd>
+::: col2
+<p class="job-text">
+Schulz, D., Do, T. T. H., Feng, Y.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+CIE Working Paper Series (Paderborn University), 170
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP170.pdf>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## 4.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Diagnosing the Trend and Bootstrapping the Forecasting Intervals Using a Semiparametric ARMA
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 168</dd>
+::: col2
+<p class="job-text">
+Schulz, D., Feng, Y., Gries, T., Fritz, M., Letmathe, S.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+CIE Working Paper Series (Paderborn University), 168
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP168.pdf>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## 5.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Estimating, Forecasting and Backtesting a Family of Exponential and Other GARCH Models Using the fEGarch Package
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 171</dd>
+::: col2
+<p class="job-text">
+Schulz, D., Feng, Y., Peitz, C., Ayensu, O. K.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+CIE Working Paper Series (Paderborn University), 171
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP171.pdf>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## 6.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Well-Known and Recent Long-Memory GARCH Models and Their Semiparametric Extensions
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Ayensu, O. K., Feng, Y., Schulz, D.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-<dd><strong>Published in:</strong> CIE Working Paper Series (Paderborn University), 175</dd>
+::: col2
+<p class="job-text">
+Ayensu, O. K., Feng, Y., Schulz, D.
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP175.pdf></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Published in:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+CIE Working Paper Series (Paderborn University), 175
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://groups.uni-paderborn.de/wp-wiwi/RePEc/pdf/ciepap/WP175.pdf>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
 
 :::

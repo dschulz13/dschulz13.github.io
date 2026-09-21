@@ -10,7 +10,7 @@ Here you can find a selection of my published **software**. Download numbers ref
 
 ## R packages
 
-::::::::::::::: pyramid-container
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: pyramid-container
 :::::: pyramid
 ::: first-row
 <a href = "https://cran.r-project.org/web/packages/fEGarch/index.html" target="_blank" rel="noopener noreferrer"> <img src="fEGarch_logo.png" class="hexa" data-info="fegarch"/> </a>
@@ -25,138 +25,580 @@ Here you can find a selection of my published **software**. Download numbers ref
 :::
 ::::::
 
-:::::::::: {#hexagon-text}
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: {#hexagon-text}
 ::: {#default-info .info .active}
 <h3>Welcome</h3>
 
 <p style="text-align:justify;">
-
 Move your mouse over a package icon to learn more. Click an icon to go to the package's CRAN or GitHub page.
-
 </p>
 :::
 
-::: {#smoots .info}
-<h3>smoots</h3>
+::::::::::::::::::::::: {#smoots .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+smoots
+</p>
 
-<p>Nonparametric Estimation of the Trend and Its Derivatives in Time Series</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2023</dd>
-
-<dd>[Authors:]{.lightbold} Feng, Y., Letmathe, S., Schulz, D. (Maintainer)</dd>
-
-<dd>[Version:]{.lightbold} 1.1.4</dd>
-
-<dd>[Available on:]{.lightbold} CRAN</dd>
-
-<dd>[Downloads:]{.lightbold} 42,988</dd>
-
-</dl>
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
 :::
 
-::: {#esemifar .info}
-<h3>esemifar</h3>
+::: col2
+<p class="job-text">
+Nonparametric Estimation of the Trend and Its Derivatives in Time Series
+</p>
+:::
+:::::
 
-<p>Smoothing Long-Memory Time Series</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2024</dd>
-
-<dd>[Authors:]{.lightbold} Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)</dd>
-
-<dd>[Version:]{.lightbold} 2.0.1</dd>
-
-<dd>[Available on:]{.lightbold} CRAN</dd>
-
-<dd>[Downloads:]{.lightbold} 22,230</dd>
-
-</dl>
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
 :::
 
-::: {#deseats .info}
-<h3>deseats</h3>
+::: col2
+<p class="job-text">
+2023
+</p>
+:::
+:::::
 
-<p>Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2026</dd>
-
-<dd>[Authors:]{.lightbold} Feng, Y., Schulz, D. (Maintainer)</dd>
-
-<dd>[Version:]{.lightbold} 1.1.2</dd>
-
-<dd>[Available on:]{.lightbold} CRAN</dd>
-
-<dd>[Downloads:]{.lightbold} 12,072</dd>
-
-</dl>
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
 :::
 
-::: {#fegarch .info}
-<h3>fEGarch</h3>
+::: col2
+<p class="job-text">
+Feng, Y., Letmathe, S., Schulz, D. (Maintainer)
+</p>
+:::
+:::::
 
-<p>Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory Extensions</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2026</dd>
-
-<dd>[Authors:]{.lightbold} Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.</dd>
-
-<dd>[Version:]{.lightbold} 1.0.7</dd>
-
-<dd>[Available on:]{.lightbold} CRAN</dd>
-
-<dd>[Downloads:]{.lightbold} 5,461</dd>
-
-</dl>
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
 :::
 
-::: {#smardapi .info}
-<h3>smardapi</h3>
+::: col2
+<p class="job-text">
+1.1.4
+</p>
+:::
+:::::
 
-<p>Access to the SMARD API of the German Federal Network Agency</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2026</dd>
-
-<dd>[Authors:]{.lightbold} Schulz, D. (Maintainer)</dd>
-
-<dd>[Version:]{.lightbold} 0.1.2</dd>
-
-<dd>[Available on:]{.lightbold} GitHub</dd>
-
-<dd>[Downloads:]{.lightbold} ---</dd>
-
-</dl>
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
 :::
 
-::: {#ufrisk .info}
-<h3>ufRisk</h3>
-
-<p>Risk Measure Calculation in Financial Time Series</p>
-
-<dl>
-
-<dd>[Year:]{.lightbold} 2023</dd>
-
-<dd>[Authors:]{.lightbold} Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)</dd>
-
-<dd>[Version:]{.lightbold} 1.0.7</dd>
-
-<dd>[Available on:]{.lightbold} CRAN</dd>
-
-<dd>[Downloads:]{.lightbold} 15,482</dd>
-
-</dl>
+::: col2
+<p class="job-text">
+CRAN
+</p>
 :::
-::::::::::
-:::::::::::::::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+42,988
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+
+::::::::::::::::::::::: {#esemifar .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+esemifar
+</p>
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Smoothing Long-Memory Time Series
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2024
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2.0.1
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+CRAN
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+22,230
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+
+::::::::::::::::::::::: {#deseats .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+deseats
+</p>
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Feng, Y., Schulz, D. (Maintainer)
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+1.1.2
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+CRAN
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+12,072
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+
+::::::::::::::::::::::: {#fegarch .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+fEGarch
+</p>
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory Extensions
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+1.0.7
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+CRAN
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+5,461
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+
+::::::::::::::::::::::: {#smardapi .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+smardapi
+</p>
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Access to the SMARD API of the German Federal Network Agency
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Schulz, D. (Maintainer)
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+0.1.2
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+GitHub
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+—
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+
+::::::::::::::::::::::: {#ufrisk .info}
+:::::::::::::::::::::: job-card-container
+::::::::::::::::::::: inform-card
+<p class="job-header">
+ufRisk
+</p>
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Description:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Risk Measure Calculation in Financial Time Series
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2023
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Version:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+1.0.7
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+CRAN
+</p>
+:::
+:::::
+
+::::: col-container2
+::: col12
+<p class="job-ind">
+Downloads:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+15,482
+</p>
+:::
+:::::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ```{=html}
 <script>
@@ -212,81 +654,101 @@ defaultInfo.classList.add('active');
 ::: card
 <a href="https://schulzd-grime-dice-simulation.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="GrimeDiceThumbFinal.png" class="thumbnail-picture"/> </a>
 
+```{=html}
 <p class="thumb-descr", style="margin-top:8px;">
 
 <strong>Year:</strong> 2026
 
 </p>
+```
 
+```{=html}
 <p class="thumb-descr", style="margin-top:-50px;">
 
 <strong>Authors:</strong> Schulz, D.
 
 </p>
+```
 :::
 
 ::: card
 <a href="https://schulzd-stock-price-analyzer.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="StockAnalyzerThumbFinal.png" class="thumbnail-picture"/> </a>
 
+```{=html}
 <p class="thumb-descr", style="margin-top:8px;">
 
 <strong>Year:</strong> 2026
 
 </p>
+```
 
+```{=html}
 <p class="thumb-descr", style="margin-top:-50px;">
 
 <strong>Authors:</strong> Schulz, D.
 
 </p>
+```
 :::
 
 ::: card
 <a href="https://schulzd-weather-forecaster.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="WeatherThumbFinal.png" class="thumbnail-picture"/> </a>
 
+```{=html}
 <p class="thumb-descr", style="margin-top:8px;">
 
 <strong>Year:</strong> 2026
 
 </p>
+```
 
+```{=html}
 <p class="thumb-descr", style="margin-top:-50px;">
 
 <strong>Authors:</strong> Schulz, D.
 
 </p>
+```
 :::
 
 ::: card
 <a href="https://schulzd-one-minute-closing-price-downloader.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="OneMinuteThumbFinal.png" class="thumbnail-picture"/> </a>
 
+```{=html}
 <p class="thumb-descr", style="margin-top:8px;">
 
 <strong>Year:</strong> 2026
 
 </p>
+```
 
+```{=html}
 <p class="thumb-descr", style="margin-top:-50px;">
 
 <strong>Authors:</strong> Schulz, D.
 
 </p>
+```
 :::
 
 ::: card
 <a href="https://schulzd-farima-simulator.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer"> <img src="FARIMAThumbFinal.png" class="thumbnail-picture"/> </a>
 
+```{=html}
 <p class="thumb-descr", style="margin-top:8px;">
 
 <strong>Year:</strong> 2026
 
 </p>
+```
 
+```{=html}
 <p class="thumb-descr", style="margin-top:-50px;">
 
 <strong>Authors:</strong> Schulz, D.
 
 </p>
+```
 :::
 ::::::::
 :::::::::
@@ -377,36 +839,164 @@ goToSlide(0);
 
 ## Python projects
 
-::: panel-tabset
-## smard_api
+::::::::::::::::::::::::::::::::::::: panel-tabset
+## smardapi
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+smardapi
+</p>
 
-<dt>smardapi (Python Version): Access to the SMARD API of the German Federal Network Agency</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Description:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2026</dd>
+::: col2
+<p class="job-text">
+Access to the SMARD API of the German Federal Network Agency
+</p>
+:::
+:::::
 
-<dd><strong>Authors:</strong> Schulz, D.</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Available on:</strong> GitHub</dd>
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
 
-<dd><strong>Link:</strong> <https://github.com/dschulz13/smardapi_python></dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+Schulz, D.
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+GitHub
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://github.com/dschulz13/smardapi_python>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
 
 ## Immo_Webscraper
 
-<dl class="stacked-list">
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Immo_Webscraper
+</p>
 
-<dt>Immo_Webscraper: Ein automatisierter Webscraper für ImmobilienScout24 unter Nutzung von Pythons Playwright</dt>
-
-<dd><strong>Year:</strong> 2026</dd>
-
-<dd><strong>Authors:</strong> Schulz, D.</dd>
-
-<dd><strong>Available on:</strong> GitHub</dd>
-
-<dd><strong>Link:</strong> <https://github.com/dschulz13/Immo_Webscraper></dd>
-
-</dl>
+::::: col-container
+::: col1
+<p class="job-ind">
+Description:
+</p>
 :::
+
+::: col2
+<p class="job-text">
+An Automated Webscraper for ImmobilienScout24.de Using Python's Playwright
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+2026
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Schulz, D.
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Available on:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+GitHub
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://github.com/dschulz13/Immo_Webscraper>
+</p>
+:::
+:::::
+::::::::::::::::::
+:::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::

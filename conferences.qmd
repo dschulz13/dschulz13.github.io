@@ -14,86 +14,275 @@ Find here a selection of my contributions to scientific conferences.
 
 <hr>
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## 1.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Automated Local Polynomial Smoothing of Time Series Using smoots
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2021</dd>
+::: col2
+<p class="job-text">
+2021
+</p>
+:::
+:::::
 
-<dd><strong>Conference:</strong> PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Conference:
+</p>
+:::
 
-<dd><strong>Location:</strong> Paderborn, Germany</dd>
+::: col2
+<p class="job-text">
+PhD student workshop of the Faculty of Business Administration and Economics, Paderborn University
+</p>
+:::
+:::::
 
-<dd><strong>Type:</strong> Poster</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Location:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+Paderborn, Germany
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Type:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Poster
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
 
 ## 2.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 The smoots Package in R for Semiparametric Modeling of Trend Stationary Time Series
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2022</dd>
+::: col2
+<p class="job-text">
+2022
+</p>
+:::
+:::::
 
-<dd><strong>Conference:</strong> CFE-CMStatistics 2022</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Conference:
+</p>
+:::
 
-<dd><strong>Location:</strong> London, UK</dd>
+::: col2
+<p class="job-text">
+CFE-CMStatistics 2022
+</p>
+:::
+:::::
 
-<dd><strong>Type:</strong> Talk</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Location:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+London, UK
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Type:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Talk
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
 
 ## 3.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Eine Sammlung von R-Paketen zur parametrischen und semiparametrischen Modellierung von Zeitreihen der Makroökonomie und des Finanzsektors
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2025</dd>
+::: col2
+<p class="job-text">
+2025
+</p>
+:::
+:::::
 
-<dd><strong>Conference:</strong> Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Conference:
+</p>
+:::
 
-<dd><strong>Location:</strong> Paderborn, Germany</dd>
+::: col2
+<p class="job-text">
+Faculty Research Workshop of the Faculty of Business Administration and Economics, Paderborn University
+</p>
+:::
+:::::
 
-<dd><strong>Type:</strong> Talk</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Location:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+Paderborn, Germany
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Type:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Talk
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
 
 ## 4.
 
-<dl class="stacked-list">
-
-<dt>
-
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
 Das R-Paket deseats zur simultanen Schätzung von Trend und Saisonalität in Zeitreihen anhand datengesteuerter lokal gewichteter Regression
+</p>
 
-</dt>
+::::: col-container
+::: col1
+<p class="job-ind">
+Year:
+</p>
+:::
 
-<dd><strong>Year:</strong> 2025</dd>
+::: col2
+<p class="job-text">
+2025
+</p>
+:::
+:::::
 
-<dd><strong>Conference:</strong> Statistische Woche 2025</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Conference:
+</p>
+:::
 
-<dd><strong>Location:</strong> Wiesbaden, Germany</dd>
+::: col2
+<p class="job-text">
+Statistische Woche 2025
+</p>
+:::
+:::::
 
-<dd><strong>Type:</strong> Poster</dd>
+::::: col-container
+::: col1
+<p class="job-ind">
+Location:
+</p>
+:::
 
-</dl>
+::: col2
+<p class="job-text">
+Wiesbaden, Germany
+</p>
+:::
+:::::
+
+::::: col-container
+::: col1
+<p class="job-ind">
+Type:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Poster
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
 
 :::
