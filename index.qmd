@@ -9,7 +9,7 @@ listing:
   sort: "date desc"
   type: grid
   max-items: 3
-  grid-columns: 3
+  grid-columns: 1
   fields: [image, date, title, author, reading-time]
 ---
 

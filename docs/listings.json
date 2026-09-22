@@ -2,12 +2,14 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/blog_posts/series - class objects/0002 - intro/index.html",
       "/blog_posts/0001 - welcome/index.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/blog_posts/series - class objects/0002 - intro/index.html",
       "/blog_posts/0001 - welcome/index.html"
     ]
   }
