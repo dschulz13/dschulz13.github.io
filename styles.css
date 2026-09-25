@@ -307,7 +307,7 @@
   margin: 0;
   padding: 0;
   margin-left: 30px;
-  margin-bottom: -10px;
+  margin-bottom: -5px;
   gap: 16px;
 }
 
@@ -327,14 +327,6 @@
   margin-right: 16px;
 }
 
-.col13 {
-  width: 140px;
-  min-width: 140px;
-  max-width: 140px;
-  margin-left: 8px;
-  margin-right: 16px;
-}
-
 .col2 {
   flex: 1;
   flex-shrink: 0;
@@ -350,4 +342,17 @@
 
 .inform-card {
   border-style: none;
+}
+
+
+/* Limitiert die maximale Breite jeder einzelnen Grid-Karte */
+.quarto-grid-item.card {
+  max-width: 280px; /* Hier gewünschte Breite anpassen */
+  width: 280px;
+  min-width: 280px;
+}
+
+
+.list.grid.quarto-listing-cols-3 {
+  gap: 0px !important;
 }
