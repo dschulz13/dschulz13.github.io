@@ -15,8 +15,7 @@ Here you can find a list of the courses I taught at Paderborn University until M
 
 <hr>
 
-::: panel-tabset
-
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: panel-tabset
 ## M.184.2453
 
 ::::::::::::::::::: job-card-container
@@ -28,7 +27,7 @@ Angewandte Zeitreihenanalyse und Einführung in die Finanzökonometrie
 ::::: col-container
 ::: col13
 <p class="job-ind">
-Couse ID:
+Course ID:
 </p>
 :::
 
@@ -94,10 +93,8 @@ German
 </p>
 :::
 :::::
-
 ::::::::::::::::::
 :::::::::::::::::::
-
 
 ## M.184.4479
 
@@ -110,7 +107,7 @@ Econometrics
 ::::: col-container
 ::: col13
 <p class="job-ind">
-Couse ID:
+Course ID:
 </p>
 :::
 
@@ -176,10 +173,8 @@ English
 </p>
 :::
 :::::
-
 ::::::::::::::::::
 :::::::::::::::::::
-
 
 ## M.184.4451
 
@@ -192,7 +187,7 @@ Financial Econometrics and Quantitative Risk Management
 ::::: col-container
 ::: col13
 <p class="job-ind">
-Couse ID:
+Course ID:
 </p>
 :::
 
@@ -258,10 +253,8 @@ English
 </p>
 :::
 :::::
-
 ::::::::::::::::::
 :::::::::::::::::::
-
 
 ## M.184.5453
 
@@ -274,7 +267,7 @@ Advanced Time Series Analysis and Forecasting
 ::::: col-container
 ::: col13
 <p class="job-ind">
-Couse ID:
+Course ID:
 </p>
 :::
 
@@ -340,8 +333,6 @@ English
 </p>
 :::
 :::::
-
 ::::::::::::::::::
 :::::::::::::::::::
-
-:::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
