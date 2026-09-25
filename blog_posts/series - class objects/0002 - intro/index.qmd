@@ -21,7 +21,7 @@ To illustrate the behavior of `plot()`:
 #| echo: true
 #| fig-height: 4
 #| fig-align: "center"
-#| fig-cap: "Example plots for different input objects. Left is a scatter plot, left is a line plot."
+#| fig-cap: "Example plots for different input objects. Left is a scatter plot, right is a line plot."
 #| label: fig-figure1 
 
 set.seed(1)        # starting point for random number generation
