@@ -36,6 +36,7 @@ website:
         - research_articles.qmd
         - published_software.qmd
         - conferences.qmd
+        - books.qmd
 
 format:
   html:

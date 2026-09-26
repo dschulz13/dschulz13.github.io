@@ -1,0 +1,53 @@
+---
+title: "Books"
+sidebar: false
+page-layout: full
+---
+
+::: {#hero-heading}
+This is a list of publicly available books that I am currently working on. They are currently a work in progress.
+:::
+
+<hr>
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: panel-tabset
+## OTSF
+
+::::::::::::::::::: job-card-container
+:::::::::::::::::: inform-card
+<p class="job-header">
+Operational Time Series Forecasting: A Hands-On Guide to Classical and Modern Methods in R and Python
+</p>
+
+::::: col-container
+::: col13
+<p class="job-ind">
+Authors:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+Dominik Schulz
+</p>
+:::
+:::::
+
+::::: col-container
+::: col13
+<p class="job-ind">
+Link:
+</p>
+:::
+
+::: col2
+<p class="job-text">
+<https://dschulz13.github.io/OTSF/>
+</p>
+:::
+:::::
+
+::::::::::::::::::
+:::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
