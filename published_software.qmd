@@ -30,7 +30,9 @@ Here you can find a selection of my published **software**. Download numbers ref
 <h3>Welcome</h3>
 
 <p style="text-align:justify;">
+
 Move your mouse over a package icon to learn more. Click an icon to go to the package's CRAN or GitHub page.
+
 </p>
 :::
 
@@ -38,19 +40,25 @@ Move your mouse over a package icon to learn more. Click an icon to go to the pa
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 smoots
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Nonparametric Estimation of the Trend and Its Derivatives in Time Series
+
 </p>
 :::
 :::::
@@ -58,13 +66,17 @@ Nonparametric Estimation of the Trend and Its Derivatives in Time Series
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2023
+
 </p>
 :::
 :::::
@@ -72,13 +84,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Feng, Y., Letmathe, S., Schulz, D. (Maintainer)
+
 </p>
 :::
 :::::
@@ -86,13 +102,17 @@ Feng, Y., Letmathe, S., Schulz, D. (Maintainer)
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 1.1.4
+
 </p>
 :::
 :::::
@@ -100,13 +120,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 CRAN
+
 </p>
 :::
 :::::
@@ -114,13 +138,17 @@ CRAN
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 42,988
+
 </p>
 :::
 :::::
@@ -132,19 +160,25 @@ Downloads:
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 esemifar
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Smoothing Long-Memory Time Series
+
 </p>
 :::
 :::::
@@ -152,13 +186,17 @@ Smoothing Long-Memory Time Series
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2024
+
 </p>
 :::
 :::::
@@ -166,13 +204,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)
+
 </p>
 :::
 :::::
@@ -180,13 +222,17 @@ Feng, Y., Beran, J., Letmathe, S., Schulz, D. (Maintainer)
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2.0.1
+
 </p>
 :::
 :::::
@@ -194,13 +240,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 CRAN
+
 </p>
 :::
 :::::
@@ -208,13 +258,17 @@ CRAN
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 22,230
+
 </p>
 :::
 :::::
@@ -226,19 +280,25 @@ Downloads:
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 deseats
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series
+
 </p>
 :::
 :::::
@@ -246,13 +306,17 @@ Data-Driven Locally Weighted Regression for Trend and Seasonality in Time Series
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2026
+
 </p>
 :::
 :::::
@@ -260,13 +324,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Feng, Y., Schulz, D. (Maintainer)
+
 </p>
 :::
 :::::
@@ -274,13 +342,17 @@ Feng, Y., Schulz, D. (Maintainer)
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
-1.1.2
+
+1.1.3
+
 </p>
 :::
 :::::
@@ -288,13 +360,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 CRAN
+
 </p>
 :::
 :::::
@@ -302,13 +378,17 @@ CRAN
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 12,072
+
 </p>
 :::
 :::::
@@ -320,19 +400,25 @@ Downloads:
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 fEGarch
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory Extensions
+
 </p>
 :::
 :::::
@@ -340,13 +426,17 @@ Short-Memory/Long-Memory EGARCH & GARCH, VaR/ES Backtesting & Dual Long-Memory E
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2026
+
 </p>
 :::
 :::::
@@ -354,13 +444,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.
+
 </p>
 :::
 :::::
@@ -368,13 +462,17 @@ Schulz, D. (Maintainer), Feng, Y., Peitz, C., Ayensu, O. K.
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 1.0.7
+
 </p>
 :::
 :::::
@@ -382,13 +480,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 CRAN
+
 </p>
 :::
 :::::
@@ -396,13 +498,17 @@ CRAN
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 5,461
+
 </p>
 :::
 :::::
@@ -414,19 +520,25 @@ Downloads:
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 smardapi
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Access to the SMARD API of the German Federal Network Agency
+
 </p>
 :::
 :::::
@@ -434,13 +546,17 @@ Access to the SMARD API of the German Federal Network Agency
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2026
+
 </p>
 :::
 :::::
@@ -448,13 +564,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Schulz, D. (Maintainer)
+
 </p>
 :::
 :::::
@@ -462,13 +582,17 @@ Schulz, D. (Maintainer)
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 0.1.2
+
 </p>
 :::
 :::::
@@ -476,13 +600,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 GitHub
+
 </p>
 :::
 :::::
@@ -490,13 +618,17 @@ GitHub
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 —
+
 </p>
 :::
 :::::
@@ -508,19 +640,25 @@ Downloads:
 :::::::::::::::::::::: job-card-container
 ::::::::::::::::::::: inform-card
 <p class="job-header">
+
 ufRisk
+
 </p>
 
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Risk Measure Calculation in Financial Time Series
+
 </p>
 :::
 :::::
@@ -528,13 +666,17 @@ Risk Measure Calculation in Financial Time Series
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2023
+
 </p>
 :::
 :::::
@@ -542,13 +684,17 @@ Year:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)
+
 </p>
 :::
 :::::
@@ -556,13 +702,17 @@ Feng, Y., Zhang, X., Peitz, C., Schulz, D., Li, S., Letmathe, S. (Maintainer)
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Version:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 1.0.7
+
 </p>
 :::
 :::::
@@ -570,13 +720,17 @@ Version:
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 CRAN
+
 </p>
 :::
 :::::
@@ -584,13 +738,17 @@ CRAN
 ::::: col-container2
 ::: col12
 <p class="job-ind">
+
 Downloads:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 15,482
+
 </p>
 :::
 :::::
@@ -845,19 +1003,25 @@ goToSlide(0);
 ::::::::::::::::::: job-card-container
 :::::::::::::::::: inform-card
 <p class="job-header">
+
 smardapi
+
 </p>
 
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Access to the SMARD API of the German Federal Network Agency
+
 </p>
 :::
 :::::
@@ -865,13 +1029,17 @@ Access to the SMARD API of the German Federal Network Agency
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2026
+
 </p>
 :::
 :::::
@@ -879,13 +1047,17 @@ Year:
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Schulz, D.
+
 </p>
 :::
 :::::
@@ -893,13 +1065,17 @@ Schulz, D.
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 GitHub
+
 </p>
 :::
 :::::
@@ -907,13 +1083,17 @@ GitHub
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Link:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 <https://github.com/dschulz13/smardapi_python>
+
 </p>
 :::
 :::::
@@ -925,19 +1105,25 @@ Link:
 ::::::::::::::::::: job-card-container
 :::::::::::::::::: inform-card
 <p class="job-header">
+
 Immo_Webscraper
+
 </p>
 
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Description:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 An Automated Webscraper for ImmobilienScout24.de Using Python's Playwright
+
 </p>
 :::
 :::::
@@ -945,13 +1131,17 @@ An Automated Webscraper for ImmobilienScout24.de Using Python's Playwright
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Year:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 2026
+
 </p>
 :::
 :::::
@@ -959,13 +1149,17 @@ Year:
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Authors:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 Schulz, D.
+
 </p>
 :::
 :::::
@@ -973,13 +1167,17 @@ Schulz, D.
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Available on:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 GitHub
+
 </p>
 :::
 :::::
@@ -987,13 +1185,17 @@ GitHub
 ::::: col-container
 ::: col1
 <p class="job-ind">
+
 Link:
+
 </p>
 :::
 
 ::: col2
 <p class="job-text">
+
 <https://github.com/dschulz13/Immo_Webscraper>
+
 </p>
 :::
 :::::
