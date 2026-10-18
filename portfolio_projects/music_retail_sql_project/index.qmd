@@ -1,0 +1,2588 @@
+---
+title: "Music Retailer Sales SQL Project"
+author: "Dominik Schulz"
+date: "2026-10-18"
+categories: [SQL, project]
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: right
+number-sections: true
+crossref:
+  chapters: true
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  fig.align = 'center',
+  purl = FALSE,
+  warning = FALSE
+)
+
+library(RMySQL)
+con <- dbConnect(RMySQL::MySQL(),
+                 host = "localhost", 
+                 dbname = "musical_retail_germany",
+                 port = 3306, 
+                 user = "Dominik", 
+                 password = "mysql")
+library(knitr)
+library(kableExtra)
+library(reticulate)
+reticulate::use_virtualenv("my-env", required = TRUE)
+
+money_format <- function(x) {
+  paste0("€", format(round(x, 2), big.mark = ",", decimal.mark = ".", scientific = FALSE, nsmall = 2))
+}
+trim_chr_cols <- function(x) {
+  w <- purrr::map_lgl(x, function(.x) {is.character(.x)})
+  x[w] <- purrr::map_df(x[w], function(.x) {
+    trimws(.x)
+  })
+  x
+}
+remove_format <- function(x) {
+  as.numeric(gsub(
+    pattern = "[,%€]",
+    replacement = "",
+    x = x
+  ))
+}
+
+sql_chunk_activator <- function(export_type) {
+    if (export_type == "sql") {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+}
+export_type <- "sql"
+
+start_code <- function(text = "Show code") {
+  knitr::asis_output(paste0("<details><summary>", text, "</summary>"))
+}
+end_code <- function() {
+  knitr::asis_output("</details>")
+}
+```
+
+<style>
+  p {
+    text-align: justify;
+  }
+</style>
+
+**Note:**
+
+To access the source files of this project, please visit [https://github.com/dschulz13/musical_retail_sql_project](https://github.com/dschulz13/musical_retail_sql_project).
+
+# Executive summary
+
+1. **Sales are growing, with a clear fourth-quarter peak.** Net sales after subtracting shipping fees increased in 2025 compared with 2024, and every month recorded year-over-year growth. October through December contributed approximately **31.2%** of 2025 net sales, while growth slowed in January and February. The company should prepare inventory, fulfilment capacity, and marketing campaigns ahead of the fourth-quarter peak. For January and February, use targeted promotions and timely replenishment to support demand without relying on blanket discounts.
+
+2. **Increasing repeat purchases is an important growth opportunity.** Total order counts rose each year, but average orders per active customer fell from **4.36 in 2022 to 3.03 in 2025**. Despite increases in average order value in 2024 and 2025, approximate gross order value per active customer declined from about **€7,344 in 2024 to €6,878 in 2025**, using the rounded averages reported in the analysis. The company should encourage second purchases through relevant accessory recommendations, post-purchase communication, and personalized reactivation offers. Since **61.83%** of observed repeat-order intervals were within 99 days and **83.18%** within 199 days, these periods provide sensible starting points for customer reminders; timing should reflect each customer's purchase history rather than a single fixed schedule.
+
+3. **Tailor customer management to private buyers and business accounts.** The customer revenue distribution is concentrated at the lower end: **49.39%** of active customers generated less than **€5,000** in 2025, while approximately **75.72%** generated less than **€10,000**. The distribution extends to **€75,000**, with no customer revenue above that level represented. The 20 highest-revenue customers were all classified as business customers, and most placed multiple orders across several product categories. The company should offer business customers more proactive account support, replenishment planning, and relevant cross-category offers, while using accessible bundles and complementary-product recommendations to encourage private customers to return. Prioritize outreach using purchasing recency, frequency, and category interests, and assess the value of customer groups using both revenue and profitability.
+
+4. **Protect leading product lines and make selective decisions about weaker sellers.** Guitars & Basses was the leading category in 2025 at **€42.62 million** in line-item revenue. Westwerk led brands at **€8.98 million**, followed by Silverline at **€7.95 million**; Silverline Acoustic Guitar Advanced 945 Navy ranked first among individual products by revenue across 2022–2025. The company should maintain availability and visible merchandising for proven leaders and consider expanding support for products that grew in both units and revenue in every quarter. Products selling no more than five units and generating no more than €500 should be reviewed for margin, stock availability, time on sale, and marketing exposure before any delisting decision. New and discontinued products should be assessed in the context of how long they were actually available for sale.
+
+5. **Make pricing decisions product by product and prioritize profitable sales.** The pricing analysis identifies products whose observed unit volumes remained stable or increased after price rises, as well as products that sold more units after price reductions. These patterns identify candidates for review but do not prove that price changes caused the volume movements; promotions, seasonality, and product availability may also explain them. Avoid broad price changes based on these patterns alone. Instead, selectively pilot adjustments on suitable products and judge them by contribution margin alongside units sold and revenue, taking care not to increase volume at the expense of profitability.
+
+6. **Manage performance through a focused business scorecard.** Leadership should regularly review net sales after shipping fees, order volume, average order value, repeat-purchase frequency, active and returning customers, and product-level units, revenue, and contribution margin together. This will help distinguish growth driven by more orders from growth driven by higher spending, identify retention problems early, and direct inventory and promotional spending toward products and customer groups that create sustainable value. The immediate priorities are to prepare for fourth-quarter demand, improve repeat purchasing, strengthen relationships with business customers, and protect profitable sales of leading products.
+
+
+
+```{python}
+#| label: fig-executive-dashboard
+#| echo: FALSE
+#| fig-width: 12
+#| fig-height: 5.5
+#| fig-cap: "Selected business indicators for 2025."
+
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+kpis = [
+  ("FOURTH-QUARTER SHARE", "31.2%", "of 2025 net sales"),
+  ("ORDER FREQUENCY", "3.03", "Orders per active customer"),
+  ("LEADING CATEGORY", "€42.62m", "Guitars & Basses revenue"),
+  ("LEADING BRAND", "€8.98m", "Westwerk revenue")
+]
+
+fig, ax = plt.subplots(figsize = (12, 5.5))
+fig.patch.set_facecolor('#f5f7fa')
+ax.set_facecolor('#f5f7fa')
+ax.set_xlim(0, 12);
+ax.set_ylim(0, 5.5);
+ax.axis('off');
+
+ax.text(
+  0.05, 5.3, 'BUSINESS AT A GLANCE',
+  fontsize = 18,
+  fontweight = 'bold',
+  color = '#1e293b'
+);
+ax.text(
+  0.05, 5.0, 'Selected business indicators | 2025',
+  fontsize = 12, color = '#64748b'
+);
+
+card_width = 5.65
+card_height = 2.15
+card_y = 0.35
+gap = 0.25
+start_x = 0.05
+
+# First box
+x = start_x
+card_y = 2.45
+card = FancyBboxPatch(
+    (x, card_y),
+    card_width,
+    card_height,
+    boxstyle = 'round,pad = 0.03, rounding_size = 0.10',
+    facecolor = '#ffffff',
+    edgecolor = '#dbe2ea',
+    linewidth = 1
+);
+ax.add_patch(card);
+ax.plot(
+    [x + 0.2, x + 0.65],
+    [card_y + 1.85, card_y + 1.85],
+    color = '#218589',
+    linewidth = 3,
+    solid_capstyle = 'round'
+);
+ax.text(
+    x + 0.2, card_y + 1.55, kpis[0][0],
+    fontsize = 12, fontweight = "bold", color = "#64748b"
+);
+ax.text(
+    x + 0.2, card_y + 0.95, kpis[0][1],
+    fontsize = 19, fontweight = "bold", color = "#1e293b"
+);
+ax.text(
+    x + 0.2, card_y + 0.45, kpis[0][2],
+    fontsize = 12, color = "#64748b"
+);
+
+# Second box
+x = start_x + 1 * (card_width + gap)
+card_y = 2.45
+card = FancyBboxPatch(
+    (x, card_y),
+    card_width,
+    card_height,
+    boxstyle = 'round,pad = 0.03, rounding_size = 0.10',
+    facecolor = '#ffffff',
+    edgecolor = '#dbe2ea',
+    linewidth = 1
+);
+ax.add_patch(card);
+ax.plot(
+    [x + 0.2, x + 0.65],
+    [card_y + 1.85, card_y + 1.85],
+    color = '#218589',
+    linewidth = 3,
+    solid_capstyle = 'round'
+);
+ax.text(
+    x + 0.2, card_y + 1.55, kpis[1][0],
+    fontsize = 12, fontweight = "bold", color = "#64748b"
+);
+ax.text(
+    x + 0.2, card_y + 0.95, kpis[1][1],
+    fontsize = 19, fontweight = "bold", color = "#1e293b"
+);
+ax.text(
+    x + 0.2, card_y + 0.45, kpis[1][2],
+    fontsize = 12, color = "#64748b"
+);
+
+# Third box
+x = start_x + 0 * (card_width + gap)
+card_y = 0.1
+card = FancyBboxPatch(
+    (x, card_y),
+    card_width,
+    card_height,
+    boxstyle = 'round,pad = 0.03, rounding_size = 0.10',
+    facecolor = '#ffffff',
+    edgecolor = '#dbe2ea',
+    linewidth = 1
+);
+ax.add_patch(card);
+ax.plot(
+    [x + 0.2, x + 0.65],
+    [card_y + 1.85, card_y + 1.85],
+    color = '#218589',
+    linewidth = 3,
+    solid_capstyle = 'round'
+);
+ax.text(
+    x + 0.2, card_y + 1.55, kpis[2][0],
+    fontsize = 12, fontweight = "bold", color = "#64748b"
+);
+ax.text(
+    x + 0.2, card_y + 0.95, kpis[2][1],
+    fontsize = 19, fontweight = "bold", color = "#1e293b"
+);
+ax.text(
+    x + 0.2, card_y + 0.45, kpis[2][2],
+    fontsize = 12, color = "#64748b"
+);
+
+# Fourth box
+x = start_x + 1 * (card_width + gap)
+card_y = 0.1
+card = FancyBboxPatch(
+    (x, card_y),
+    card_width,
+    card_height,
+    boxstyle = 'round,pad = 0.03, rounding_size = 0.10',
+    facecolor = '#ffffff',
+    edgecolor = '#dbe2ea',
+    linewidth = 1
+);
+ax.add_patch(card);
+ax.plot(
+    [x + 0.2, x + 0.65],
+    [card_y + 1.85, card_y + 1.85],
+    color = '#218589',
+    linewidth = 3,
+    solid_capstyle = 'round'
+);
+ax.text(
+    x + 0.2, card_y + 1.55, kpis[3][0],
+    fontsize = 12, fontweight = "bold", color = "#64748b"
+);
+ax.text(
+    x + 0.2, card_y + 0.95, kpis[3][1],
+    fontsize = 19, fontweight = "bold", color = "#1e293b"
+);
+ax.text(
+    x + 0.2, card_y + 0.45, kpis[3][2],
+    fontsize = 12, color = "#64748b"
+);
+
+```
+
+
+# Company & data information
+
+The company is an online retailer of musical equipment and related items. The dataset covers the company’s sales from 2022 through 2025, along with information on registered customers, sale items, products, inventory movements, and related entities.
+
+**Note:** The data used is the synthetic SQL database `musical_retail_germany.sql` provided in my GitHub repository [dschulz13/musical_retail_germany](https://github.com/dschulz13/musical_retail_germany).
+
+The available data is structured as displayed in @fig-struct.
+
+```{r}
+#| label: fig-struct
+#| out-width: 80%
+#| out-height: 80%
+#| fig-cap: "An overview of the structure of the musical_retail_germany SQL database."
+knitr::include_graphics("structure_musical_retail_germany.png")
+```
+
+The database contains eight interconnected tables: `sales`, `sale_items`, `products`, `product_prices`, `customers`, `suppliers`, `inventory_in`, and `inventory_out`.
+
+# Objectives
+
+The data supports, among others, four broad business topics, each with several sub-questions. They help determining the current state of the company at the end of the year 2025. This project aims to address the presented questions as the analysis is developed.
+
+1. **Revenue & sales performance**
+  - How much was sold in 2025?
+  - How did 2025 compare with 2024?
+  - Is revenue growing?
+  - How many customers are registered, and how many orders are placed?
+  - What is the average order value?
+  - What accounts for the increase or decrease in revenue?
+
+2. **Customer health**
+  - How many active customers are there in 2025?
+    - How many of them are new and how many are returning?
+  - How concentrated is revenue among customers?
+  - What does customer purchasing frequency look like?
+  - Are there high-value customer segments?
+  - Are customers becoming more or less valuable?
+  
+3. **Product portfolio**
+  - Which categories/brands/products drive revenue?
+  - Which products are growing?
+  - Which products have poor sales?
+  - How concentrated is revenue among products?
+  - Which products are newly introduced?
+  - Which products have been discontinued?
+
+4. **Pricing**
+  - Which products experienced major price changes?
+  - Which products increased in price without losing much volume?
+  - Which products became cheaper but sold considerably more?
+  - Which brands/categories have the highest prices?
+  
+
+# Applied tools
+
+Data manipulation, calculations and table creations are performed in [MySQL](https://www.mysql.com/de/). Graphics and unsupervised learning techniques, used only sparingly where clearly helpful in this MySQL project, are created with [Python](https://www.python.org/), while [R Markdown](https://rmarkdown.rstudio.com/) is used to generate the report and format the final table outputs.
+
+AI tools were used to enhance the written text. No AI was used in the application of MySQL, Python and R Markdown.
+
+# Detailed project results
+
+This section presents the results available so far, with tables, figures, and corresponding recommendations. Results are organized by topic and business question. Before running the provided SQL, one should run `SQL Cleaning Script.sql` to create views of cleaned tables from the `musical_retail_germany` database.
+
+## Revenue & sales performance
+
+### How much was sold in 2025?
+
+
+**SQL approach for total 2025 figure**
+
+1. Filter `sales` to transactions recorded in 2025.
+2. Sum `total_price_eur - shipping_fee_eur` to calculate sales after subtracting shipping fees.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q1", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Total sales in year 2025
+SELECT SUM(total_price_eur - shipping_fee_eur) AS total_sales_2025
+FROM SALES
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025;
+```
+
+`r end_code()`
+
+```{sql connection = con, output.var = "sql_q1_2", warning = FALSE, echo = FALSE, purl = sql_chunk_activator(export_type)}
+# Total sales in year 2024
+SELECT SUM(total_price_eur - shipping_fee_eur) AS total_sales_2024
+FROM SALES
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2024;
+```
+
+```{r, echo = FALSE}
+sql_q1 <- as.numeric(sql_q1)
+sql_q1_2 <- as.numeric(sql_q1_2)
+sales_change <- sql_q1 - sql_q1_2
+abs_change <- abs(sales_change)
+rel_change <- round(100 * abs_change / sql_q1_2, 2)
+inc_dec <- if (sales_change < 0) {
+  "decrease"
+} else if (sales_change > 0) {
+  "increase"
+} else {
+  "no change"
+}
+```
+
+
+**SQL approach for absolute figures in @tbl-sales-monthly-tab**
+
+1. Filter sales to 2025 and extract the month from each sale timestamp.
+2. Group by month and sum sales after subtracting shipping fees.
+3. Pivot the 12 monthly totals into one row with conditional aggregation (`MAX(CASE WHEN ...)`).
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q1_monthly1", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Total sales by month in year 2025 (Table 5.1, Row 1)
+WITH sales_long_tab AS (
+SELECT EXTRACT(MONTH FROM sale_timestamp) AS month_numb, SUM(total_price_eur - shipping_fee_eur) AS total_sales
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY EXTRACT(MONTH FROM sale_timestamp))
+SELECT
+  	MAX(CASE WHEN month_numb = 1 THEN total_sales END) AS January,
+    MAX(CASE WHEN month_numb = 2 THEN total_sales END) AS February,
+    MAX(CASE WHEN month_numb = 3 THEN total_sales END) AS March,
+	  MAX(CASE WHEN month_numb = 4 THEN total_sales END) AS April,
+    MAX(CASE WHEN month_numb = 5 THEN total_sales END) AS May,
+    MAX(CASE WHEN month_numb = 6 THEN total_sales END) AS June,    
+    MAX(CASE WHEN month_numb = 7 THEN total_sales END) AS July,  
+    MAX(CASE WHEN month_numb = 8 THEN total_sales END) AS August,
+    MAX(CASE WHEN month_numb = 9 THEN total_sales END) AS September,
+    MAX(CASE WHEN month_numb = 10 THEN total_sales END) AS October,
+    MAX(CASE WHEN month_numb = 11 THEN total_sales END) AS November,
+    MAX(CASE WHEN month_numb = 12 THEN total_sales END) AS December
+FROM sales_long_tab;
+```
+
+`r end_code()`
+
+
+```{r, echo = FALSE}
+sql_q1_monthly1 <- purrr::map_df(sql_q1_monthly1, function(.x) {
+  money_format(.x)
+})
+```
+
+**SQL approach for relative figures in @tbl-sales-monthly-tab**
+
+1. Filter sales to 2025, extract the month, and calculate each month’s total after subtracting shipping fees.
+2. Use the sum of all monthly totals as the annual denominator.
+3. Calculate each month’s share of annual sales and format it as a percentage.
+4. Pivot the monthly percentages into one row for presentation.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q1_monthly2", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Total sales by month in year 2025 (Table 5.1, Row 2)
+WITH sales_long_tab AS (
+SELECT EXTRACT(MONTH FROM sale_timestamp) AS month_numb, SUM(total_price_eur - shipping_fee_eur) AS total_sales
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY EXTRACT(MONTH FROM sale_timestamp))
+SELECT
+  	CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 1 THEN total_sales END) / SUM(total_sales), 2), '%') AS January,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 2 THEN total_sales END) / SUM(total_sales), 2), '%') AS February,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 3 THEN total_sales END) / SUM(total_sales), 2), '%') AS March,
+	  CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 4 THEN total_sales END) / SUM(total_sales), 2), '%') AS April,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 5 THEN total_sales END) / SUM(total_sales), 2), '%') AS May,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 6 THEN total_sales END) / SUM(total_sales), 2), '%') AS June,    
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 7 THEN total_sales END) / SUM(total_sales), 2), '%') AS July,  
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 8 THEN total_sales END) / SUM(total_sales), 2), '%') AS August,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 9 THEN total_sales END) / SUM(total_sales), 2), '%') AS September,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 10 THEN total_sales END) / SUM(total_sales), 2), '%') AS October,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 11 THEN total_sales END) / SUM(total_sales), 2), '%') AS November,
+    CONCAT(ROUND(100 * MAX(CASE WHEN month_numb = 12 THEN total_sales END) / SUM(total_sales), 2), '%') AS December
+FROM sales_long_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+The **net sales total** for 2025, defined here as `total_price_eur` minus shipping fees, is **`r money_format(sql_q1)`**.
+
+@tbl-sales-monthly-tab shows monthly net sales for 2025. October, November, and December recorded **`r sql_q1_monthly1$October`**, **`r sql_q1_monthly1$November`**, and **`r sql_q1_monthly1$December`**, respectively. Together, these three months contributed approximately **31.2%** of annual net sales, indicating a pronounced fourth-quarter peak. The company should prepare inventory, fulfilment capacity, and campaign activity ahead of this period, then use monthly demand to adjust replenishment and avoid tying up unnecessary stock outside peak periods.
+
+```{r}
+#| label: tbl-sales-monthly-tab
+#| echo: false
+#| tbl-cap: "Monthly total sales (absolute and relative) of the year 2025."
+tab_q1_monthly <- as.data.frame(dplyr::bind_rows(sql_q1_monthly1, sql_q1_monthly2))
+rownames(tab_q1_monthly) <- c("Absolute", "Relative")
+kable(tab_q1_monthly, row.names = TRUE, align = paste0(rep("r", 12), collapse = ""), format = "pipe")
+```
+
+
+### How did 2025 compare with 2024?
+
+**SQL approach for total 2024 figure**
+
+1. Filter `sales` to transactions recorded in 2024.
+2. Sum `total_price_eur - shipping_fee_eur` to calculate the comparable net-of-shipping sales total for 2024.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q1_2", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Total sales in year 2024
+SELECT SUM(total_price_eur - shipping_fee_eur) AS total_sales_2024
+FROM SALES
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2024;
+```
+
+`r end_code()`
+
+**SQL approach for @tbl-sales-monthly-comp**
+
+1. Filter transactions to 2024 and 2025, then aggregate net-of-shipping sales by year and month.
+2. Use `LAG()` partitioned by month to align each 2025 month with the corresponding 2024 value.
+3. Keep the 2025 rows and calculate absolute and relative year-over-year changes.
+4. Format the monetary values and percentage changes for the comparison table.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q2_monthly", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Monthly sales comparison between 2024 and 2025 (Table 5.2)
+WITH suma_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS year_numb, EXTRACT(MONTH FROM sale_timestamp) AS month_numb, MONTHNAME(sale_timestamp) AS month_name, SUM(total_price_eur - shipping_fee_eur) AS total_sales
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) BETWEEN 2024 AND 2025
+GROUP BY EXTRACT(YEAR FROM sale_timestamp), EXTRACT(MONTH FROM sale_timestamp), MONTHNAME(sale_timestamp)),
+lag_tab AS (
+SELECT year_numb, month_numb, month_name, LAG(total_sales, 1) OVER (PARTITION BY month_numb ORDER BY year_numb ASC) AS total_sales_2024, total_sales AS total_sales_2025
+FROM suma_tab),
+comp_tab AS (
+SELECT month_name, total_sales_2024, total_sales_2025 FROM lag_tab
+WHERE year_numb = 2025
+ORDER BY month_numb ASC)
+SELECT month_name, CONCAT('€', FORMAT(total_sales_2024, 2)) AS total_sales_2024,
+	CONCAT('€', FORMAT(total_sales_2025, 2)) AS total_sales_2025,
+	CASE
+    WHEN total_sales_2025 - total_sales_2024 >= 0 THEN CONCAT('+€', FORMAT(total_sales_2025 - total_sales_2024, 2))
+    WHEN total_sales_2025 - total_sales_2024 < 0 THEN CONCAT('-€', FORMAT(ABS(total_sales_2025 - total_sales_2024), 2))
+  END AS abs_change,
+  CASE
+    WHEN 100 * (total_sales_2025 - total_sales_2024) / total_sales_2024 >= 0 THEN CONCAT('+', FORMAT(100 * (total_sales_2025 - total_sales_2024) / total_sales_2024, 2), '%')
+    WHEN 100 * (total_sales_2025 - total_sales_2024) / total_sales_2024 < 0 THEN CONCAT('-', FORMAT(ABS(100 * (total_sales_2025 - total_sales_2024) / total_sales_2024), 2), '%')
+  END AS rel_change
+FROM comp_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+Net sales totaled **`r money_format(sql_q1)`** in 2025, an **`r inc_dec`** of **`r money_format(abs_change)`** (**`r rel_change`%**) compared with 2024, when net sales were **`r money_format(sql_q1_2)`**.
+
+
+```{r}
+#| label: tbl-sales-monthly-comp
+#| echo: false
+#| tbl-cap: "Monthly sales comparison between the years 2024 and 2025."
+x <- knitr::kable(sql_q2_monthly,
+             col.names = c("Month", "Sales 2024", "Sales 2025", "Absolute change", "Relative change"), align = c("l", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+As @tbl-sales-monthly-comp shows, net sales increased in every month of 2025 compared with the same month in 2024. February had the smallest relative increase (5.72%), followed by April (8.93%) and January (9.12%). The largest relative increases occurred in October, November, and December. Management should protect the activities and product availability supporting this broad-based growth, use targeted campaigns to address weaker-growth months rather than blanket discounts, and scale stock and fulfilment plans before the stronger fourth-quarter period.
+
+### Is revenue growing?
+
+**SQL approach for @tbl-revenue-monthly-comp**
+
+1. Aggregate `total_price_eur` by year and month; this query does not subtract shipping fees.
+2. Use windowed `LAG()` values to retrieve the same month’s revenue from the previous three years.
+3. For the 2025 row, calculate relative changes for 2022–2023, 2023–2024, and 2024–2025.
+4. Return the monthly comparison in calendar order.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q3", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Total revenue increase in % by month for each year (Table 5.3)
+WITH agg_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS year_numb, EXTRACT(MONTH FROM sale_timestamp) AS month_numb, MONTHNAME(sale_timestamp) AS month_name, SUM(total_price_eur) AS revenue
+FROM sales
+GROUP BY EXTRACT(YEAR FROM sale_timestamp), EXTRACT(MONTH FROM sale_timestamp), MONTHNAME(sale_timestamp)),
+lag_tab AS (
+SELECT year_numb, month_numb, month_name, LAG(revenue, 3) OVER (PARTITION BY month_numb ORDER BY year_numb ASC) AS rev_2022,
+	LAG(revenue, 2) OVER (PARTITION BY month_numb ORDER BY year_numb ASC) AS rev_2023,
+    LAG(revenue, 1) OVER (PARTITION BY month_numb ORDER BY year_numb ASC) AS rev_2024,
+    revenue AS rev_2025
+FROM agg_tab)
+SELECT month_name,
+  CASE
+    WHEN 100 * (rev_2023 - rev_2022) / rev_2022 >= 0 THEN CONCAT('+', FORMAT(100 * (rev_2023 - rev_2022) / rev_2022, 2), '%')
+    WHEN 100 * (rev_2023 - rev_2022) / rev_2022 < 0 THEN CONCAT('-', FORMAT(ABS(100 * (rev_2023 - rev_2022) / rev_2022), 2), '%')
+  END AS change_22_23,
+  CASE
+    WHEN 100 * (rev_2024 - rev_2023) / rev_2023 >= 0 THEN CONCAT('+', FORMAT(100 * (rev_2024 - rev_2023) / rev_2023, 2), '%')
+    WHEN 100 * (rev_2024 - rev_2023) / rev_2023 < 0 THEN CONCAT('-', FORMAT(ABS(100 * (rev_2024 - rev_2023) / rev_2023), 2), '%')
+  END AS change_23_24,
+  CASE
+    WHEN 100 * (rev_2025 - rev_2024) / rev_2024 >= 0 THEN CONCAT('+', FORMAT(100 * (rev_2025 - rev_2024) / rev_2024, 2), '%')
+    WHEN 100 * (rev_2025 - rev_2024) / rev_2024 < 0 THEN CONCAT('-', FORMAT(ABS(100 * (rev_2025 - rev_2024) / rev_2024), 2), '%')
+  END AS change_24_25
+FROM lag_tab
+WHERE year_numb = 2025
+ORDER BY month_numb;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-revenue-monthly-comp
+#| echo: false
+#| tbl-cap: "Yearly relative revenue changes by month 2022 through 2025."
+x <- knitr::kable(sql_q3,
+             col.names = c("Month", "Change 2022 to 2023", "Change 2023 to 2024", "Change 2024 to 2025"), align = c("l", "r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-revenue-monthly-comp shows positive year-over-year growth for every month in each comparison presented. The growth rate accelerated from 2024 to 2025 in March through December, but slowed in January and February. This is a change in the **growth rate**, not a decline in revenue in those two months.
+
+The largest acceleration was in March, when the growth rate rose from 5.01% to 13.27%—an increase of 8.26 percentage points. From September through December, the growth rate increased by roughly five to seven percentage points. The company should investigate softer growth in January and February and plan capacity for the stronger March-to-year-end trajectory. Because this query sums `total_price_eur` without subtracting shipping fees, these figures are not on the same net-of-shipping basis as the sales totals in Sections 6.1.1–6.1.2; management should compare like-for-like measures when evaluating performance.
+
+### How many registered and active customers are there?
+
+**SQL approach for @tbl-reg-cust-tab**
+
+1. Assign each customer to a registration-year bucket: 2022 or earlier, 2023, 2024, or 2025.
+2. Count registrations within each bucket.
+3. Calculate a cumulative sum across the buckets to obtain the registered-customer total at each year-end.
+4. Pivot the cumulative totals into one row, with one column per year.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q4_1", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Cumulative registered customers by year (Table 5.4)
+WITH year_tab AS (
+SELECT customer_id,
+	CASE
+		WHEN EXTRACT(YEAR FROM signup_timestamp) <= 2022 THEN 2022
+        WHEN EXTRACT(YEAR FROM signup_timestamp) = 2023 THEN 2023
+        WHEN EXTRACT(YEAR FROM signup_timestamp) = 2024 THEN 2024
+        WHEN EXTRACT(YEAR FROM signup_timestamp) = 2025 THEN 2025
+	END AS registered_by
+FROM customers_cleaned),
+agg_tab AS (
+SELECT registered_by, COUNT(DISTINCT customer_id) AS new_registrations
+FROM year_tab
+GROUP BY registered_by),
+sum_tab AS (
+SELECT registered_by AS year, SUM(new_registrations) OVER (ORDER BY registered_by ASC) AS cum_registrations
+FROM agg_tab)
+SELECT
+	FORMAT(MAX(CASE WHEN year = 2022 THEN cum_registrations END), 0) AS year_2022,
+    FORMAT(MAX(CASE WHEN year = 2023 THEN cum_registrations END), 0) AS year_2023,
+    FORMAT(MAX(CASE WHEN year = 2024 THEN cum_registrations END), 0) AS year_2024,
+    FORMAT(MAX(CASE WHEN year = 2025 THEN cum_registrations END), 0) AS year_2025
+FROM sum_tab;
+```
+
+`r end_code()`
+
+**SQL approach for @tbl-act-cust-tab**
+
+1. Extract the sale year and customer ID from each sale.
+2. Count distinct customers with at least one sale in each year.
+3. Pivot those yearly counts into one row for 2022–2025.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q4_2", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Active customers by year (Table 5.5)
+WITH id_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS year_numb, customer_id FROM sales),
+agg_tab AS (
+SELECT year_numb, COUNT(DISTINCT customer_id) AS numb_active_cust
+FROM id_tab
+GROUP BY year_numb)
+SELECT
+	FORMAT(MAX(CASE WHEN year_numb = 2022 THEN numb_active_cust END), 0) AS year_2022,
+    FORMAT(MAX(CASE WHEN year_numb = 2023 THEN numb_active_cust END), 0) AS year_2023,
+    FORMAT(MAX(CASE WHEN year_numb = 2024 THEN numb_active_cust END), 0) AS year_2024,
+    FORMAT(MAX(CASE WHEN year_numb = 2025 THEN numb_active_cust END), 0) AS year_2025
+FROM agg_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-reg-cust-tab
+#| echo: false
+#| tbl-cap: "Cumulative number of registered customers by year."
+knitr::kable(
+  sql_q4_1,
+  col.names = c("2022", "2023", "2024", "2025"),
+  format = "pipe",
+  align = "rrrr"
+)
+```
+
+@tbl-reg-cust-tab shows that the registered-customer base nearly doubled from 2022 to 2025. By the end of 2025, the platform had **`r as.character(sql_q4_1[["year_2025"]])` registered customers**. This expanding base gives the company a larger pool to convert into buyers, but registrations alone do not generate sales; make the first-purchase journey straightforward and communicate relevant product benefits to registered people who have not yet ordered.
+
+
+```{r}
+#| label: tbl-act-cust-tab
+#| echo: false
+#| tbl-cap: "Number of active customers by year."
+knitr::kable(
+  sql_q4_2,
+  col.names = c("2022", "2023", "2024", "2025"),
+  format = "pipe",
+  align = "rrrr"
+)
+```
+
+```{r, echo = FALSE}
+all_vals <- remove_format(as.character(sql_q4_2)) / remove_format(as.character(sql_q4_1[1, ]))
+min_v <- paste0(sprintf("%.2f", 100 * min(all_vals)), "%")
+max_v <- paste0(sprintf("%.2f", 100 * max(all_vals)), "%")
+val_2025 <- paste0(sprintf("%.2f", 100 * tail(all_vals, 1)), "%")
+```
+
+
+@tbl-act-cust-tab shows the number of **active customers**, defined as customers who placed at least one order in the corresponding year. Active customers are fewer than registered customers in every year. The active-customer share of the registered base ranged from **`r min_v`** to **`r max_v`**, and was **`r val_2025`** in 2025. The gap between registrations and active buyers makes reactivation and first-purchase conversion important alongside acquisition. The company should track active-customer share over time and use appropriate onboarding or win-back communication to turn more of its registered base into purchasing customers.
+
+### What is the average order value?
+
+**SQL approach for @tbl-tab-average-order**
+
+1. Group sales by calendar year and calculate the average `total_price_eur` per order.
+2. Pivot the four annual averages into one row and format them as euro amounts.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q5", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Average order value by year (Table 5.6)
+WITH agg_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS year_numb, AVG(total_price_eur) AS average_order_eur
+FROM sales
+GROUP BY EXTRACT(YEAR FROM sale_timestamp))
+SELECT
+	CONCAT('€', FORMAT(MAX(CASE WHEN year_numb = 2022 THEN average_order_eur END), 2)) AS year_2022,
+    CONCAT('€', FORMAT(MAX(CASE WHEN year_numb = 2023 THEN average_order_eur END), 2)) AS year_2023,
+    CONCAT('€', FORMAT(MAX(CASE WHEN year_numb = 2024 THEN average_order_eur END), 2)) AS year_2024,
+    CONCAT('€', FORMAT(MAX(CASE WHEN year_numb = 2025 THEN average_order_eur END), 2)) AS year_2025
+FROM agg_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab-average-order
+#| echo: false
+#| tbl-cap: "Yearly average order value for years 2022 through 2025."
+x <- knitr::kable(sql_q5,
+             col.names = c("2022", "2023", "2024", "2025"), align = c("r", "r", "r", "r"), format = "pipe")
+x
+```
+
+According to @tbl-tab-average-order, average order value fell slightly from 2022 to 2023 and then increased in both 2024 and 2025. The 2025 average was **`r as.character(sql_q5[["year_2025"]])`**. The rise creates an opportunity to promote relevant accessories, bundles, and complementary products, provided these offers protect contribution margin. This calculation uses `total_price_eur`; unlike the net sales totals earlier in this section, it does not subtract shipping fees, so the company should use consistent definitions when comparing campaigns or periods.
+
+### What accounts for the increase or decrease in revenue?
+
+
+**SQL approach for @tbl-tab-num-order**
+
+1. Count the number of sales records (orders) in each year.
+2. Separately count distinct active customers per year and join those counts to the annual order counts.
+3. Divide orders by active customers to calculate average orders per active customer.
+4. Combine the order-count and order-frequency rows, then pivot the annual values into columns.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q6_1", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Yearly order counts and average orders by active customer (Table 5.7)
+(WITH agg_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS sale_year, COUNT(*) AS orders_placed
+FROM sales
+GROUP BY EXTRACT(YEAR FROM sale_timestamp))
+SELECT
+	FORMAT(MAX(CASE WHEN sale_year = 2022 THEN orders_placed END), 0) AS year_2022,
+    FORMAT(MAX(CASE WHEN sale_year = 2023 THEN orders_placed END), 0) AS year_2023,
+    FORMAT(MAX(CASE WHEN sale_year = 2024 THEN orders_placed END), 0) AS year_2024,
+    FORMAT(MAX(CASE WHEN sale_year = 2025 THEN orders_placed END), 0) AS year_2025
+FROM agg_tab)
+UNION ALL
+(WITH agg_tab2 AS (
+SELECT tab1.year_numb AS year_numb, ROUND(tab2.orders_placed / tab1.active_cust_count, 2) AS orders_per_capita
+FROM (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS year_numb, COUNT(DISTINCT customer_id) AS active_cust_count
+FROM sales
+GROUP BY EXTRACT(YEAR FROM sale_timestamp)) AS tab1
+INNER JOIN (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS sale_year, COUNT(*) AS orders_placed
+FROM sales
+GROUP BY EXTRACT(YEAR FROM sale_timestamp)) AS tab2 ON tab1.year_numb = tab2.sale_year)
+SELECT
+	MAX(CASE WHEN year_numb = 2022 THEN orders_per_capita END) AS year_2022,
+    MAX(CASE WHEN year_numb = 2023 THEN orders_per_capita END) AS year_2023,
+    MAX(CASE WHEN year_numb = 2024 THEN orders_per_capita END) AS year_2024,
+    MAX(CASE WHEN year_numb = 2025 THEN orders_per_capita END) AS year_2025
+FROM agg_tab2);
+```
+
+`r end_code()`
+
+**SQL approach for @tbl-tab62**
+
+1. Select 2025 sales and join them to customer records, grouping customers by whether they registered before 2025 or during 2025.
+2. For each registration group, calculate order count, total `total_price_eur`, and average order value.
+3. Separately count distinct active customers in each registration group.
+4. Join the summaries and calculate orders per active customer; format the monetary and count fields for the table.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q6_2", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Order count, average orders by active customer, total revenue,
+# and average order value by active customer for customers registered
+# before and in 2025 (Table 5.8)
+WITH joined_tab AS (
+SELECT tab1.signup_year, tab2.numb_act_cust, tab1.order_count, tab1.revenue, tab1.eur_per_order FROM (
+WITH comb_tab AS (
+SELECT sa.sale_id, sa.customer_id, 
+	CASE
+		WHEN EXTRACT(YEAR FROM c.signup_timestamp) <= 2024 THEN 'before 2025'
+        WHEN EXTRACT(YEAR FROM c.signup_timestamp) = 2025 THEN 'in 2025'
+	END AS signup_year,
+    sa.total_price_eur
+FROM sales AS sa
+INNER JOIN customers AS c ON sa.customer_id = c.customer_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025)
+SELECT signup_year, COUNT(*) AS order_count, SUM(total_price_eur) AS revenue, SUM(total_price_eur) / COUNT(*) AS eur_per_order
+FROM comb_tab
+GROUP BY signup_year) AS tab1
+INNER JOIN (
+WITH c2tab AS (
+SELECT sa.customer_id,
+	CASE
+		WHEN EXTRACT(YEAR FROM c.signup_timestamp) <= 2024 THEN 'before 2025'
+        WHEN EXTRACT(YEAR FROM c.signup_timestamp) = 2025 THEN 'in 2025'
+	END AS signup_year
+FROM sales AS sa
+INNER JOIN customers AS c ON sa.customer_id = c.customer_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025)
+SELECT signup_year, COUNT(DISTINCT customer_id) AS numb_act_cust
+FROM c2tab
+GROUP BY signup_year) AS tab2 ON tab1.signup_year = tab2.signup_year)
+SELECT signup_year, FORMAT(order_count, 0) AS order_count, ROUND(order_count / numb_act_cust, 2) AS orders_per_capita,
+	CONCAT('€', FORMAT(revenue, 2)) AS revenue, CONCAT('€', FORMAT(eur_per_order, 2)) AS value_per_order
+FROM joined_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab-num-order
+#| echo: false
+#| tbl-cap: "Yearly order counts and average orders per active customer."
+rownames(sql_q6_1) <- c("Number of orders", "Orders per capita")
+x <- knitr::kable(sql_q6_1,
+             col.names = c("2022", "2023", "2024", "2025"), align = c("r", "r", "r", "r"), format = "pipe", row.names = TRUE)
+x
+```
+
+```{r, echo = FALSE}
+# 2024
+val_2024 <- 3.35 * 2192.33
+# 2025
+val_2025 <- 3.03 * 2268.35
+
+
+rev_incr <- 80000 * 2268.35 - 73500 * 2192.33
+scen1 <- (80000 - 73500) * 2192.33  # order value stay the same
+scen2 <- 73500 * (2268.35 - 2192.33)  # number of orders stays the same
+remaind <- rev_incr - scen1 - scen2
+```
+
+
+```{r}
+#| label: tbl-tab62
+#| echo: false
+#| tbl-cap: "Distinction between existing and new customers in 2025."
+x <- knitr::kable(sql_q6_2,
+             col.names = c("Signup year", "Order count", "Orders per capita", "Revenue", "Average order value"), align = c("l", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab-num-order shows that the **number of orders** increased each year, while the **average number of orders per active customer** declined from 4.36 in 2022 to 3.03 in 2025. Multiplying order frequency by average order value gives an approximate annual order value per active customer of **`r money_format(3.03 * 2268.35)`** in 2025, down from **`r money_format(3.35 * 2192.33)`** in 2024. The active-customer share of the registered base was broadly stable. These figures suggest that growth is associated with a larger customer base and more orders overall, but they do not by themselves establish how much of the increase was caused by new registrations.
+
+Using the rounded order counts and average order values, the estimated increase in **gross order value** from 2024 to 2025 is **`r money_format(rev_incr)`**. If average order value had remained at its 2024 level, the increase in order count would account for **`r money_format(scen1)`** of the increase. If order count had remained at its 2024 level, the higher average order value would account for **`r money_format(scen2)`**. The remaining **`r money_format(remaind)`** is the interaction between the two changes. On this decomposition, higher order volume is the largest arithmetic contributor. Note that this calculation uses `total_price_eur` and rounded averages, whereas the headline sales totals subtract shipping fees; the resulting amounts are therefore not directly comparable and may not reconcile exactly.
+
+@tbl-tab62 shows that customers registered before 2025 generated **`r sql_q6_2[["revenue"]][sql_q6_2[["signup_year"]] == "before 2025"]`** in gross order value during 2025, compared with **`r sql_q6_2[["revenue"]][sql_q6_2[["signup_year"]] == "in 2025"]`** from customers who registered during 2025. These figures are useful for describing the 2025 cohorts, but they should not be directly compared with the 2024 net sales total because the definitions differ. The newer registration cohort recorded fewer orders per active customer, which may partly reflect its shorter time on the platform.
+
+Customer acquisition is valuable, but sustained growth also depends on retention. The company should test ways to **reactivate lapsed customers** and increase repeat purchases among active customers. Options include targeted discounts for lapsed or long-standing customers and a loyalty programme that rewards repeat orders. A controlled pilot with a holdout group would help determine whether these interventions create incremental orders and margin, rather than simply discounting purchases that would have happened anyway.
+
+## Customer health
+
+### How many active customers are there in 2025?
+
+**Sub-question:** How many of them are new and how many are returning?
+
+
+
+**SQL approach for @tbl-tab7**
+
+1. Number each customer’s purchases chronologically across the full sales history.
+2. Keep the customer’s 2025 purchases and classify the customer as new if their first-ever purchase is in 2025, otherwise as returning.
+3. Count customers in each group and calculate each group’s percentage of all active customers in 2025.
+4. Return absolute counts and relative shares as two rows.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q7", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Number of new and returning customers in 2025 (Table 5.9)
+WITH agg_tab AS (
+SELECT customer_id, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY sale_timestamp ASC) AS nr_purchase, EXTRACT(YEAR FROM sale_timestamp) AS sale_year
+FROM sales),
+type_tab AS (
+SELECT customer_id,
+	CASE
+		WHEN MIN(nr_purchase) = 1 THEN 'new'
+        ELSE 'returning'
+	END AS customer_type
+FROM agg_tab
+WHERE sale_year = 2025
+GROUP BY customer_id),
+count_tab AS (
+SELECT customer_type, COUNT(*) AS customer_count
+FROM type_tab
+GROUP BY customer_type),
+abs_tab AS (
+SELECT
+	MAX(CASE WHEN customer_type = 'returning' THEN customer_count END) AS returning_cust,
+    MAX(CASE WHEN customer_type = 'new' THEN customer_count END) AS new_cust
+FROM count_tab)
+(SELECT
+	FORMAT(returning_cust, 0) AS 'Returning',
+    FORMAT(new_cust, 0) AS 'New',
+    FORMAT(returning_cust + new_cust, 0) AS 'Total'
+FROM abs_tab)
+UNION ALL
+(SELECT
+	CONCAT(ROUND(100 * returning_cust / (returning_cust + new_cust), 2), '%') AS 'Returning',
+    CONCAT(ROUND(100 * new_cust / (returning_cust + new_cust), 2), '%') AS 'New',
+    '100.00%' AS 'Total'
+FROM abs_tab);
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab7
+#| echo: false
+#| tbl-cap: "New and returning customers in 2025."
+rownames(sql_q7) <- c("Absolute", "Relative")
+x <- knitr::kable(sql_q7,
+             col.names = c("Returning", "New", "Total"), align = c("r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab7 shows **`r sql_q7$Total[[1]]` active customers** in 2025, defined as customers who placed at least one order during the year. A **new customer** is one whose first-ever purchase occurred in 2025, regardless of registration date. On this basis, **`r sql_q7$New[[1]]` customers (`r sql_q7$New[[2]]`)** were new buyers and **`r sql_q7$Returning[[1]]` (`r sql_q7$Returning[[2]]`)** were returning buyers. The split should guide distinct commercial priorities: help new buyers reach a useful second purchase, and encourage returning customers to replenish or explore complementary products. Because registration and first purchase are different events, acquisition performance should be judged by actual first orders as well as the repeat orders that follow.
+
+### How concentrated is revenue among customers?
+
+**SQL approach for @tbl-tab8**
+
+1. Construct revenue intervals in €5,000 steps, with an upper limit of €75,000.
+2. Sum each customer’s `total_price_eur` across 2025 sales.
+3. Assign each customer to the interval containing their 2025 revenue and count customers by interval.
+4. Calculate each interval’s share of the customers included in the grouped results and order the intervals from low to high.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q8", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Revenue concentration among active customers in 2025 (Table 5.10)
+WITH pre_tab AS (
+SELECT f.thousands + g.tthousands AS lower_bound, LEAD(f.thousands + g.tthousands) OVER (ORDER BY f.thousands + g.tthousands ASC) AS upper_bound
+FROM (
+SELECT 0 AS thousands
+UNION ALL SELECT 5000
+) AS f
+CROSS JOIN (
+SELECT 0 AS tthousands
+UNION ALL SELECT 10000
+UNION ALL SELECT 20000
+UNION ALL SELECT 30000
+UNION ALL SELECT 40000
+UNION ALL SELECT 50000
+UNION ALL SELECT 60000
+UNION ALL SELECT 70000
+UNION ALL SELECT 80000
+UNION ALL SELECT 90000
+) AS g
+ORDER BY f.thousands + g.tthousands ASC),
+group_tab AS (
+SELECT lower_bound, upper_bound - 0.01 AS upper_bound, CONCAT('[€', FORMAT(lower_bound, 0), ', €', FORMAT(upper_bound, 0), ')') AS category
+FROM pre_tab
+WHERE upper_bound <= 75000),
+sale_tab AS (
+SELECT customer_id, SUM(total_price_eur) AS revenue
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id),
+comb_tab AS (
+SELECT st.customer_id, st.revenue, gt.category, gt.lower_bound AS lower_bound
+FROM sale_tab AS st
+INNER JOIN group_tab AS gt ON st.revenue BETWEEN gt.lower_bound AND gt.upper_bound),
+pre_final AS (
+SELECT category, COUNT(*) AS cust_count, lower_bound
+FROM comb_tab
+GROUP BY category, lower_bound)
+SELECT category, FORMAT(cust_count, 0), CONCAT(FORMAT(100 * cust_count / (SUM(cust_count) OVER ()), 2), '%') AS rel
+FROM pre_final
+ORDER BY lower_bound;
+```
+
+`r end_code()`
+
+**Results:**
+
+```{r}
+#| label: tbl-tab8
+#| echo: false
+#| tbl-cap: "Active customers in 2025 by 2025 revenue."
+x <- knitr::kable(sql_q8,
+             col.names = c("Revenue interval", "Customer count", "Relative"), align = c("l", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab8 shows 2025 revenue per active customer grouped into revenue intervals. These amounts use `total_price_eur`, so they are not directly comparable with the net-of-shipping sales totals reported earlier. The distribution is strongly right-skewed: **49.39%** of active customers generated less than **€5,000**, approximately **75.72%** generated less than **€10,000**, and **0.08%** fell into the displayed bands from **€50,000** up to **€75,000**. The distribution ends at **€75,000**, indicating that no customer revenue exceeded that level. This pattern supports scalable repeat-purchase and cross-sell activity for the broad lower-spending base alongside more personalized account management for high-value buyers.
+
+
+```{sql connection = con, output.var = "sql_hist_rev", warning = FALSE, echo = FALSE, purl = FALSE}
+SELECT customer_id, SUM(total_price_eur) AS revenue
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id;
+```
+
+```{python}
+#| label: fig-dist-rev
+#| echo: false
+#| eval: true
+#| fig-cap: "Histogram and kernel density estimate of customer-level revenue in 2025."
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.ticker as ticker
+
+revenue = r.sql_hist_rev['revenue'].to_numpy()
+fig, ax = plt.subplots(1, 1, figsize = (10, 5))
+
+sns.histplot(data = revenue, stat = 'count', kde = True, binwidth = 1000, binrange = (0, 75000), ax = ax,
+  color = '#ADD8E6',
+  edgecolor = 'black',
+  alpha = 1,
+  line_kws={
+    "color": "#00008B",   
+    "linewidth": 3,       
+    "linestyle": "-" 
+})
+ax.lines[0].set_color("#00008B")
+ax.set_xlabel('Revenue by customer in 2025')
+ax.set_ylabel('Number of customers')
+ax.set_title('Distribution of customer-level revenue in 2025')
+ax.xaxis.set_major_formatter(ticker.StrMethodFormatter('€{x:,.0f}'))
+ax.yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}'))
+ax.grid(axis = 'y', zorder = 0)
+ax.set_axisbelow(True)
+```
+
+@fig-dist-rev combines a histogram of customer-level revenue in 2025 with a kernel density estimate and highlights the distribution’s strong right skew and long upper tail. Commercially, this suggests a two-track approach: make repeat-purchase and complementary-product offers economical to deliver across the broad lower-revenue base, while offering more tailored account support to high-revenue customers. Revenue should be considered alongside gross margin and servicing costs when deciding how much support or incentive each group warrants.
+
+### What does customer purchasing frequency look like?
+
+
+**SQL approach for @tbl-tab9**
+
+1. Use `LAG()` to find each customer’s previous sale timestamp and calculate the elapsed time in days.
+2. Keep order intervals associated with sales made in 2025.
+3. Build 100-day intervals from 0 through 1,399 days and assign each eligible order interval to a bin.
+4. Count intervals in each bin and calculate their percentage of all intervals included in the bins.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q9", warning = FALSE, echo = TRUE, , purl = sql_chunk_activator(export_type)}
+# Number of orders in 2025 by days since the previous purchase (Table 5.11)
+WITH time_tab AS (
+SELECT customer_id, sale_timestamp, TIMESTAMPDIFF(SECOND, LAG(sale_timestamp, 1) OVER (PARTITION BY customer_id ORDER BY sale_timestamp ASC), sale_timestamp) / 86400.0 AS days_since_last_purch
+FROM sales
+ORDER BY customer_id, sale_timestamp),
+freq_tab AS (
+SELECT customer_id, days_since_last_purch
+FROM time_tab
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025),
+pre_group AS (
+SELECT hund_tab.hundreds + thous_tab.thousands AS lower_bound, 
+	LEAD(hund_tab.hundreds + thous_tab.thousands, 1) OVER (ORDER BY hund_tab.hundreds + thous_tab.thousands) AS upper_bound
+FROM (
+SELECT 0 AS hundreds
+UNION ALL SELECT 100
+UNION ALL SELECT 200
+UNION ALL SELECT 300
+UNION ALL SELECT 400
+UNION ALL SELECT 500
+UNION ALL SELECT 600
+UNION ALL SELECT 700
+UNION ALL SELECT 800
+UNION ALL SELECT 900
+) AS hund_tab
+CROSS JOIN (
+SELECT 0 AS thousands
+UNION ALL SELECT 1000
+) AS thous_tab
+ORDER BY  hund_tab.hundreds + thous_tab.thousands ASC),
+group_tab AS (
+SELECT lower_bound, upper_bound - 1 AS upper_bound, CONCAT('between ', lower_bound, ' and ', upper_bound - 1) AS category
+FROM pre_group
+WHERE upper_bound <= 1400),
+count_tab AS (
+SELECT gt.category, gt.lower_bound
+FROM freq_tab AS ft
+INNER JOIN group_tab AS gt ON ft.days_since_last_purch >= gt.lower_bound AND ft.days_since_last_purch < gt.upper_bound + 1),
+pre_final AS (
+SELECT category, COUNT(*) AS order_count, lower_bound
+FROM count_tab
+GROUP BY category, lower_bound
+ORDER BY lower_bound)
+SELECT category, FORMAT(order_count, 0) AS abs, CONCAT(FORMAT(100 * order_count / SUM(order_count) OVER (), 2), '%') AS rel
+FROM pre_final;
+```
+
+`r end_code()`
+
+**Results**
+
+
+```{r}
+#| label: tbl-tab9
+#| echo: false
+#| tbl-cap: "Order counts in 2025 by days since last purchase."
+x <- knitr::kable(sql_q9,
+             col.names = c("Days since last purchase", "Order count", "Relative"), align = c("l", "r", "r"), format = "pipe")
+x
+```
+
+Among the order intervals assigned to the reported bins, **61.83%** fell within 99 days of the previous purchase and **83.18%** within 199 days. **3.63%** fell into bins of 400 days or more; this should not be described as the share taking more than a year, because the 300–399-day bin straddles the one-year mark. The table counts order intervals, not unique customers: the 37 observations at 1,000 days or more are **orders**, not customers. Overall, repeat-purchase intervals are strongly right-skewed. The company can use the first few months after a purchase as a starting window for relevant accessory recommendations or replenishment reminders, and longer-lapsed intervals for selective win-back outreach. Timing should reflect the product category and individual purchase history, and incentives should be evaluated on incremental margin rather than order count alone.
+
+
+### Are there high-value customer segments?
+
+**SQL approach for @tbl-tab10**
+
+1. Aggregate 2025 revenue and order count separately for each customer.
+2. Calculate recency and time since first purchase relative to January 01, 2026 (taken as the current time point).
+3. Join sales to sale items and product data to count distinct categories purchased by each customer in 2025.
+4. Join those features to the cleaned customer type, calculate revenue shares and average revenue per order, then return the 20 highest-revenue customers.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q10", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Key features of top 20 customers by revenue in 2025 (Table 5.12)
+WITH rev_tab AS (
+SELECT customer_id, SUM(total_price_eur) AS revenue
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id
+ORDER BY SUM(total_price_eur) DESC),
+ord_tab AS (
+SELECT customer_id, COUNT(*) AS order_count
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id
+ORDER BY COUNT(*) DESC),
+recency_tab AS (
+SELECT customer_id, TIMESTAMPDIFF(SECOND, MAX(sale_timestamp), '2026-01-01 00:00:00') / 86400.0 AS recency
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id),
+cust_id_2025 AS (
+SELECT DISTINCT customer_id
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+),
+first_tab AS (
+	SELECT cid.customer_id, stab.time_since_first_purch
+    FROM cust_id_2025 AS cid
+    LEFT JOIN (
+		SELECT customer_id, TIMESTAMPDIFF(SECOND, MIN(sale_timestamp), '2026-01-01 00:00:00') / 86400.0 AS time_since_first_purch
+        FROM sales
+        GROUP BY customer_id
+    ) AS stab ON cid.customer_id = stab.customer_id),
+cat_pre AS (
+SELECT s1.customer_id, s3.category
+FROM sales AS s1
+INNER JOIN sale_items AS s2 ON s1.sale_id = s2.sale_id
+LEFT JOIN products AS s3 ON s2.product_id = s3.product_id
+WHERE EXTRACT(YEAR FROM s1.sale_timestamp) = 2025),
+cat_final AS (
+SELECT customer_id, COUNT(DISTINCT category) AS category_count
+FROM cat_pre
+GROUP BY customer_id)
+SELECT rt.customer_id, CONCAT('€', FORMAT(rt.revenue, 2)) AS revenue,
+	CONCAT(FORMAT(100 * rt.revenue / (SUM(rt.revenue) OVER ()), 2), '%') AS perc,
+    FORMAT(ot.order_count, 0) AS order_count, CONCAT('€', FORMAT(rt.revenue / ot.order_count, 2)) AS average_rev_per_order, cc.customer_type,
+    FORMAT(rec_tab.recency, 2) AS recency, FORMAT(ft.time_since_first_purch, 2) AS time_since_first_purch, ct.category_count
+FROM rev_tab AS rt
+INNER JOIN ord_tab AS ot ON rt.customer_id = ot.customer_id
+INNER JOIN customers_cleaned AS cc ON rt.customer_id = cc.customer_id
+INNER JOIN recency_tab AS rec_tab ON rt.customer_id = rec_tab.customer_id
+INNER JOIN first_tab AS ft ON rt.customer_id = ft.customer_id
+INNER JOIN cat_final AS ct ON rt.customer_id = ct.customer_id
+ORDER BY rt.revenue DESC
+LIMIT 20;
+```
+
+`r end_code()`
+
+**Results**
+
+
+```{r}
+#| label: tbl-tab10
+#| echo: false
+#| tbl-cap: "Top 20 customers in 2025 by revenue."
+x <- knitr::kable(sql_q10,
+             col.names = c("Customer ID", "Total revenue", "Relative revenue", "Order count", "Average revenue per order", "Customer type", "Days since last purchase", "Days since first purchase", "Product categories"), align = c("r", "r", "r", "r", "r", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab10 summarizes the 20 customers with the highest 2025 revenue. All are classified as business customers in the cleaned data, and most placed multiple orders across several product categories. Many have been purchasing from the company for more than 1,000 days. Each contributed approximately **0.03%–0.04%** of total 2025 customer revenue, so no single customer dominates this measure. These patterns support proactive business-account management, including named contact points, replenishment planning, and relevant cross-category offers. Revenue alone does not establish profitability, however, so the level of account support and any bespoke terms should also reflect margins and service costs; business customers should still be segmented by their needs and purchasing behavior rather than treated as one uniform group.
+
+**SQL approach for the customer-segmentation input**
+
+1. Aggregate 2025 gross revenue and order counts at customer level.
+2. Calculate days since the most recent 2025 purchase and days since the first recorded purchase, using 1 January 2026 as the reference date.
+3. Join sales to sale items and product metadata to count the distinct product categories purchased in 2025, and add each customer's cleaned customer type.
+4. Return numeric customer-level features, along with each customer's share of 2025 customer revenue, for use in PCA and K-Means clustering in Python.
+
+```{sql connection = con, output.var = "sql_q10_2", warning = FALSE, echo = FALSE, purl = FALSE}
+WITH rev_tab AS (
+SELECT customer_id, SUM(total_price_eur) AS revenue
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id
+ORDER BY SUM(total_price_eur) DESC),
+ord_tab AS (
+SELECT customer_id, COUNT(*) AS order_count
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id
+ORDER BY COUNT(*) DESC),
+recency_tab AS (
+SELECT customer_id, TIMESTAMPDIFF(SECOND, MAX(sale_timestamp), '2026-01-01 00:00:00') / 86400.0 AS recency
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+GROUP BY customer_id),
+cust_id_2025 AS (
+SELECT DISTINCT customer_id
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) = 2025
+),
+first_tab AS (
+	SELECT cid.customer_id, stab.time_since_first_purch
+    FROM cust_id_2025 AS cid
+    LEFT JOIN (
+		SELECT customer_id, TIMESTAMPDIFF(SECOND, MIN(sale_timestamp), '2026-01-01 00:00:00') / 86400.0 AS time_since_first_purch
+        FROM sales
+        GROUP BY customer_id
+    ) AS stab ON cid.customer_id = stab.customer_id),
+cat_pre AS (
+SELECT s1.customer_id, s3.category
+FROM sales AS s1
+INNER JOIN sale_items AS s2 ON s1.sale_id = s2.sale_id
+LEFT JOIN products AS s3 ON s2.product_id = s3.product_id
+WHERE EXTRACT(YEAR FROM s1.sale_timestamp) = 2025),
+cat_final AS (
+SELECT customer_id, COUNT(DISTINCT category) AS category_count
+FROM cat_pre
+GROUP BY customer_id)
+SELECT rt.customer_id, rt.revenue AS revenue,
+	100 * rt.revenue / (SUM(rt.revenue) OVER ()) AS perc,
+    ot.order_count AS order_count, rt.revenue / ot.order_count AS average_rev_per_order, cc.customer_type,
+    rec_tab.recency AS recency, ft.time_since_first_purch AS time_since_first_purch, ct.category_count
+FROM rev_tab AS rt
+INNER JOIN ord_tab AS ot ON rt.customer_id = ot.customer_id
+INNER JOIN customers_cleaned AS cc ON rt.customer_id = cc.customer_id
+INNER JOIN recency_tab AS rec_tab ON rt.customer_id = rec_tab.customer_id
+INNER JOIN first_tab AS ft ON rt.customer_id = ft.customer_id
+INNER JOIN cat_final AS ct ON rt.customer_id = ct.customer_id
+ORDER BY rt.revenue DESC;
+```
+
+`r start_code("Python code")`
+
+```{python segmentation-functions, echo = TRUE, eval = FALSE, include = TRUE}
+# Import relevant libraries
+import pandas as pd
+from sklearn.preprocessing import StandardScaler as SC
+from sklearn.cluster import KMeans
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+
+### K-Means wrapper for relevant results
+
+def kmeans(data, n_clusters):
+  
+  # Pipeline
+  kmeans_pipeline = Pipeline([
+    ('scaler', SC(with_std = True, with_mean = True)),
+    ('kmeans', KMeans(n_clusters = 3, random_state = 1, n_init = 100))
+  ])
+  
+  # Data to numpy
+  X = data.to_numpy()
+  
+  # Fit
+  clust_fit = kmeans_pipeline.fit(X)
+  centroids = clust_fit.named_steps['kmeans'].cluster_centers_
+  labels = clust_fit.predict(X)
+  
+  return {'fit_obj': clust_fit, 'centroids': centroids, 'labels': labels}
+
+### PCA wrapper
+
+def pca(data):
+  
+  pca_pipeline = Pipeline([
+    ('scaler', SC(with_mean = True, with_std = True)),
+    ('pca_est', PCA())
+  ])
+  
+  pca_fit = pca_pipeline.fit(data)
+  scores = pca_fit.transform(data)
+  loadings = pca_fit.named_steps['pca_est'].components_
+  
+  return {'fit_obj': pca_fit, 'scores': scores, 'loadings': loadings}
+
+
+
+### PCA for visualization
+
+def pca_clust_plot(clust_fit, pca_fit):
+  
+  scores = pca_fit['scores']
+  centroids = pca_fit['fit_obj'].named_steps['pca_est'].transform(clust_fit['centroids'])
+  
+  pc1 = scores[:, 0]
+  pc2 = scores[:, 1]
+  
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.scatter(pc1, pc2, c = clust_fit['labels'], alpha = 0.2);
+  ax.scatter(centroids[:, 0], centroids[:, 1], c = 'red', marker = '*', s = 120);
+  ax.set_xlabel('Principal component 1');
+  ax.set_ylabel('Principal component 2');
+  ax.set_title('Customer segments');
+  ax.grid(axis = 'x');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Biplot of PCA
+
+def biplot(scores, loadings, s = 4):
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.scatter(scores[:, 0], scores[:, 1], color = '#D3D3D3', alpha = 0.3);
+  
+  nams = ['Revenue', 'Orders', 'Revenue / order', 'Recency', 'Lifetime', 'Categories']
+  
+  dim = loadings.shape[1]
+  
+  for k in range(dim):
+    ax.arrow(0, 0, s * loadings[0, k], s * loadings[1, k], color = 'red', head_width = 0.2);
+    ax.text(s * loadings[0, k] + 0.2, s * loadings[1, k], nams[k], color = 'black');
+  
+  ax.set_xlabel('Principal component 1');
+  ax.set_ylabel('Principal component 2');
+  ax.set_title('First two principal component scores and loadings');
+  ax.grid(axis = 'x');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Centroid plot
+
+def centroid_plot(clust_fit, data):
+  cluster_centers = clust_fit['centroids'].copy()
+
+  cluster_centers_rescaled = clust_fit['fit_obj'].named_steps['scaler'].inverse_transform(cluster_centers)
+
+  cluster_centers_sc = cluster_centers_rescaled.copy()
+  
+  ncol = data.shape[1]
+
+  for i in range(0, ncol):
+    minv = data.iloc[:, i].min()
+    maxv = data.iloc[:, i].max()
+    cluster_centers_sc[:, i] = (cluster_centers_rescaled[:, i] - minv) / (maxv - minv)
+
+
+  cmap = plt.colormaps['viridis']
+  norm = mcolors.Normalize(vmin = 0, vmax = 2)
+  color_0 = cmap(norm(0))
+  color_1 = cmap(norm(1))
+  color_2 = cmap(norm(2))
+
+  x = np.arange(1, ncol + 1, 1)
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.plot(x, cluster_centers_sc[0, :], color = color_0);
+  ax.scatter(x, cluster_centers_sc[0, :], color = color_0);
+  ax.plot(x, cluster_centers_sc[1, :], color = color_1);
+  ax.scatter(x, cluster_centers_sc[1, :], color = color_1);
+  ax.plot(x, cluster_centers_sc[2, :], color = color_2);
+  ax.scatter(x, cluster_centers_sc[2, :], color = color_2);
+  ax.set_xticks(x, labels = ['Revenue', 'Orders', 'Avg revenue', 'Recency', 'Lifetime', 'Categories'], rotation = 30);
+  ax.set_ylabel("Centroid position between variable's smallest (0) and largest (1) value");
+  ax.set_title('Detailed centroid comparison');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Application to private customers
+
+data_cust = r.sql_q10_2
+data_cust_private = data_cust[data_cust['customer_type'] == 'private'].copy()
+data_cust_private_red = data_cust_private.drop(['customer_id', 'customer_type', 'perc'], axis = 1)
+
+clust_fit_priv = kmeans(data_cust_private_red, n_clusters = 3)
+pca_fit_priv = pca(data_cust_private_red)
+
+### Application to business customers
+
+data_cust_bus = data_cust[data_cust['customer_type'] == 'business'].copy()
+data_cust_bus_red = data_cust_bus.drop(['customer_id', 'customer_type', 'perc'], axis = 1)
+
+clust_fit_bus = kmeans(data_cust_bus_red, n_clusters = 3)
+pca_fit_bus = pca(data_cust_bus_red)
+```
+
+```{python, echo = FALSE, eval = TRUE, include = FALSE}
+# Import relevant libraries
+import pandas as pd
+from sklearn.preprocessing import StandardScaler as SC
+from sklearn.cluster import KMeans
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+
+### K-Means wrapper for relevant results
+
+def kmeans(data, n_clusters):
+  
+  # Pipeline
+  kmeans_pipeline = Pipeline([
+    ('scaler', SC(with_std = True, with_mean = True)),
+    ('kmeans', KMeans(n_clusters = 3, random_state = 1, n_init = 100))
+  ])
+  
+  # Data to numpy
+  X = data.to_numpy()
+  
+  # Fit
+  clust_fit = kmeans_pipeline.fit(X)
+  centroids = clust_fit.named_steps['kmeans'].cluster_centers_
+  labels = clust_fit.predict(X)
+  
+  return {'fit_obj': clust_fit, 'centroids': centroids, 'labels': labels}
+
+### PCA wrapper
+
+def pca(data):
+  
+  pca_pipeline = Pipeline([
+    ('scaler', SC(with_mean = True, with_std = True)),
+    ('pca_est', PCA())
+  ])
+  
+  pca_fit = pca_pipeline.fit(data)
+  scores = pca_fit.transform(data)
+  loadings = pca_fit.named_steps['pca_est'].components_
+  
+  return {'fit_obj': pca_fit, 'scores': scores, 'loadings': loadings}
+
+
+
+### PCA for visualization
+
+def pca_clust_plot(clust_fit, pca_fit):
+  
+  scores = pca_fit['scores']
+  centroids = pca_fit['fit_obj'].named_steps['pca_est'].transform(clust_fit['centroids'])
+  
+  pc1 = scores[:, 0]
+  pc2 = scores[:, 1]
+  
+  cmap = plt.colormaps['viridis']
+  norm = mcolors.Normalize(vmin = 0, vmax = 2)
+  color_0 = cmap(norm(0))
+  color_1 = cmap(norm(1))
+  color_2 = cmap(norm(2))
+  
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.scatter(pc1, pc2, c = clust_fit['labels'], alpha = 0.2);
+  ax.scatter(centroids[0, 0], centroids[0, 1], color = color_0, s = 240, edgecolors = 'white', linewidths = 2);
+  ax.scatter(centroids[1, 0], centroids[1, 1], color = color_1, s = 240, edgecolors = 'white', linewidths = 2);
+  ax.scatter(centroids[2, 0], centroids[2, 1], color = color_2, s = 240, edgecolors = 'white', linewidths = 2);
+  ax.set_xlabel('Principal component 1');
+  ax.set_ylabel('Principal component 2');
+  ax.set_title('Customer segments');
+  ax.grid(axis = 'x');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Biplot of PCA
+
+def biplot(scores, loadings, s = 4):
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.scatter(scores[:, 0], scores[:, 1], color = '#D3D3D3', alpha = 0.3);
+  
+  nams = ['Revenue', 'Orders', 'Revenue / order', 'Recency', 'Lifetime', 'Categories']
+  
+  dim = loadings.shape[1]
+  
+  for k in range(dim):
+    ax.arrow(0, 0, s * loadings[0, k], s * loadings[1, k], color = 'red', head_width = 0.2);
+    ax.text(s * loadings[0, k] + 0.2, s * loadings[1, k], nams[k], color = 'black');
+  
+  ax.set_xlabel('Principal component 1');
+  ax.set_ylabel('Principal component 2');
+  ax.set_title('First two principal component scores and loadings');
+  ax.grid(axis = 'x');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Centroid plot
+
+def centroid_plot(clust_fit, data):
+  cluster_centers = clust_fit['centroids'].copy()
+
+  cluster_centers_rescaled = clust_fit['fit_obj'].named_steps['scaler'].inverse_transform(cluster_centers)
+
+  cluster_centers_sc = cluster_centers_rescaled.copy()
+  
+  ncol = data.shape[1]
+
+  for i in range(0, ncol):
+    minv = data.iloc[:, i].min()
+    maxv = data.iloc[:, i].max()
+    cluster_centers_sc[:, i] = (cluster_centers_rescaled[:, i] - minv) / (maxv - minv)
+
+
+  cmap = plt.colormaps['viridis']
+  norm = mcolors.Normalize(vmin = 0, vmax = 2)
+  color_0 = cmap(norm(0))
+  color_1 = cmap(norm(1))
+  color_2 = cmap(norm(2))
+
+  x = np.arange(1, ncol + 1, 1)
+  fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+  ax.plot(x, cluster_centers_sc[0, :], color = color_0);
+  ax.scatter(x, cluster_centers_sc[0, :], color = color_0);
+  ax.plot(x, cluster_centers_sc[1, :], color = color_1);
+  ax.scatter(x, cluster_centers_sc[1, :], color = color_1);
+  ax.plot(x, cluster_centers_sc[2, :], color = color_2);
+  ax.scatter(x, cluster_centers_sc[2, :], color = color_2);
+  ax.set_xticks(x, labels = ['Revenue', 'Orders', 'Avg revenue', 'Recency', 'Lifetime', 'Categories'], rotation = 30);
+  ax.set_ylabel("Centroid position between variable's smallest (0) and largest (1) value");
+  ax.set_title('Detailed centroid comparison');
+  ax.grid(axis = 'y');
+  ax.set_axisbelow(True);
+
+### Application to private customers
+
+data_cust = r.sql_q10_2
+data_cust_private = data_cust[data_cust['customer_type'] == 'private'].copy()
+data_cust_private_red = data_cust_private.drop(['customer_id', 'customer_type', 'perc'], axis = 1)
+
+clust_fit_priv = kmeans(data_cust_private_red, n_clusters = 3)
+pca_fit_priv = pca(data_cust_private_red)
+
+### Application to business customers
+
+data_cust_bus = data_cust[data_cust['customer_type'] == 'business'].copy()
+data_cust_bus_red = data_cust_bus.drop(['customer_id', 'customer_type', 'perc'], axis = 1)
+
+clust_fit_bus = kmeans(data_cust_bus_red, n_clusters = 3)
+pca_fit_bus = pca(data_cust_bus_red)
+```
+
+```{python python-apply-code-echo, echo = TRUE, eval = FALSE, include = TRUE}
+# Biplots
+biplot(scores = pca_fit_priv['scores'], loadings = pca_fit_priv['loadings'], s = 5)
+biplot(scores = pca_fit_bus['scores'], loadings = pca_fit_bus['loadings'], s = 5)
+
+# Plots of PC1 vs. PC2 with clusters
+pca_clust_plot(clust_fit_priv, pca_fit_priv)
+pca_clust_plot(clust_fit_bus, pca_fit_bus)
+
+# Plots of centroids for original variables
+centroid_plot(clust_fit_priv, data_cust_private_red)
+centroid_plot(clust_fit_bus, data_cust_bus_red)
+```
+
+
+`r end_code()`
+
+
+```{python}
+#| label: fig-biplot-private
+#| fig-cap: "Biplot of PCA applied to private customer data."
+biplot(scores = pca_fit_priv['scores'], loadings = pca_fit_priv['loadings'], s = 5)
+```
+
+```{python}
+#| label: fig-biplot-business
+#| fig-cap: "Biplot of PCA applied to business customer data."
+biplot(scores = pca_fit_bus['scores'], loadings = pca_fit_bus['loadings'], s = 5)
+```
+
+The biplots in [@fig-biplot-private; @fig-biplot-business] suggest that customer behavior is distinguished mainly by overall activity and engagement on one dimension and average spending per order on another. Revenue, order count, category breadth, and recent purchasing activity align strongly with the first component, while average revenue per order is most strongly associated with the second. This gives the company a practical basis for differentiating customer offers: highly engaged customers may respond to relevant add-ons and category expansion, while customers with larger baskets may respond to carefully selected bundles or premium options. The principal components summarize several measures rather than directly measuring customer value, so service and incentive decisions should also account for margin and cost to serve. 
+
+```{python}
+#| label: fig-clust-private
+#| echo: false
+#| eval: true
+#| fig-cap: "K-Means clusters for private customers projected onto the first two principal components."
+pca_clust_plot(clust_fit_priv, pca_fit_priv)
+```
+
+```{python}
+#| label: fig-clust-business
+#| echo: false
+#| eval: true
+#| fig-cap: "K-Means clusters for business customers projected onto the first two principal components."
+pca_clust_plot(clust_fit_bus, pca_fit_bus)
+```
+
+[@fig-clust-private; @fig-clust-business] show the private- and business-customer groups across the first two principal components. The groups overlap to some extent, so they should be treated as broad behavioral profiles rather than rigid categories for individual customers.
+
+The clusters suggest three broad buying patterns: lower-to-moderate activity and spending, higher activity with lower-to-moderate spending per order, and lower-to-moderate activity with higher spending per order. These patterns point to different commercial opportunities. The company can encourage repeat and cross-category purchases among highly active customers with smaller baskets, while offering relevant bundles or premium alternatives to customers who spend more per order. Revenue and engagement do not automatically mean higher profit, so loyalty benefits and service levels should also reflect contribution margin and cost to serve. The detailed cluster profiles below show how the segments differ across the original customer features.
+
+```{python}
+#| label: fig-clust-private-detail
+#| echo: false
+#| eval: true
+#| fig-cap: "Centroids of private customer clusters scaled between 0 and 1."
+centroid_plot(clust_fit_priv, data_cust_private_red)
+```
+
+```{python}
+#| label: fig-clust-business-detail
+#| echo: false
+#| eval: true
+#| fig-cap: "Centroids of business customer clusters scaled between 0 and 1."
+centroid_plot(clust_fit_bus, data_cust_bus_red)
+```
+
+Among private customers, the green cluster generates the highest total revenue despite lower revenue per order than another segment. It is also the most engaged group, with the longest customer history, the most recent purchase activity (lowest recency), and purchases spanning the most categories. The company should prioritize retaining these customers and recommending relevant products across categories; increasing basket value may be an opportunity, but offers should not undermine the repeat activity that makes this group valuable.
+
+Among business customers, the purple cluster has the strongest overall profile across the measured features, including the lowest recency. The company should consider proactive account support, replenishment planning, and relevant cross-category offers for this group, while monitoring contribution margin and servicing costs to ensure that higher engagement also creates sustainable value.
+
+
+### Are customers becoming more or less valuable?
+
+**SQL approach for @tbl-tab11**
+
+1. Aggregate revenue per customer separately for 2024 and 2025.
+2. Use `LAG()` within each customer’s timeline to align the 2024 value with the 2025 value.
+3. Keep customers with sales in both years and calculate each customer’s absolute and relative revenue change.
+4. Average those customer-level changes to produce the two summary measures.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q11", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Average customer-level revenue change between 2024 and 2025 among
+# customers doing a purchase in both years (Table 5.13)
+WITH agg_tab AS (
+SELECT customer_id, EXTRACT(YEAR FROM sale_timestamp) AS sale_year, SUM(total_price_eur) AS revenue
+FROM sales
+WHERE EXTRACT(YEAR FROM sale_timestamp) BETWEEN 2024 AND 2025
+GROUP BY EXTRACT(YEAR FROM sale_timestamp), customer_id),
+lag_tab AS (
+SELECT customer_id, sale_year, revenue AS revenue2025, LAG(revenue, 1) OVER (PARTITION BY customer_id ORDER BY sale_year ASC) AS revenue2024
+FROM agg_tab),
+change_tab AS (
+SELECT customer_id, revenue2024, revenue2025, revenue2025 - revenue2024 AS revenue_shift, 100 * (revenue2025 - revenue2024) / revenue2024 AS revenue_change_rel
+FROM lag_tab
+WHERE sale_year = 2025 AND revenue2024 IS NOT NULL)
+SELECT
+  CASE
+    WHEN AVG(revenue_shift) >= 0 THEN CONCAT('+€', FORMAT(AVG(revenue_shift), 2))
+    WHEN AVG(revenue_shift) < 0 THEN CONCAT('-€', FORMAT(ABS(AVG(revenue_shift)), 2))
+  END AS mean_abs_change, 
+  CASE
+    WHEN AVG(revenue_change_rel) >= 0 THEN CONCAT('+', FORMAT(AVG(revenue_change_rel), 2), '%')
+    WHEN AVG(revenue_change_rel) < 0 THEN CONCAT('-', FORMAT(ABS(AVG(revenue_change_rel)), 2), '%')
+  END AS mean_rel_change
+FROM change_tab;
+```
+
+`r end_code()`
+
+**Results**
+
+
+```{r}
+#| label: tbl-tab11
+#| echo: false
+#| tbl-cap: "Mean customer-level revenue change from 2024 to 2025 among customers who purchased in both years."
+x <- knitr::kable(sql_q11,
+             col.names = c("Mean change", "Mean relative change"), align = c("r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab11 shows that customers who purchased in both 2024 and 2025 generated **€22.46 less revenue per customer on average** in 2025. The mean relative change is **+436.42%**, which is not inconsistent with the negative mean euro change: the two statistics average different quantities, and individual percentage changes can become very large when a customer’s 2024 revenue was small. Taken together, these averages do not support a simple claim that the typical customer became more or less valuable; customer-level changes vary widely. The company should identify returning customers whose spending has fallen and tailor retention activity to them, while evaluating growth accounts by absolute revenue and margin as well as percentage growth.
+
+## Product portfolio
+
+### Which categories/brands/products drive revenue?
+
+**SQL approach for @tbl-tab12**
+
+1. Join sales to sale items and cleaned product metadata, extracting the sale year and line-item revenue.
+2. Sum line-item revenue by year and product.
+3. Rank products by revenue within each year using `DENSE_RANK()`.
+4. Return ranks up to 10 for each year, sorted by year and rank.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q12", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Top 10 products by revenue for years 2022 through 2025 (Table 5.14)
+WITH join_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS sale_year, si.product_id, si.units_sold, si.line_total_eur AS revenue,
+	pr.product_name, pr.category, pr.subcategory, pr.brand
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id),
+agg_tab AS (
+SELECT sale_year, product_id, product_name, SUM(revenue) AS revenue
+FROM join_tab
+GROUP BY sale_year, product_id, product_name),
+rank_tab AS (
+SELECT sale_year, product_name, revenue, DENSE_RANK() OVER (PARTITION BY sale_year ORDER BY revenue DESC) AS ranking
+FROM agg_tab)
+SELECT sale_year, ranking, product_name, CONCAT('€', FORMAT(revenue, 2)) AS revenue
+FROM rank_tab
+WHERE ranking <= 10
+ORDER BY sale_year DESC, ranking ASC;
+```
+
+`r end_code()`
+
+**SQL approach for @tbl-tab13**
+
+1. Join sales to sale items and cleaned product metadata, extracting the sale year and line-item revenue.
+2. Sum line-item revenue by year and product category.
+3. Rank categories by revenue within each year using `DENSE_RANK()`.
+4. Return categories with a rank up to 10 for each year, sorted by year and rank.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q12_2", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Product categories ranked by revenue for 2022 through 2025 (Table 5.15)
+WITH join_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS sale_year, si.product_id, si.units_sold, si.line_total_eur AS revenue,
+	pr.product_name, pr.category, pr.subcategory, pr.brand
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id),
+agg_tab AS (
+SELECT sale_year, category, SUM(revenue) AS revenue
+FROM join_tab
+GROUP BY sale_year, category),
+rank_tab AS (
+SELECT sale_year, category, revenue, DENSE_RANK() OVER (PARTITION BY sale_year ORDER BY revenue DESC) AS ranking
+FROM agg_tab)
+SELECT sale_year, ranking, category, CONCAT('€', FORMAT(revenue, 2)) AS revenue
+FROM rank_tab
+WHERE ranking <= 10
+ORDER BY sale_year DESC, ranking ASC;
+```
+
+`r end_code()`
+
+**SQL approach for @tbl-tab14**
+
+1. Join sales to sale items and cleaned product metadata, extracting the sale year and line-item revenue.
+2. Sum line-item revenue by year and brand.
+3. Rank brands by revenue within each year using `DENSE_RANK()`.
+4. Return brands with a rank up to 10 for each year, sorted by year and rank.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q12_3", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Top 10 brands by revenue for 2022 through 2025 (Table 5.16)
+WITH join_tab AS (
+SELECT EXTRACT(YEAR FROM sale_timestamp) AS sale_year, si.product_id, si.units_sold, si.line_total_eur AS revenue,
+	pr.product_name, pr.category, pr.subcategory, pr.brand
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id),
+agg_tab AS (
+SELECT sale_year, brand, SUM(revenue) AS revenue
+FROM join_tab
+GROUP BY sale_year, brand),
+rank_tab AS (
+SELECT sale_year, brand, revenue, DENSE_RANK() OVER (PARTITION BY sale_year ORDER BY revenue DESC) AS ranking
+FROM agg_tab)
+SELECT sale_year, ranking, brand, CONCAT('€', FORMAT(revenue, 2)) AS revenue
+FROM rank_tab
+WHERE ranking <= 10
+ORDER BY sale_year DESC, ranking ASC;
+```
+
+`r end_code()`
+
+**Results**
+
+
+```{r}
+#| label: tbl-tab12
+#| echo: false
+#| tbl-cap: "Top 10 products by revenue for 2022–2025."
+x <- knitr::kable(sql_q12,
+             col.names = c("Year", "Sales ranking", "Product name", "Total revenue"), align = c("r", "r", "l", "r"), format = "pipe")
+x
+```
+
+
+
+```{r}
+#| label: tbl-tab13
+#| echo: false
+#| tbl-cap: "Product categories ranked by revenue for 2022–2025."
+x <- knitr::kable(sql_q12_2,
+             col.names = c("Year", "Sales ranking", "Product category", "Total revenue"), align = c("r", "r", "l", "r"), format = "pipe")
+x
+```
+
+
+```{r}
+#| label: tbl-tab14
+#| echo: false
+#| tbl-cap: "Top 10 brands by revenue for 2022–2025."
+x <- knitr::kable(sql_q12_3,
+             col.names = c("Year", "Sales ranking", "Brand", "Total revenue"), align = c("r", "r", "l", "r"), format = "pipe")
+x
+```
+
+Across 2022–2025, **Silverline Acoustic Guitar Advanced 945 Navy** ranked first among individual products by line-item revenue. In 2025, **Guitars & Basses** was the leading category at **€42.62 million**, while **Westwerk** was the top brand at **€8.98 million**, followed by Silverline at **€7.95 million**. The company should protect availability and prominent merchandising for proven revenue drivers, and use category and brand strength to guide supplier and inventory planning. These rankings describe revenue, not profit or unit sales, so decisions about expanding stock or promotional support should also account for margin, units sold, availability, and price changes.
+
+
+### Which products are growing?
+
+**SQL approach for @tbl-tab15**
+
+1. Join `sales`, `sale_items`, and `products_cleaned` tables on `sale_id` and `product_id`. Keep only entries of products available from the very start of 2024.
+2. Sum units sold and revenue by product and quarter.
+3. Create lag variables for units sold and revenue containing the values of the previous year's quarter.
+4. Compute change in revenue and units sold with respect to previous year's quarter and keep only entries for 2025.
+5. Create an indicator that equals 1 when a change (both in revenue and units sold) from a 2024 quarter to the corresponding 2025 quarter was positive, and 0 otherwise. Sum the indicator by product and keep only those, where the changes for all four quarters were positive.
+6. Sum up revenue and units sold for the entirety of 2025 for the remaining products and join with further products details. Order (descending) by increase in revenue.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q13", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Products growing in each of the four quarters both by
+# revenue generated and units sold with respect to the
+# corresponding quarter of 2024 (Table 5.17)
+WITH join_tab AS (
+SELECT EXTRACT(YEAR FROM sa.sale_timestamp) AS sale_year, EXTRACT(QUARTER FROM sa.sale_timestamp) AS sale_quarter,
+	si.product_id, pr.product_name, pr.category, si.units_sold, si.line_total_eur
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE sa.sale_timestamp >= '2024-01-01' AND pr.available_from <= '2024-01-01'),
+sum_tab AS (
+SELECT sale_year, sale_quarter, product_id, product_name, category,
+	SUM(units_sold) AS units_sold, SUM(line_total_eur) AS revenue
+FROM join_tab
+GROUP BY sale_year, sale_quarter, product_id),
+lag_tab AS (
+SELECT sale_year, sale_quarter, product_id, product_name, category,
+	units_sold AS units_sold_2025, LAG(units_sold, 1) OVER (PARTITION BY product_id, sale_quarter ORDER BY sale_year ASC) AS units_sold_2024,
+    revenue AS revenue_2025, LAG(revenue, 1) OVER (PARTITION BY product_id, sale_quarter ORDER BY sale_year ASC) AS revenue_2024
+FROM sum_tab),
+diff_tab AS (
+SELECT sale_year, sale_quarter, product_id, product_name, category,
+	units_sold_2024, units_sold_2025, revenue_2024, revenue_2025,
+	units_sold_2025 - units_sold_2024 AS change_us_abs,
+    100 * (units_sold_2025 - units_sold_2024) / units_sold_2024 AS change_us_rel,
+    revenue_2025 - revenue_2024 AS change_rev_abs,
+    100 * (revenue_2025 - revenue_2024) / revenue_2024 AS change_rev_rel
+FROM lag_tab
+WHERE sale_year = 2025),
+idx_tab AS (
+SELECT sale_year, product_id, product_name, category,
+    SUM(CASE WHEN change_us_abs > 0 AND change_rev_abs > 0 THEN 1 ELSE 0 END) AS idx
+FROM diff_tab
+GROUP BY product_id)
+SELECT it.product_name, it.category,
+	FORMAT(SUM(dt.units_sold_2025), 0) AS units_sold,
+    FORMAT(SUM(dt.change_us_abs), 0) AS increase_units_sold,
+	CONCAT('€', FORMAT(SUM(dt.revenue_2025), 2)) AS revenue,
+    CONCAT('+€', FORMAT(SUM(dt.change_rev_abs), 2)) AS increase_revenue
+FROM idx_tab AS it
+INNER JOIN diff_tab AS dt ON it.product_id = dt.product_id
+WHERE it.idx = 4
+GROUP BY it.product_id
+ORDER BY SUM(dt.change_rev_abs) DESC;
+```
+
+
+`r end_code()`
+
+
+**Results**
+
+```{r}
+#| label: tbl-tab15
+#| echo: false
+#| tbl-cap: "Products with positive growth (in simultaneously revenue and units sold) in each quarter of 2025 with respect to the corresponding 2024 quarter."
+x <- knitr::kable(sql_q13,
+             col.names = c("Product", "Category", "Units sold", "Increase (units sold)", "Revenue", "Increase (revenue)"), align = c("l", "l", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+The table includes products whose units sold and line-item revenue both increased in each of the four quarters of 2025 relative to the matching quarter of 2024. This strict filter highlights sustained growth rather than a single-quarter spike, and the table is ordered by summed absolute revenue increase. These products are candidates for stronger availability, replenishment attention, and targeted merchandising or marketing. Before increasing commitments, the company should check contribution margin, inventory requirements, and supplier reliability; the growth pattern alone does not establish profitability or explain why sales increased.
+
+### Which products have poor sales?
+
+**SQL approach for @tbl-tab16**
+
+1. Join the `sales`, `sale_items`, and `products_cleaned` tables on `sale_id` and `product_id`.
+2. Sum revenue and units sold by product and filter for year 2025 and items being sold the entire year.
+3. Filter by `units_sold <= 5` and `revenue <= 500`.
+
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q14", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Products with poor sales in 2025 (Table 5.18)
+WITH agg_tab AS (
+SELECT si.product_id, pr.product_name, SUM(si.units_sold) AS units_sold, SUM(si.line_total_eur) AS revenue
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025 AND pr.available_from <= '2025-01-01'
+GROUP BY product_id
+ORDER BY SUM(si.line_total_eur) ASC)
+SELECT product_name, FORMAT(units_sold, 0), CONCAT('€', FORMAT(revenue, 2))
+FROM agg_tab
+WHERE units_sold <= 5 AND revenue <= 500;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab16
+#| echo: false
+#| tbl-cap: "Products with poor sales performance in 2025. They have simultaneously not sold more than five units and not made more than €500,00 in total revenue."
+x <- knitr::kable(sql_q14,
+             col.names = c("Product", "Units sold", "Revenue"), align = c("l", "r", "r"), format = "pipe")
+x
+```
+
+The table flags products available by 1 January 2025 that met both thresholds in the 2025 data: no more than five units sold and no more than €500 in line-item revenue. Treat this as a shortlist for assortment review, not an automatic delisting rule. For each item, the company should compare contribution margin, inventory on hand, carrying costs, time on sale, stock availability, and marketing exposure; reduce replenishment or discontinue products only when the full commercial case supports that decision.
+
+### How concentrated is revenue among products?
+
+**SQL approach for @tbl-tab17**
+
+1. Join `sale`, `sale_items`, and `products_cleaned` tables on `sale_id` and `product_id`.
+2. Compute the sum of revenue in 2025 by product.
+3. Generate a table containing histogram bin borders via cross joins.
+4. Join revenue and bin border tables.
+5. Count occurrences per interval.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q15", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+# Histogram of revenue by number of products (Table 5.19)
+WITH agg_tab AS (
+SELECT si.product_id, pr.product_name, SUM(si.line_total_eur) AS revenue
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025
+GROUP BY si.product_id),
+group_tab AS (
+SELECT ht.hthousands + mt.millions AS lower_bound,
+	(LEAD(ht.hthousands + mt.millions, 1) OVER (ORDER BY ht.hthousands + mt.millions ASC)) - 0.01 AS upper_bound,
+    CONCAT('[€', FORMAT(ht.hthousands + mt.millions, 2), ', €', FORMAT((LEAD(ht.hthousands + mt.millions, 1) OVER (ORDER BY ht.hthousands + mt.millions ASC)), 2), ')') AS interv FROM
+(SELECT 0 AS hthousands
+UNION ALL SELECT 100000
+UNION ALL SELECT 200000
+UNION ALL SELECT 300000
+UNION ALL SELECT 400000
+UNION ALL SELECT 500000
+UNION ALL SELECT 600000
+UNION ALL SELECT 700000
+UNION ALL SELECT 800000
+UNION ALL SELECT 900000) AS ht
+CROSS JOIN
+(SELECT 0 AS millions
+UNION ALL SELECT 1000000
+UNION ALL SELECT 2000000) AS mt
+ORDER BY ht.hthousands + mt.millions ASC),
+assign_tab AS (
+SELECT atab.product_id, gtab.interv, gtab.lower_bound
+FROM agg_tab AS atab
+LEFT JOIN group_tab AS gtab ON atab.revenue BETWEEN gtab.lower_bound AND gtab.upper_bound)
+SELECT interv, COUNT(product_id) AS count_numb
+FROM assign_tab
+GROUP BY interv, lower_bound
+ORDER BY lower_bound ASC;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab17
+#| echo: false
+#| tbl-cap: "Tabular histogram showing the number of products generating a certain amount of revenue in 2025."
+x <- knitr::kable(sql_q15,
+             col.names = c("Interval", "Count"), align = c("l", "r"), format = "pipe")
+x
+```
+
+```{sql connection = con, output.var = "sql_q15_2", warning = FALSE, echo = FALSE, purl = FALSE}
+SELECT si.product_id, pr.product_name, SUM(si.line_total_eur) AS revenue
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025
+GROUP BY si.product_id;
+```
+
+
+```{python}
+#| echo: false
+#| fig-cap: "Distribution of revenue in 2025 by number of products within specified revenue ranges."
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import matplotlib.ticker as ticker
+
+rev_vec = r.sql_q15_2['revenue'].to_numpy()
+fig, ax = plt.subplots(1, 1, figsize = (10, 6))
+sns.histplot(rev_vec, binwidth = 10000, binrange = (0, 1610000), ax = ax,
+  kde = True,   color = '#ADD8E6', edgecolor = 'black', alpha = 1,
+  line_kws = {
+    'color': '#00008B',
+    'linewidth': 3,
+    'linestyle': '-'
+  });
+ax.lines[0].set_color("#00008B");
+ax.set_xlabel('Revenue by product in 2025');
+ax.set_ylabel('Number of products');
+ax.set_title('Distribution of product-level revenue in 2025');
+ax.xaxis.set_major_formatter(ticker.StrMethodFormatter('€{x:,.0f}'));
+ax.yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}'));
+ax.grid(axis = 'y');
+ax.set_axisbelow(True);
+```
+
+The table and histogram group products by total line-item revenue in 2025, so the count in each band indicates how many products fall within that revenue range rather than how much total revenue the band contributes. The company can use these bands to make assortment decisions at different levels: protect availability for important revenue contributors and review lower-revenue items for demand, contribution margin, carrying costs, and their role in covering customer needs. Because the distribution does not by itself show margin, unit sales, or reliance on individual products, revenue bands should inform—not determine—stocking and delisting decisions.
+
+### Which products are newly introduced?
+
+**SQL approach for @tbl-tab18**
+
+1. Join sales and sale-item records to cleaned product metadata, then keep products whose `available_from` date falls in 2025.
+2. Sum units sold and line-item revenue for each product.
+3. Sort products by revenue in descending order and return the first 20.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q16", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+SELECT pr.product_name, pr.category, DATE_FORMAT(pr.available_from, '%Y-%m-%d') AS available_from,
+	FORMAT(SUM(si.units_sold), 0) AS units_sold,
+	CONCAT('€', FORMAT(SUM(si.line_total_eur), 2)) AS revenue
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM pr.available_from) = 2025
+GROUP BY si.product_id
+ORDER BY SUM(si.line_total_eur) DESC
+LIMIT 20;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab18
+#| echo: false
+#| tbl-cap: "Top 20 of products in 2025 (by revenue generated) newly introduced in 2025."
+x <- knitr::kable(sql_q16,
+             col.names = c("Product", "Category", "Introduced at", "Sold units", "Revenue"), align = c("l", "l", "r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab18 lists up to 20 products introduced in 2025 that generated recorded sales, ordered by their line-item revenue for the year. Units sold and revenue describe their observed sales during 2025, but products became available at different points in the year, so their totals are not directly comparable as full-year performance. Newly introduced products with no recorded sales are not included. The company should judge launches in relation to time available for sale and early sell-through, provide targeted visibility for promising products, and avoid withdrawing a recent launch solely because it had fewer selling days than established items.
+
+### Which products have been discontinued?
+
+**SQL approach for @tbl-tab19**
+
+1. Join sales and sale-item records to cleaned product metadata to retrieve product names, categories, units, and line-item revenue.
+2. Keep sales made in 2025 for products whose recorded `discontinued_at` date falls in 2025.
+3. Sum units sold and revenue by product, sort by revenue in descending order, and return up to 20 products.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q17", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+SELECT pr.product_name, pr.category, DATE_FORMAT(pr.discontinued_at, '%Y-%m-%d') AS discontinued_at,
+	FORMAT(SUM(si.units_sold), 0) AS units_sold, 
+    CONCAT('€', FORMAT(SUM(si.line_total_eur), 2)) AS revenue
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) = 2025 AND EXTRACT(YEAR FROM pr.discontinued_at) = 2025
+GROUP BY si.product_id
+ORDER BY SUM(si.line_total_eur) DESC
+LIMIT 20;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab19
+#| echo: false
+#| tbl-cap: "Top 20 of products in 2025 (by revenue generated) discontinued in 2025."
+x <- knitr::kable(sql_q17,
+             col.names = c("Product", "Category", "Discontinued at", "Sold units", "Revenue"), align = c("l", "l", "r", "r", "r"), format = "pipe")
+x
+```
+
+@tbl-tab19 lists up to 20 products discontinued in 2025 that also had recorded sales during 2025, ordered by total line-item revenue. These values describe sales across the calendar year; they are not necessarily sales made before each product's discontinuation date, so they should not be treated as pre-discontinuation demand alone. The company can use the list to plan substitute products, communicate replacements to repeat buyers, and manage remaining inventory. Clearance, replacement, and customer-notification decisions should account for the timing of discontinuation, stock on hand, and profitability.
+
+## Pricing
+
+### Which products experienced major price changes?
+
+**SQL approach for @tbl-tab20**
+
+1. Join cleaned product details to price-history records and exclude products first available in 2025.
+2. Use `LAG()` within each product's price history to retrieve the preceding price for every price change.
+3. Keep price changes introduced in 2025 and calculate absolute and relative differences from the preceding price.
+4. Retain changes of at least +12% or at most -9%, and sort the results by the signed price difference in descending order.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q18", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+WITH join_tab AS (
+SELECT pr.product_id, pr.product_name, pr.category, pr.available_from, pp.offered_price_eur, pp.introduced_at
+FROM products_cleaned AS pr
+INNER JOIN product_prices AS pp ON pr.product_id = pp.product_id
+WHERE EXTRACT(YEAR FROM available_from) < 2025),
+lag_tab AS (
+SELECT product_id, product_name, category, available_from, offered_price_eur, introduced_at, LAG(offered_price_eur, 1) OVER (PARTITION BY product_id ORDER BY introduced_at ASC) AS offered_price_eur_lag1
+FROM join_tab),
+fin_tab AS (
+SELECT product_id, product_name, category, introduced_at, offered_price_eur_lag1 AS previous_price, offered_price_eur AS new_price,
+	offered_price_eur - offered_price_eur_lag1 AS price_change,
+	ROUND(100 * (offered_price_eur - offered_price_eur_lag1) / offered_price_eur_lag1, 2) AS rel_price_change
+FROM lag_tab
+WHERE EXTRACT(YEAR FROM introduced_at) = 2025
+ORDER BY product_id ASC, introduced_at ASC)
+SELECT product_name, category, DATE_FORMAT(introduced_at, '%Y-%m-%d') AS introduced_at,
+	CONCAT('€', FORMAT(previous_price, 2)) AS previous_price,
+    CONCAT('€', FORMAT(new_price, 2)) AS new_price,
+	CASE
+		WHEN price_change >= 0 THEN CONCAT('+€', FORMAT(price_change, 2))
+        WHEN price_change < 0 THEN CONCAT('-€', FORMAT(ABS(price_change), 2))
+	END AS price_change_abs,
+    CASE
+		WHEN rel_price_change >= 0 THEN CONCAT('+', FORMAT(rel_price_change, 2), '%')
+        WHEN rel_price_change < 0 THEN CONCAT('-', FORMAT(ABS(rel_price_change), 2), '%')
+	END AS rel_price_change
+FROM fin_tab
+WHERE rel_price_change >= 12 OR rel_price_change <= -9
+ORDER BY price_change DESC;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab20
+#| echo: false
+#| tbl-cap: "Products in 2025 with the strongest (positive and negative) relative price changes."
+x <- knitr::kable(sql_q18,
+             col.names = c("Product", "Category", "New price date", "Old price", "New price", 'Price change (abs.)', 'Price change (rel.)'), align = c("l", "l", "r", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+The table identifies price revisions introduced in 2025 that crossed at least one predefined threshold: an increase of 12% or more, or a decrease of 9% or more. Because the thresholds are not symmetric, the table is a targeted screen rather than a complete list of all price changes, and changes between -9% and +12% are omitted. The company should review these larger changes against units sold, realised selling price, competitor positioning where available, and contribution margin. A price movement alone does not show whether demand or profitability improved, so broad price changes should not be based on this list in isolation.
+
+### Which products increased in price without losing much volume?
+
+**SQL approach for @tbl-tab21**
+
+1. Join sales from 2024–2025 to sale items and product details, and build effective price intervals from each product's price history using `LAG()` and `LEAD()`.
+2. Select price changes effective in 2025 and assign sales timestamps within a 56-day window centered on each change (28 days on either side).
+3. Aggregate units sold for records classified as before and after the change, then calculate the changes in unit volume and price.
+4. Retain cases with a price increase and no decrease in units sold, returning up to 15 rows.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q20", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+WITH join_tab_2025 AS (
+SELECT pr.product_id, pr.product_name, sa.sale_timestamp, si.units_sold
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) >= 2024),
+price_changes AS (
+SELECT pr.product_id, 
+	LAG(pp.offered_price_eur, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC) AS previous_price,
+	pp.offered_price_eur AS new_price, pp.introduced_at,
+    CASE
+		WHEN LEAD(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC) IS NULL THEN CAST('2025-12-31 23:59:59' AS DATETIME)
+        ELSE DATE_SUB(LEAD(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC), INTERVAL 1 SECOND)
+	END AS end_at
+FROM products_cleaned AS pr
+INNER JOIN product_prices AS pp ON pr.product_id = pp.product_id),
+base_tab AS (
+SELECT jt.product_id, jt.product_name, jt.sale_timestamp, jt.units_sold,
+	pc.previous_price, pc.new_price, pc.introduced_at, pc.end_at
+FROM join_tab_2025 AS jt
+LEFT JOIN price_changes AS pc ON jt.product_id = pc.product_id AND (jt.sale_timestamp BETWEEN pc.introduced_at AND pc.end_at)
+WHERE (EXTRACT(YEAR FROM sale_timestamp) BETWEEN 2024 AND 2025) # AND pc.previous_price IS NOT NULL
+ORDER BY jt.product_id, jt.sale_timestamp),
+rank_tab AS (
+SELECT product_id, introduced_at, end_at, ROW_NUMBER() OVER (PARTITION BY product_id, introduced_at ORDER BY introduced_at DESC) AS ranking 
+FROM base_tab
+WHERE EXTRACT(YEAR FROM introduced_at) = 2025
+ORDER BY product_id, introduced_at, ROW_NUMBER() OVER (PARTITION BY product_id, introduced_at ORDER BY introduced_at DESC)),
+assign_tab AS (
+SELECT product_id, DATE_SUB(introduced_at, INTERVAL 28 DAY) AS left_bound, DATE_SUB(DATE_ADD(introduced_at, INTERVAL 28 DAY), INTERVAL 1 SECOND) AS right_bound,
+	CONCAT(product_id, '_', DATE_SUB(introduced_at, INTERVAL 28 DAY), '_', DATE_SUB(DATE_ADD(introduced_at, INTERVAL 28 DAY), INTERVAL 1 SECOND)) AS category
+FROM rank_tab
+WHERE ranking = 1),
+jtab AS (
+SELECT t1.product_id, t1.product_name, t1.sale_timestamp, t1.units_sold,
+	t1.previous_price, t1.new_price, t1.introduced_at, t1.end_at,
+    t2.category
+FROM base_tab AS t1
+LEFT JOIN assign_tab AS t2 ON t1.product_id = t2.product_id AND (t1.sale_timestamp BETWEEN t2.left_bound AND t2.right_bound)
+WHERE t2.category IS NOT NULL
+ORDER BY t1.product_id ASC, t1.sale_timestamp ASC),
+ba_tab AS (
+SELECT product_id, product_name, sale_timestamp, units_sold, previous_price, new_price, introduced_at,
+	end_at, category,
+    CASE
+		WHEN introduced_at < CAST(SUBSTRING(category, LOCATE('_', category) + 1, 19) AS DATETIME) THEN 'before'
+        ELSE 'after'
+	END AS before_after
+FROM jtab),
+sum_tab AS (
+SELECT product_id, product_name, SUM(units_sold) AS units_sold, introduced_at, previous_price, new_price, category, before_after
+FROM ba_tab
+GROUP BY category, before_after, product_id, introduced_at, previous_price, new_price),
+lagged_tab AS (
+SELECT product_id, product_name,
+	CASE
+		WHEN LAG(units_sold, 1) OVER(PARTITION BY category ORDER BY introduced_at ASC) IS NULL THEN 0
+        ELSE LAG(units_sold, 1) OVER(PARTITION BY category ORDER BY introduced_at ASC)
+	END AS units_sold_before,
+    units_sold AS units_sold_after, introduced_at, previous_price, new_price, category, before_after
+FROM sum_tab),
+result_tab AS (
+SELECT product_id, product_name, units_sold_before, units_sold_after,
+	units_sold_after - units_sold_before AS units_change_abs,
+  ROUND(100 * (units_sold_after - units_sold_before) / units_sold_before, 2) AS units_change_rel,
+  introduced_at, previous_price, new_price,
+  new_price - previous_price AS price_change_abs,
+  ROUND(100 * (new_price - previous_price) / previous_price, 2) AS price_change_rel
+FROM lagged_tab
+WHERE before_after = 'after'
+ORDER BY product_id ASC, introduced_at ASC)
+SELECT product_id, product_name, units_sold_before, units_sold_after,
+	CONCAT('+', FORMAT(units_change_abs, 0)) AS units_change_abs,
+    CONCAT('+', FORMAT(units_change_rel, 2), '%') AS units_change_rel,
+    introduced_at,
+    CONCAT('€', FORMAT(previous_price, 2)) AS previous_price, 
+    CONCAT('€', FORMAT(new_price, 2)) AS new_price,
+    CASE
+      WHEN price_change_abs >= 0 THEN CONCAT('+€', FORMAT(price_change_abs, 2))
+      WHEN price_change_abs < 0 THEN CONCAT('-€', FORMAT(ABS(price_change_abs), 2))
+    END AS price_change_abs,
+    CASE
+      WHEN price_change_rel >= 0 THEN CONCAT('+', FORMAT(price_change_rel, 2), '%')
+      WHEN price_change_rel < 0 THEN CONCAT('-', FORMAT(ABS(price_change_rel), 2), '%')
+    END AS price_change_rel
+FROM result_tab
+WHERE (units_change_abs >= 0) AND (price_change_abs > 0)
+LIMIT 15;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab21
+#| echo: false
+#| tbl-cap: "Selected list of items with price increases but stable or increasing sales volumes."
+x <- knitr::kable(sql_q20,
+             col.names = c("Product ID", "Product name", "Units (before)", "Units (after)", "Unit change (abs.)", 'Unit change (rel.)', 'New price effective', 'Price old', 'Price new', 'Price change (abs.)', 'Price change (rel.)'), align = c("r", "l", "r", "r", "r", "r", "r", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+Each listed case passes the screening condition: the price difference is positive and the computed unit-volume difference is nonnegative. The comparison uses sales assigned to a 56-day window centered on a 2025 price-change date and classified into before/after groups. These products are candidates for a pricing review because the observed increase was not accompanied by lower units in the selected window. The company should check contribution margin and a longer sales period before retaining or testing a higher price; seasonality, promotions, stock availability, and other factors can affect short-term volume. The query returns at most 15 matching rows.
+
+### Which products became cheaper but sold considerably more?
+
+**SQL approach for @tbl-tab22**
+
+1. Join 2024–2025 sales to sale items and product details, and reconstruct the effective price intervals from the price history.
+2. For price changes effective in 2025, assign sales timestamps within a 56-day window centered on each change and classify records as before or after using the price-history dates.
+3. Calculate absolute and relative changes in units sold and price, then keep price decreases associated with an increase of at least eight units sold.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q21", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+WITH join_tab_2025 AS (
+SELECT pr.product_id, pr.product_name, sa.sale_timestamp, si.units_sold
+FROM sales AS sa
+INNER JOIN sale_items AS si ON sa.sale_id = si.sale_id
+LEFT JOIN products_cleaned AS pr ON si.product_id = pr.product_id
+WHERE EXTRACT(YEAR FROM sa.sale_timestamp) >= 2024),
+price_changes AS (
+SELECT pr.product_id, 
+	LAG(pp.offered_price_eur, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC) AS previous_price,
+	pp.offered_price_eur AS new_price, pp.introduced_at,
+    CASE
+		WHEN LEAD(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC) IS NULL THEN CAST('2025-12-31 23:59:59' AS DATETIME)
+        ELSE DATE_SUB(LEAD(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at ASC), INTERVAL 1 SECOND)
+	END AS end_at
+FROM products_cleaned AS pr
+INNER JOIN product_prices AS pp ON pr.product_id = pp.product_id),
+base_tab AS (
+SELECT jt.product_id, jt.product_name, jt.sale_timestamp, jt.units_sold,
+	pc.previous_price, pc.new_price, pc.introduced_at, pc.end_at
+FROM join_tab_2025 AS jt
+LEFT JOIN price_changes AS pc ON jt.product_id = pc.product_id AND (jt.sale_timestamp BETWEEN pc.introduced_at AND pc.end_at)
+WHERE (EXTRACT(YEAR FROM sale_timestamp) BETWEEN 2024 AND 2025) # AND pc.previous_price IS NOT NULL
+ORDER BY jt.product_id, jt.sale_timestamp),
+rank_tab AS (
+SELECT product_id, introduced_at, end_at, ROW_NUMBER() OVER (PARTITION BY product_id, introduced_at ORDER BY introduced_at DESC) AS ranking 
+FROM base_tab
+WHERE EXTRACT(YEAR FROM introduced_at) = 2025
+ORDER BY product_id, introduced_at, ROW_NUMBER() OVER (PARTITION BY product_id, introduced_at ORDER BY introduced_at DESC)),
+assign_tab AS (
+SELECT product_id, DATE_SUB(introduced_at, INTERVAL 28 DAY) AS left_bound, DATE_SUB(DATE_ADD(introduced_at, INTERVAL 28 DAY), INTERVAL 1 SECOND) AS right_bound,
+	CONCAT(product_id, '_', DATE_SUB(introduced_at, INTERVAL 28 DAY), '_', DATE_SUB(DATE_ADD(introduced_at, INTERVAL 28 DAY), INTERVAL 1 SECOND)) AS category
+FROM rank_tab
+WHERE ranking = 1),
+jtab AS (
+SELECT t1.product_id, t1.product_name, t1.sale_timestamp, t1.units_sold,
+	t1.previous_price, t1.new_price, t1.introduced_at, t1.end_at,
+    t2.category
+FROM base_tab AS t1
+LEFT JOIN assign_tab AS t2 ON t1.product_id = t2.product_id AND (t1.sale_timestamp BETWEEN t2.left_bound AND t2.right_bound)
+WHERE t2.category IS NOT NULL
+ORDER BY t1.product_id ASC, t1.sale_timestamp ASC),
+ba_tab AS (
+SELECT product_id, product_name, sale_timestamp, units_sold, previous_price, new_price, introduced_at,
+	end_at, category,
+    CASE
+		WHEN introduced_at < CAST(SUBSTRING(category, LOCATE('_', category) + 1, 19) AS DATETIME) THEN 'before'
+        ELSE 'after'
+	END AS before_after
+FROM jtab),
+sum_tab AS (
+SELECT product_id, product_name, SUM(units_sold) AS units_sold, introduced_at, previous_price, new_price, category, before_after
+FROM ba_tab
+GROUP BY category, before_after, product_id, introduced_at, previous_price, new_price),
+lagged_tab AS (
+SELECT product_id, product_name,
+	CASE
+		WHEN LAG(units_sold, 1) OVER(PARTITION BY category ORDER BY introduced_at ASC) IS NULL THEN 0
+        ELSE LAG(units_sold, 1) OVER(PARTITION BY category ORDER BY introduced_at ASC)
+	END AS units_sold_before,
+    units_sold AS units_sold_after, introduced_at, previous_price, new_price, category, before_after
+FROM sum_tab),
+result_tab AS (
+SELECT product_id, product_name, units_sold_before, units_sold_after,
+	units_sold_after - units_sold_before AS units_change_abs,
+  ROUND(100 * (units_sold_after - units_sold_before) / units_sold_before, 2) AS units_change_rel,
+  introduced_at, previous_price, new_price,
+  new_price - previous_price AS price_change_abs,
+  ROUND(100 * (new_price - previous_price) / previous_price, 2) AS price_change_rel
+FROM lagged_tab
+WHERE before_after = 'after'
+ORDER BY product_id ASC, introduced_at ASC)
+SELECT product_id, product_name, units_sold_before, units_sold_after,
+	CONCAT('+', FORMAT(units_change_abs, 0)) AS units_change_abs,
+    CONCAT('+', FORMAT(units_change_rel, 2), '%') AS units_change_rel,
+    introduced_at,
+    CONCAT('€', FORMAT(previous_price, 2)) AS previous_price, 
+    CONCAT('€', FORMAT(new_price, 2)) AS new_price,
+    CASE
+      WHEN price_change_abs >= 0 THEN CONCAT('+€', FORMAT(price_change_abs, 2))
+      WHEN price_change_abs < 0 THEN CONCAT('-€', FORMAT(ABS(price_change_abs), 2))
+    END AS price_change_abs,
+    CASE
+      WHEN price_change_rel >= 0 THEN CONCAT('+', FORMAT(price_change_rel, 2), '%')
+      WHEN price_change_rel < 0 THEN CONCAT('-', FORMAT(ABS(price_change_rel), 2), '%')
+    END AS price_change_rel
+FROM result_tab
+WHERE units_change_abs >= 8 AND price_change_abs < 0;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab22
+#| echo: false
+#| tbl-cap: "Selected list of items with price drops and considerable volume increase."
+x <- knitr::kable(sql_q21,
+             col.names = c("Product ID", "Product name", "Units (before)", "Units (after)", "Unit change (abs.)", 'Unit change (rel.)', 'New price effective', 'Price old', 'Price new', 'Price change (abs.)', 'Price change (rel.)'), align = c("r", "l", "r", "r", "r", "r", "r", "r", "r", "r", "r"), format = "pipe")
+x
+```
+
+The table contains cases where the computed price difference is negative and the computed unit-volume increase is at least eight units. These are products for which the before/after comparison shows a price drop alongside higher volume. Because selection is based on an absolute unit increase, products with different starting sales volumes can qualify; compare both unit and percentage changes, and check whether the added volume generated enough contribution to offset the lower price. The association is not proof that the price reduction caused the increase, since seasonality, promotions, stock availability, and other factors may also influence sales.
+
+### Which brands/categories have the highest prices?
+
+**SQL approach for [@tbl-tab23; @tbl-tab24]**
+
+1. Join cleaned product metadata to product-price history and use `LAG()` to retrieve the three most recent recorded prices and their effective dates.
+2. Treat a missing discontinuation date as 31 December 2025, calculate the number of days each of the tracked prices applied during 2025, and derive a time-weighted average price for each product.
+3. Average these product-level prices by brand and return the ten highest brand averages; separately average them by category and sort the categories from highest to lowest.
+
+`r start_code()`
+
+```{sql connection = con, output.var = "sql_q22", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+WITH base_tab AS (
+SELECT pr.product_id, pr.product_name, pr.brand, pr.category,
+	LAG(pp.offered_price_eur, 2) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS price_lag2,
+    LAG(pp.offered_price_eur, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS price_lag1,
+    pp.offered_price_eur AS price_lag0,
+	LAG(pp.introduced_at, 2) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS intro_lag2,
+    LAG(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS intro_lag1,
+    pp.introduced_at AS intro_lag0,
+    pr.available_from,
+    CASE
+		WHEN pr.discontinued_at IS NULL THEN CAST('2025-12-31 23:59:59' AS DATETIME)
+        ELSE pr.discontinued_at
+	END AS discontinued_at
+FROM products_cleaned AS pr
+INNER JOIN product_prices AS pp ON pr.product_id = pp.product_id),
+rank_tab AS (
+SELECT product_id, product_name, brand, category, price_lag2, price_lag1, price_lag0,
+	intro_lag2, intro_lag1, intro_lag0, available_from, discontinued_at,
+    ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY intro_lag0 DESC) AS ranking
+FROM base_tab),
+timediff_tab AS (
+SELECT product_id, product_name, brand, category, price_lag2, price_lag1, price_lag0,
+	intro_lag2, intro_lag1, intro_lag0, available_from, discontinued_at,
+    CASE
+		WHEN EXTRACT(YEAR FROM intro_lag1) = 2025 AND EXTRACT(YEAR FROM intro_lag2) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag2, intro_lag1) / 86400
+        WHEN EXTRACT(YEAR FROM intro_lag1) = 2025 AND EXTRACT(YEAR FROM intro_lag2) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), intro_lag1) / 86400
+        ELSE 0
+	END AS timediff_21,
+    CASE
+		WHEN EXTRACT(YEAR FROM intro_lag0) = 2025 AND EXTRACT(YEAR FROM intro_lag1) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag1, intro_lag0) / 86400
+        WHEN EXTRACT(YEAR FROM intro_lag0) = 2025 AND EXTRACT(YEAR FROM intro_lag1) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), intro_lag0) / 86400
+        ELSE 0
+	END AS timediff_10,    
+    CASE
+		WHEN EXTRACT(YEAR FROM discontinued_at) = 2025 AND EXTRACT(YEAR FROM intro_lag0) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag0, discontinued_at) / 86400
+        WHEN EXTRACT(YEAR FROM discontinued_at) = 2025 AND EXTRACT(YEAR FROM intro_lag0) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), discontinued_at) / 86400
+        ELSE 0
+	END AS timediff_0e
+FROM rank_tab
+WHERE ranking = 1 AND EXTRACT(YEAR FROM discontinued_at) = 2025),
+avg_price_tab AS (
+SELECT product_id, product_name, brand, category, (price_lag2 * timediff_21 + price_lag1 * timediff_10 + price_lag0 * timediff_0e) / (timediff_21 + timediff_10 + timediff_0e) AS average_price
+FROM timediff_tab),
+ord_tab AS (
+SELECT product_id, product_name, brand, category, average_price
+FROM avg_price_tab
+ORDER BY average_price DESC)
+SELECT brand, CONCAT('€', FORMAT(ROUND(AVG(average_price), 2), 2)) AS avg_brand_price
+FROM ord_tab
+GROUP BY brand
+ORDER BY AVG(average_price) DESC
+LIMIT 10;
+```
+
+```{sql connection = con, output.var = "sql_q23", warning = FALSE, echo = TRUE, purl = sql_chunk_activator(export_type)}
+WITH base_tab AS (
+SELECT pr.product_id, pr.product_name, pr.brand, pr.category,
+	LAG(pp.offered_price_eur, 2) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS price_lag2,
+    LAG(pp.offered_price_eur, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS price_lag1,
+    pp.offered_price_eur AS price_lag0,
+	LAG(pp.introduced_at, 2) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS intro_lag2,
+    LAG(pp.introduced_at, 1) OVER (PARTITION BY pr.product_id ORDER BY pp.introduced_at) AS intro_lag1,
+    pp.introduced_at AS intro_lag0,
+    pr.available_from,
+    CASE
+		WHEN pr.discontinued_at IS NULL THEN CAST('2025-12-31 23:59:59' AS DATETIME)
+        ELSE pr.discontinued_at
+	END AS discontinued_at
+FROM products_cleaned AS pr
+INNER JOIN product_prices AS pp ON pr.product_id = pp.product_id),
+rank_tab AS (
+SELECT product_id, product_name, brand, category, price_lag2, price_lag1, price_lag0,
+	intro_lag2, intro_lag1, intro_lag0, available_from, discontinued_at,
+    ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY intro_lag0 DESC) AS ranking
+FROM base_tab),
+timediff_tab AS (
+SELECT product_id, product_name, brand, category, price_lag2, price_lag1, price_lag0,
+	intro_lag2, intro_lag1, intro_lag0, available_from, discontinued_at,
+    CASE
+		WHEN EXTRACT(YEAR FROM intro_lag1) = 2025 AND EXTRACT(YEAR FROM intro_lag2) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag2, intro_lag1) / 86400
+        WHEN EXTRACT(YEAR FROM intro_lag1) = 2025 AND EXTRACT(YEAR FROM intro_lag2) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), intro_lag1) / 86400
+        ELSE 0
+	END AS timediff_21,
+    CASE
+		WHEN EXTRACT(YEAR FROM intro_lag0) = 2025 AND EXTRACT(YEAR FROM intro_lag1) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag1, intro_lag0) / 86400
+        WHEN EXTRACT(YEAR FROM intro_lag0) = 2025 AND EXTRACT(YEAR FROM intro_lag1) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), intro_lag0) / 86400
+        ELSE 0
+	END AS timediff_10,    
+    CASE
+		WHEN EXTRACT(YEAR FROM discontinued_at) = 2025 AND EXTRACT(YEAR FROM intro_lag0) = 2025 THEN TIMESTAMPDIFF(SECOND, intro_lag0, discontinued_at) / 86400
+        WHEN EXTRACT(YEAR FROM discontinued_at) = 2025 AND EXTRACT(YEAR FROM intro_lag0) < 2025 THEN TIMESTAMPDIFF(SECOND, CAST('2025-01-01 00:00:00' AS DATETIME), discontinued_at) / 86400
+        ELSE 0
+	END AS timediff_0e
+FROM rank_tab
+WHERE ranking = 1 AND EXTRACT(YEAR FROM discontinued_at) = 2025),
+avg_price_tab AS (
+SELECT product_id, product_name, brand, category, (price_lag2 * timediff_21 + price_lag1 * timediff_10 + price_lag0 * timediff_0e) / (timediff_21 + timediff_10 + timediff_0e) AS average_price
+FROM timediff_tab),
+ord_tab AS (
+SELECT product_id, product_name, brand, category, average_price
+FROM avg_price_tab
+ORDER BY average_price DESC)
+SELECT category, CONCAT('€', FORMAT(ROUND(AVG(average_price), 2), 2)) AS avg_brand_price
+FROM ord_tab
+GROUP BY category
+ORDER BY AVG(average_price) DESC;
+```
+
+`r end_code()`
+
+**Results**
+
+```{r}
+#| label: tbl-tab23
+#| echo: false
+#| tbl-cap: "Top 10 brands with highest average product prices in 2025."
+x <- knitr::kable(sql_q22,
+             col.names = c('Brand', 'Average product price'), align = c("l", "r"), format = "pipe")
+x
+```
+
+```{r}
+#| label: tbl-tab24
+#| echo: false
+#| tbl-cap: "Average product prices by product category in 2025."
+x <- knitr::kable(sql_q23,
+             col.names = c('Category', 'Average product price'), align = c("l", "r"), format = "pipe")
+x
+```
+
+[@tbl-tab23; @tbl-tab24] show average product prices by brand (the ten highest averages) and category. The calculation estimates each product's average listed price using the time represented by its recorded prices in 2025, then averages across products; it is not weighted by units sold. The query includes products with no recorded discontinuation date and products discontinued in 2025, while excluding products discontinued before 2025. The company can use these rankings to inform product positioning and the balance between premium and accessible offerings, but should not assume that higher prices mean stronger demand or better profit. Unit volumes, realised prices, product-level margins, and the sales mix should inform assortment and pricing decisions.

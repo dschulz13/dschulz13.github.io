@@ -33,6 +33,7 @@ website:
       background: light
       collapse-level: 2
       contents:
+        - project_portfolio.qmd
         - research_articles.qmd
         - published_software.qmd
         - conferences.qmd

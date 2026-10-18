@@ -1,0 +1,18 @@
+---
+title: 'Portfolio projects'
+sidebar: false
+page-layout: full
+listing:
+  contents: portfolio_projects/**/*.qmd
+  sort: "date desc"
+  type: grid
+  table-hover: true
+  fields: [image, date, title, author, reading-time]
+  categories: true
+  sort-ui: true
+  filter-ui: true 
+---
+
+::: {#hero-heading}
+Find here my portfolio of practical data science applications.
+:::
