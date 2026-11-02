@@ -1,6 +1,6 @@
 ---
-title: "Identifying Negative Customer Experiences Through Text Classification Using Python: A Case Study of Amazon.com Reviews on Trustpilot"
-listing-title: "Text Classification Python Project"
+title: "Text Classification Python Project"
+description: "Identifying Negative Customer Experiences Through Text Classification Using Python: A Case Study of Amazon.com Reviews on Trustpilot"
 author: "Dominik Schulz"
 date: "2026-11-02"
 categories: [Python, project, classification, text data]
