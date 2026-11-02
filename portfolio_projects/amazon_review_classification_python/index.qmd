@@ -1,5 +1,6 @@
 ---
 title: "Identifying Negative Customer Experiences Through Text Classification Using Python: A Case Study of Amazon.com Reviews on Trustpilot"
+listing-title: "Text Classification Python Project"
 author: "Dominik Schulz"
 date: "2026-11-02"
 categories: [Python, project, classification, text data]
@@ -26,7 +27,7 @@ reticulate::use_virtualenv('C:/Users/Dominik Schulz/Documents/Private Projects/a
 
 **Note:**
 
-To access the source files of this project, please visit [https://github.com/dschulz13/amazon_review_classification_python_project](https://github.com/dschulz13/amazon_review_classification_python_project).
+To access the source files of this project, please visit <https://github.com/dschulz13/amazon_review_classification_python_project>.
 
 ```{=html}
 <style>
@@ -1420,6 +1421,7 @@ ax.set_xticklabels(ax.get_xticklabels(), rotation = 45, ha = 'right');
 
 </details>
 
+```{=html}
 <style>
 .cell-output-display, table {
   display: block !important;
@@ -1427,6 +1429,7 @@ ax.set_xticklabels(ax.get_xticklabels(), rotation = 45, ha = 'right');
   white-space: nowrap !important;
 }
 </style>
+```
 
 ```{python}
 #| echo: False
