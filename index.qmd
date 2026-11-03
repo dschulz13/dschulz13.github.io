@@ -20,7 +20,7 @@ listing:
 ::::: {.columns style="display: flex; align-items: center;"}
 ::: {.column style="width=70%;margin:0;padding:0;padding-right: 40px;text-align: justify; color: white;"}
 <p style="text-align: justify; color: white;">
-I am a **former PhD student** and a **former scientific employee** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/). My training includes **statistics** and **data science** and the focus of my research so far is on **time series analysis** as well as the **development of statistical software** in this context, in particular for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I appreciate more and more in my own workflows.
+I am a **data science professional** with training in **statistics** and **machine learning**, in particular (but not only) in the context of **time series analysis** and **predictive modelling**. As a huge part of my **doctoral studies** at the **Chair of Econometrics and Quantitative Methods**, Faculty of Business Administration and Economics, [Paderborn University](https://www.uni-paderborn.de/en/), I developed a lot of **statistical software**, especially for the [free software R](https://cran.r-project.org/). Nonetheless, I am also versatile in [MySQL](https://www.mysql.com/de/) and [Python](https://www.python.org/), which I regularly incorporate in my own data analysis workflows.
 </p>
 :::
 
