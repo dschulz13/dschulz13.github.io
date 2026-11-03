@@ -33,7 +33,11 @@ I am a **data science professional** with training in **statistics** and **machi
 <br>
 
 <p class="justification">
-This site functions both as a **personal website** and a **blog** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly. Regarding programming topics, I will mainly focus on R but also incorporate posts on SQL or Python from time to time.
+This site functions both as a **personal website** and a **[blog](blog.qmd)** (called **Stats Rsenal**) on topics related to data science, time series analysis, and programming. However, new blog posts will only appear irregularly. Regarding programming topics in the blog, I will mainly focus on R but also incorporate posts on SQL or Python from time to time.
+</p>
+
+<p class="justification">
+Also check out my **[data science project portfolio](project_portfolio.qmd)** with interesting **machine learning solutions to real-world business problems**, where different popular tools, such as **R**, **Python** and **MySQL**, are used. These **projects** are **unique** and nowhere else to be found on the internet, because they always involve data that I either scrape from the web myself or that I create synthetically for the purpose of the corresponding project.
 </p>
 
 <p class="justification">
