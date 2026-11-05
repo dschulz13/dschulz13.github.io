@@ -1473,6 +1473,6 @@ The strongest predictor is associated with the token `cancel`, which could indic
 
 Tokens such as `pay`, `paid`, and `charg` indicate problems with payment, while `delay`, `slower`, `slower`, and `alway late` suggest issues with delivery times. `useless`, `rubbish`, `instead`, `cheap`, and `break` may point to issues with wrong item delivery or the quality of products. `lie` and `promis` may suggest dissatisfaction with customer service directly due to being promised a solution for an issue and the customers feeling lied to.
 
-Amazon should therefore investigate the main reasons for dissatisfaction more clearly. We suggest monitoring delivery times in order to find bottlenecks and reasons for them. Furthermore, Amazon should should enforce stricter product quality control among its external vendors and for its own products. Moreover, the current training of customer service should be revised.
+Amazon should therefore investigate the main reasons for dissatisfaction more clearly. We suggest monitoring delivery times in order to find bottlenecks and reasons for them. Furthermore, Amazon should enforce stricter product quality control among its external vendors and for its own products. Moreover, the current training of customer service should be revised.
 
 Most importantly, it should be investigated, why cancellations happen. If customers cancel their orders themselves, the reasons should be studied. If vendors cancel frequently, clarifications for this behavior should be given and partnership with them scrutinized.
