@@ -158,7 +158,7 @@ Year:
 
 ::: col2
 <p class="job-text">
-2024
+2026
 </p>
 :::
 :::::
@@ -186,7 +186,7 @@ Version:
 
 ::: col2
 <p class="job-text">
-2.0.1
+2.0.2
 </p>
 :::
 :::::
