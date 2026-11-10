@@ -1,14 +1,8 @@
 [
   {
-    "listing": "/blog.html",
-    "items": [
-      "/blog_posts/series - class objects/0002 - intro/index.html",
-      "/blog_posts/0001 - welcome/index.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
+      "/portfolio_projects/electricity_consumption_forecasting_python/index.html",
       "/portfolio_projects/amazon_review_classification_python/index.html",
       "/portfolio_projects/music_retail_sql_project/index.html",
       "/blog_posts/series - class objects/0002 - intro/index.html",
@@ -16,8 +10,16 @@
     ]
   },
   {
+    "listing": "/blog.html",
+    "items": [
+      "/blog_posts/series - class objects/0002 - intro/index.html",
+      "/blog_posts/0001 - welcome/index.html"
+    ]
+  },
+  {
     "listing": "/project_portfolio.html",
     "items": [
+      "/portfolio_projects/electricity_consumption_forecasting_python/index.html",
       "/portfolio_projects/amazon_review_classification_python/index.html",
       "/portfolio_projects/music_retail_sql_project/index.html"
     ]

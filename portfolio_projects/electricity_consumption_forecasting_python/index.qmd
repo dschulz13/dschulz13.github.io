@@ -1,0 +1,308 @@
+---
+title: "Work in Progress: Energy Demand Forecasting Python Project"
+description: "Predicting Future High-Frequency Electricity Demand in Germany Using Flexible Tree-Powered Methods in Python"
+author: "Dominik Schulz"
+date: "2026-11-10"
+categories: [Python, project, forecasting, demand]
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: right
+number-sections: true
+crossref:
+  chapters: true
+image: energy-consumption-germany.png
+---
+
+```{r}
+#| label: setup
+#| echo: False
+#| eval: True
+#| include: False
+
+library(reticulate)
+reticulate::use_virtualenv('C:/Users/Dominik Schulz/Documents/Private Projects/energy_forecasting_python_project/.venv', required = TRUE)
+```
+
+**Note:**
+
+To access the source files of this project, please visit <https://github.com/dschulz13/energy_forecasting_python_project>.
+
+```{=html}
+<style>
+  p {
+    text-align: justify;
+  }
+</style>
+```
+
+# Executive summary
+
+**Note:** This is a work in progress and will be updated regularly.
+
+# Data
+
+The [SMARD API](https://smard.api.bund.dev/) of the German Federal Network Agency provides easy access to different energy-related time series for Germany at various observation frequencies. In this project, we will focus on forecasting an entire week (in 15-minute intervals) of the overall energy consumption in Germany using data observed with a frequency of 15 minutes. To access the data, it is recommended to use my Python extension [`smardapi`](https://github.com/dschulz13/smardapi_python), which can be easily installed from GitHub using `pip install git+https://github.com/dschulz13/smardapi_python.git` in the terminal.
+
+<details><summary>Show Python code for downloading the data</summary>
+
+```{python}
+#| echo: True
+#| eval: False
+#| include: True
+
+import smardapi as api
+import gc
+
+print(api.allowed_filter_no())
+print(api.allowed_region())
+print(api.allowed_resolution())
+
+api.specify(filter_no = 410, region = 'DE')
+api.download(resolution = 'quarterhour', start = '2015-01-01', stop = '2026-11-08 23:59:00')
+
+api.data.to_feather('German_Energy_Consumption_20150101_to_20261108.feather')
+
+del(api)
+gc.collect()
+```
+
+</details>
+
+A first overview of the data is obtained by inspecting the following 3D-figure @fig-threeD. Since Germany has winter and summer times, where in spring the clock once jumps from 02:00 AM to 03:00 AM and in fall it goes back once from 03:00 AM to 02:00 AM, a representation in German time is difficult. Therefore, for the missing times 02:00 AM, 02:15 AM, 02:30 AM, and 02:45 AM on one day each year in spring, we fill these values up for @fig-threeD by linear interpolation between the observed values at 01:45 AM and 03:00 AM. In contrast, in fall we have two sets of values during one night at 02:00 AM, 02:15 AM, 02:30 AM, and 02:45 AM. In these cases, we construct the arithmetic mean of the two available observations at each time point and consider those for @fig-threeD.
+
+<details><summary>Show Python code for the 3D graphic</summary>
+
+```{python}
+#| echo: True
+#| eval: False
+
+# Imports
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+
+# Construct the decimal year from an array with string dates
+def to_decimal_year(x):
+    year_start = pd.to_datetime(pd.to_datetime(x).dt.year.astype(str) + '-01-01')
+    next_year_start = pd.to_datetime((pd.to_datetime(x).dt.year + 1).astype(str) + '-01-01')
+    tp_date = pd.to_datetime(x)
+    return (tp_date - year_start) / (next_year_start - year_start) + tp_date.dt.year
+
+# Read in the data
+dataset = pd.read_feather('German_Energy_Consumption_20150101_to_20261108.feather')
+df_plot = dataset.copy()
+dims = dataset.shape
+
+# Time of day variable (in decimal time)
+df_plot['tof'] = dataset['Timestamp'].dt.hour + dataset['Timestamp'].dt.minute / 60
+# Decimal year variable
+df_plot['dec_year'] = to_decimal_year(dataset['Timestamp'].dt.date)
+# Drop timestamp variable
+df_plot = df_plot.drop(['Timestamp'], axis = 1)
+
+
+# Get time differences between sequential observations
+df_plot['timediff'] = 0.25   # Default of a quarter of an hour
+# Fill slots with actual time differences
+df_plot.loc[1:(dims[0] - 1), 'timediff'] = df_plot.loc[1:(dims[0] - 1), 'tof'].to_numpy() - df_plot.loc[0:(dims[0] - 2), 'tof'].to_numpy()
+# Jumps of -23.75 are when going from 11:45 PM to 00:00 AM and are
+# also equivalent to a quarter-hour progression
+df_plot.loc[df_plot['timediff'] == -23.75, 'timediff'] = 0.25
+# Identify where the clock goes back an hour
+backw_mask = df_plot['timediff'] == -0.75
+idx_backw = backw_mask[backw_mask].index
+# 
+for i in reversed(range(0, idx_backw.shape[0])):
+    idx = idx_backw[i]
+    # Replace first set of values with averages
+    df_plot.loc[(idx - 4):(idx - 1), 'Value'] = (df_plot.loc[idx:(idx + 3), 'Value'].to_numpy() + df_plot.loc[(idx - 4):(idx - 1), 'Value'].to_numpy()) / 2
+    # Drop second set of values
+    df_plot = df_plot.drop(range(idx, idx + 4), axis = 0)
+        
+# Reset the index
+df_plot = df_plot.reset_index(drop = True)
+
+dims = df_plot.shape
+
+# Get again the time differences
+df_plot.loc[1:(dims[0] - 1), 'timediff'] = df_plot.loc[1:(dims[0] - 1), 'tof'].to_numpy() - df_plot.loc[0:(dims[0] - 2), 'tof'].to_numpy()
+df_plot.loc[df_plot['timediff'] == -23.75, 'timediff'] = 0.25
+# Now identify the spots, where the clock jumps ahead
+forw_mask = df_plot['timediff'] == 1.25
+idx_forw = forw_mask[forw_mask].index
+for i in range(0, idx_forw.shape[0]):
+    # Set of missing times
+    x = np.array([2.00, 2.25, 2.5, 2.75])
+    # Available times at the boundaries
+    xp = np.array([1.75, 3.00])
+    # The observed series values at the available boundary points
+    yp = np.array([df_plot.loc[idx_forw[i].item() - 1, 'Value'].item(), df_plot.loc[idx_forw[i].item(), 'Value'].item()])
+    # Interpolate linearly
+    val_interp = np.interp(x = x, xp = xp, fp = yp)
+    # Add values to data frame
+    df_add = pd.DataFrame({
+        'Value': val_interp,
+        'tof': x,
+        'dec_year': df_plot.loc[idx_forw[i].item(), 'dec_year'].item(),
+        'timediff': 0.25
+    })
+    df_plot = pd.concat([df_plot, df_add], axis = 0)
+
+df_plot = (
+    df_plot
+        .drop(['timediff'], axis = 1)    # Drop timediff variable
+        # Sort by day and time of day
+        .sort_values(['dec_year', 'tof'], ascending = [True, True])
+        # Reset the index
+        .reset_index(drop = True)
+)
+
+# Number of available days
+nday = len(df_plot.dec_year.unique())
+# Number of available times
+ntime = len(df_plot.tof.unique())
+# Bring observed values into rectangular shape (and divide by 1000)
+values = df_plot.Value.to_numpy().reshape(nday, ntime) / 1000
+# Bring times into rectangular shape
+tof = df_plot.tof.to_numpy().reshape(nday, ntime)
+# Bring days into rectangular shape
+date = df_plot.dec_year.to_numpy().reshape(nday, ntime)
+
+# Construct surface plot (drop the scale)
+fig = go.Figure(data = [go.Surface(z = values, x = date, y = tof, colorscale = "inferno", showscale = False)])
+
+# Adjust title, labels, background color, etc.
+fig.update_layout(
+    title = 'Energy Consumption Germany',
+    scene = dict(
+        aspectmode = "cube",
+        xaxis = dict(
+            title = "Decimal year",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey",
+            autorange = "reversed"
+        ),
+        yaxis = dict(
+            title = "Time of day",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey",
+            autorange = "reversed"
+        ),
+        zaxis = dict(
+            title = "GWh",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey"
+        )
+    ),
+    paper_bgcolor = "white",
+    plot_bgcolor = "white"
+)
+```
+
+</details>
+
+```{python}
+#| echo: False
+#| eval: True
+#| include: True
+#| fig-cap: "A 3D plot of the 15-minute energy consumption in Germany."
+#| fig-height: 6
+#| label: fig-threeD
+
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+
+def to_decimal_year(x):
+    year_start = pd.to_datetime(pd.to_datetime(x).dt.year.astype(str) + '-01-01')
+    next_year_start = pd.to_datetime((pd.to_datetime(x).dt.year + 1).astype(str) + '-01-01')
+    tp_date = pd.to_datetime(x)
+    return (tp_date - year_start) / (next_year_start - year_start) + tp_date.dt.year
+
+dataset = pd.read_feather('C:/Users/Dominik Schulz/Documents/Private Projects/energy_forecasting_python_project/German_Energy_Consumption_20150101_to_20261108.feather')
+df_plot = dataset.copy()
+dims = dataset.shape
+df_plot['tof'] = dataset['Timestamp'].dt.hour + dataset['Timestamp'].dt.minute / 60
+df_plot['dec_year'] = to_decimal_year(dataset['Timestamp'].dt.date)
+df_plot = df_plot.drop(['Timestamp'], axis = 1)
+df_plot['timediff'] = 0.25
+
+df_plot.loc[1:(dims[0] - 1), 'timediff'] = df_plot.loc[1:(dims[0] - 1), 'tof'].to_numpy() - df_plot.loc[0:(dims[0] - 2), 'tof'].to_numpy()
+df_plot.loc[df_plot['timediff'] == -23.75, 'timediff'] = 0.25
+backw_mask = df_plot['timediff'] == -0.75
+idx_backw = backw_mask[backw_mask].index
+for i in reversed(range(0, idx_backw.shape[0])):
+    idx = idx_backw[i]
+    df_plot.loc[(idx - 4):(idx - 1), 'Value'] = (df_plot.loc[idx:(idx + 3), 'Value'].to_numpy() + df_plot.loc[(idx - 4):(idx - 1), 'Value'].to_numpy()) / 2
+    df_plot = df_plot.drop(range(idx, idx + 4), axis = 0)
+        
+df_plot = df_plot.reset_index(drop = True)
+
+dims = df_plot.shape
+df_plot.loc[1:(dims[0] - 1), 'timediff'] = df_plot.loc[1:(dims[0] - 1), 'tof'].to_numpy() - df_plot.loc[0:(dims[0] - 2), 'tof'].to_numpy()
+df_plot.loc[df_plot['timediff'] == -23.75, 'timediff'] = 0.25
+forw_mask = df_plot['timediff'] == 1.25
+idx_forw = forw_mask[forw_mask].index
+for i in range(0, idx_forw.shape[0]):
+    x = np.array([2.00, 2.25, 2.5, 2.75])
+    xp = np.array([1.75, 3.00])
+    yp = np.array([df_plot.loc[idx_forw[i].item() - 1, 'Value'].item(), df_plot.loc[idx_forw[i].item(), 'Value'].item()])
+    val_interp = np.interp(x = x, xp = xp, fp = yp)
+    df_add = pd.DataFrame({
+        'Value': val_interp,
+        'tof': x,
+        'dec_year': df_plot.loc[idx_forw[i].item(), 'dec_year'].item(),
+        'timediff': 0.25
+    })
+    df_plot = pd.concat([df_plot, df_add], axis = 0)
+
+df_plot = (
+    df_plot
+        .drop(['timediff'], axis = 1)
+        .sort_values(['dec_year', 'tof'], ascending = [True, True])
+        .reset_index(drop = True)
+)
+
+nday = len(df_plot.dec_year.unique())
+ntime = len(df_plot.tof.unique())
+values = df_plot.Value.to_numpy().reshape(nday, ntime) / 1000
+tof = df_plot.tof.to_numpy().reshape(nday, ntime)
+date = df_plot.dec_year.to_numpy().reshape(nday, ntime)
+
+fig = go.Figure(data = [go.Surface(z = values, x = date, y = tof, colorscale = "inferno", showscale = False)])
+fig.update_layout(
+    title = 'Energy Consumption Germany',
+    scene = dict(
+        aspectmode = "cube",
+        xaxis = dict(
+            title = "Decimal year",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey",
+            autorange = "reversed"
+        ),
+        yaxis = dict(
+            title = "Time of day",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey",
+            autorange = "reversed"
+        ),
+        zaxis = dict(
+            title = "GWh",
+            backgroundcolor = "white",
+            gridcolor = "lightgrey",
+            zerolinecolor = "lightgrey"
+        )
+    ),
+    paper_bgcolor = "white",
+    plot_bgcolor = "white"
+)
+```
+
+@fig-threeD illustrates that the available time series is highly complex. A repeating pattern within each day is observable as is a pattern over each year. Patterns at other resolutions are no visible by eye, but should be checked, too, such as weekly and monthly patterns. Furthermore, around the year 2022 there appears to be a minor drop in the overall level of the series. That aside, the series seems to be stable and without a strong long-term trend.
