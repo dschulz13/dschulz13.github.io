@@ -176,6 +176,7 @@ fig = go.Figure(data = [go.Surface(z = values, x = date, y = tof, colorscale = "
 # Adjust title, labels, background color, etc.
 fig.update_layout(
     title = 'Energy Consumption Germany',
+    margin = dict(l = 20, r = 20, t = 30, b = 15),    
     scene = dict(
         aspectmode = "cube",
         xaxis = dict(
@@ -211,7 +212,7 @@ fig.update_layout(
 #| eval: True
 #| include: True
 #| fig-cap: "A 3D plot of the 15-minute energy consumption in Germany."
-#| fig-height: 6
+#| fig-height: 7
 #| label: fig-threeD
 
 import pandas as pd
@@ -277,6 +278,7 @@ date = df_plot.dec_year.to_numpy().reshape(nday, ntime)
 fig = go.Figure(data = [go.Surface(z = values, x = date, y = tof, colorscale = "inferno", showscale = False)])
 fig.update_layout(
     title = 'Energy Consumption Germany',
+    margin = dict(l = 20, r = 20, t = 30, b = 15),
     scene = dict(
         aspectmode = "cube",
         xaxis = dict(
