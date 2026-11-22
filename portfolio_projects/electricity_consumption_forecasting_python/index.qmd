@@ -314,3 +314,142 @@ fig.update_layout(
 ```
 
 @fig-threeD illustrates that the available time series is highly complex. A repeating pattern within each day is observable as is a pattern over each year. Patterns at other resolutions are not visible by eye, but should be checked, too, such as weekly and monthly patterns. Furthermore, around the year 2022 there appears to be a minor drop in the overall level of the series. That aside, the series seems to be stable and without a strong long-term trend.
+
+# Modelling scheme
+
+We consider boosting methods based on different time, calendar and lag features. Since we want to produce quarter-hourly point forecasts of the energy consumption for an entire week, the days until October 25, 2026, are the original training observations, the days from October 26, 2026, to November 01, 2026, are used for validation, and the period from November 02, 2026, to November 08, 2026, is the final test set.
+
+Time and calendar features, including day of the week, position within each month, holidays, etc., are well-known even at future time points. To allow for one model to be able to produce forecasts for an entire week in advance, we, however, need to be careful with lag features. Since at the very last time point to forecast within the future week, only information until the last observation used for training is available, lags not smaller than one week will be considered. This, on one hand, admittedly omits the most recent information from the nearest past in the production of the forecasts, but on the other hand it allows to train only one highly tuned model for the stated objective.
+
+# Application
+
+## Feature engineering
+
+### Helper functions
+
+The following function can be used to reduce the memory of all `int` variables in a `pandas` data frame to the only needed amount.
+
+```{python}
+# Reduction of memory usage (for int variables)
+def reduce_mem_size(df, verbose = True):
+    num_types = ['int8', 'int16', 'int32', 'int64']
+
+    if verbose:
+        old_mem = (df.memory_usage().sum() / 1024**2).item()
+
+    for col in df.columns:
+        col_type = str(df[col].dtypes)
+        if col_type in num_types:
+            col_min = df[col].min()
+            col_max = df[col].max()
+            if (col_min >= np.iinfo('int8').min) & (col_max <= np.iinfo('int8').max):
+                df[col] = df[col].astype('int8')
+            elif (col_min >= np.iinfo('int16').min) & (col_max <= np.iinfo('int16').max):
+                df[col] = df[col].astype('int16')
+            elif (col_min >= np.iinfo('int32').min) & (col_max <= np.iinfo('int32').max):
+                df[col] = df[col].astype('int32')
+            else:
+                df[col] = df[col].astype('int64')
+
+    if verbose:
+        new_mem = (df.memory_usage().sum() / 1024**2).item()
+        print(f'Old memory usage: {old_mem:.2f}MB; new memory usage: {new_mem:.2f}MB; reduction of {(abs(new_mem - old_mem)):.2f}MB ({(100 * (abs(new_mem - old_mem)) / old_mem):.2f}%)')
+
+    return df
+```
+
+The next helper function reduces memory usage during the merge of two data frame by avoiding unnecessary copies of variables.
+
+```{python}
+# Saves memory by adding to existing df1 instead of creating entirely merged df
+def concat_merge(df1, df2, merge_on):
+    merged_df = df1[merge_on]
+    merged_df = merged_df.merge(df2, on = merge_on, how = 'left')
+    new_cols = [col for col in list(merged_df) if col not in merge_on]
+    df1[new_cols] = merged_df[new_cols]
+    return df1
+```
+
+Both helper functions are inspired by similar functions presented in *The Kaggle Workbook* by Banachewicz and Massaron (2023).
+
+
+### Time variables
+
+The following function creates time-related variables. In detail, the following time features are computed:
+
+- `Time`: the increasing time point number 1, 2, 3, etc.;
+- `Day`: the day number for a given day within the corresponding month (e.g. `1` for the first day in a month, `31` for the 31st of March);
+- `Month`: the month number (e.g. `1` for January, `12` for December);
+- `Weekday`: the weekday expressed as a number (e.g. `1` for Monday, `2` for Tuesday)
+- `Year`: the year number
+- `Max_Day`: the number of days within the corresponding month;
+- `Rel_Day_Month`: the relative position of a given day within its month expressed as a number between 0 and 1 (e.g. `0` is the very first day, `1` is the very last day)
+- `Hour`: the hour of the timestamp of a given observation;
+- `Minute`: the minute of a timestamp of a given observation;
+- `N_Elem_Day`: the number of observations within the corresponding day;
+- `Time_Point_In_Day`: the number of the time point of the observation within the given day (e.g. `1` for the very first observation of a day, `2` for the second one);
+- `Rel_Time_Day`: the relative position of a given observation within its day, expressed as a number between 0 and 1 (e.g. `0` is the first observation, `1` is the last one);
+- `Dec_Year`: the time point of observation (with respect to its day) expressed as the decimal year.
+
+
+```{python}
+def create_time_variables(df):
+
+    # Overal time point 1, 2, 3, ...
+    df['Time'] = df.index.astype(int) + 1
+    # Number of the day within the given month
+    df['Day'] = df['Timestamp'].dt.day
+    # Month number
+    df['Month'] = df['Timestamp'].dt.month
+    # Day within the week (1 for Monday, 2 for Tuesday, ...)
+    df['Weekday'] = df['Timestamp'].dt.day_of_week + 1
+    # Year number
+    df['Year'] = df['Timestamp'].dt.year
+    # Date as a string
+    df['Date'] = df['Timestamp'].dt.date
+
+    # The number of days within the given month
+    df['Max_Day'] = df.groupby(['Year', 'Month'])['Day'].transform('max')
+    df.loc[df['Max_Day'] == 8, 'Max_Day'] = 30  # Adjust for the last incomplete month
+
+    # Relative position of the day within the given month
+    df['Rel_Day_Month'] = (df['Day'] - 1) / (df['Max_Day'] - 1)
+
+    # Clock variables like hour and minute
+    df['Clock'] = df['Timestamp'].dt.time
+    df['Hour'] = df['Clock'].apply(lambda x: int(str(x)[:2]))
+    df['Minute'] = df['Clock'].apply(lambda x: int(str(x)[3:5]))
+
+    # Summer- or winter time variable
+    df['Summer_Winter_Time'] = (
+        df['Timestamp']
+            .dt.strftime('%z')
+            .replace(r'\+0200', 'summer', regex = True)
+            .replace(r'\+0100', 'winter', regex = True)
+            .astype('category')
+    )
+
+    # Drop unnecessary variables
+    df = df.drop(['Timestamp', 'Clock'], axis = 1)
+
+    # Number of elements in the given day
+    df['N_Elem_Day'] = df.groupby(['Year', 'Month', 'Day'])['Minute'].transform('count')
+    print(df['N_Elem_Day'].unique())   # Checks out
+    # Time point within the given day
+    df['Time_Point_In_Day'] = df.groupby(['Year', 'Month', 'Day']).cumcount() + 1
+    # Relative time point within the given day
+    df['Rel_Time_Day'] = (df['Time_Point_In_Day'] - 1) / (df['N_Elem_Day'] - 1)
+    # Day as decimal year
+    df['Dec_Year'] = to_decimal_year(df['Date'])
+    # Drop 'Date' variable
+    df = df.drop(['Date'], axis = 1)
+
+    # Reduce memory, save data frame, and garbage collection
+    df = reduce_mem_size(df, verbose = False)
+    df.to_feather('time-variables.feather')
+    del(df)
+    gc.collect()
+```
+
+
+
