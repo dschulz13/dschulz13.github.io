@@ -2,7 +2,7 @@
 title: "Work in Progress: Energy Demand Forecasting Python Project"
 description: "Predicting Future High-Frequency Electricity Demand in Germany Using Flexible Tree-Powered Methods in Python"
 author: "Dominik Schulz"
-date: "2026-11-10"
+date: "2026-11-22"
 categories: [Python, project, forecasting, demand]
 format:
   html:
@@ -62,7 +62,7 @@ print(api.allowed_resolution())
 api.specify(filter_no = 410, region = 'DE')
 api.download(resolution = 'quarterhour', start = '2015-01-01', stop = '2026-11-08 23:59:00')
 
-api.data.to_feather('German_Energy_Consumption_20150101_to_20261108.feather')
+api.data.to_feather('German_Energy_Consumption_20181001_to_20261108.feather')
 
 del(api)
 gc.collect()
@@ -91,7 +91,7 @@ def to_decimal_year(x):
     return (tp_date - year_start) / (next_year_start - year_start) + tp_date.dt.year
 
 # Read in the data
-dataset = pd.read_feather('German_Energy_Consumption_20150101_to_20261108.feather')
+dataset = pd.read_feather('German_Energy_Consumption_20181001_to_20261108.feather')
 df_plot = dataset.copy()
 dims = dataset.shape
 
@@ -178,6 +178,9 @@ fig.update_layout(
     title = 'Energy Consumption Germany',
     margin = dict(l = 20, r = 20, t = 30, b = 15),    
     scene = dict(
+        camera = dict(
+            eye = dict(x = 1.5, y = 1.5, z = 1.5)
+        ),      
         aspectmode = "cube",
         xaxis = dict(
             title = "Decimal year",
@@ -225,7 +228,7 @@ def to_decimal_year(x):
     tp_date = pd.to_datetime(x)
     return (tp_date - year_start) / (next_year_start - year_start) + tp_date.dt.year
 
-dataset = pd.read_feather('C:/Users/Dominik Schulz/Documents/Private Projects/energy_forecasting_python_project/German_Energy_Consumption_20150101_to_20261108.feather')
+dataset = pd.read_feather('C:/Users/Dominik Schulz/Documents/Private Projects/energy_forecasting_python_project/German_Energy_Consumption_20181001_to_20261108.feather')
 df_plot = dataset.copy()
 dims = dataset.shape
 df_plot['tof'] = dataset['Timestamp'].dt.hour + dataset['Timestamp'].dt.minute / 60
@@ -280,6 +283,9 @@ fig.update_layout(
     title = 'Energy Consumption Germany',
     margin = dict(l = 20, r = 20, t = 30, b = 15),
     scene = dict(
+        camera = dict(
+            eye = dict(x = 1.5, y = 1.5, z = 1.5)
+        ),
         aspectmode = "cube",
         xaxis = dict(
             title = "Decimal year",
@@ -307,4 +313,4 @@ fig.update_layout(
 )
 ```
 
-@fig-threeD illustrates that the available time series is highly complex. A repeating pattern within each day is observable as is a pattern over each year. Patterns at other resolutions are no visible by eye, but should be checked, too, such as weekly and monthly patterns. Furthermore, around the year 2022 there appears to be a minor drop in the overall level of the series. That aside, the series seems to be stable and without a strong long-term trend.
+@fig-threeD illustrates that the available time series is highly complex. A repeating pattern within each day is observable as is a pattern over each year. Patterns at other resolutions are not visible by eye, but should be checked, too, such as weekly and monthly patterns. Furthermore, around the year 2022 there appears to be a minor drop in the overall level of the series. That aside, the series seems to be stable and without a strong long-term trend.
